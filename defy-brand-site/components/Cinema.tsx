@@ -81,7 +81,7 @@ export default function Cinema({ copy }: { copy: Copy }) {
     const cvs = canvasRef.current!;
     const ctx = cvs.getContext("2d")!;
     const sheet = new Image();
-    sheet.src = "/contact/sheet.jpg";
+    sheet.src = "/contact/BF369056-FCEF-4819-B7A4-A5BD4EDEBCE4.PNG";
     let cells: Cell[] = [];
     let raf = 0;
     let dirty = true;
@@ -239,7 +239,7 @@ export default function Cinema({ copy }: { copy: Copy }) {
           <div ref={phoneBox} className={c.phone}>
             <canvas ref={canvasRef} className={c.screen} aria-hidden="true" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img ref={phoneImg} className={c.frame} src="/contact/iphone.png" alt="" crossOrigin="anonymous" draggable={false} />
+            <img ref={phoneImg} className={c.frame} src="/contact/10A0C363-F5DD-4C83-93AB-7038C832484F.PNG" alt="" crossOrigin="anonymous" draggable={false} />
           </div>
         </div>
       </div>
