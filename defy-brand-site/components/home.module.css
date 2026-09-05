@@ -3,8 +3,8 @@
   position: relative;
   min-height: 100svh;
   overflow: hidden;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -15,7 +15,7 @@
   position: absolute;
   inset: -12%;
   background: url("/assets/bg.jpg") center/cover no-repeat;
-  opacity: 0.08;
+  opacity: 0.42;
   transform: rotate(-90deg) scale(1.5);
   will-change: transform;
   filter: saturate(1.1);
@@ -24,8 +24,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 20% 80%, rgba(255, 255, 255, 0.9), transparent 60%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.7) 100%);
+    radial-gradient(ellipse at 20% 80%, rgba(35, 38, 43, 0.7), transparent 60%),
+    linear-gradient(180deg, rgba(35, 38, 43, 0.1), rgba(35, 38, 43, 0.55) 100%);
 }
 .glow {
   position: absolute;
@@ -35,7 +35,7 @@
   width: clamp(260px, 34vw, 640px);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(var(--fluo-rgb), 0.75), rgba(var(--fluo-rgb), 0.2) 40%, transparent 68%);
+  background: radial-gradient(circle, rgba(var(--fluo-rgb), 0.42), rgba(var(--fluo-rgb), 0.1) 40%, transparent 68%);
   filter: blur(40px);
   pointer-events: none;
   will-change: transform;
@@ -43,11 +43,12 @@
 .wall {
   position: relative;
   z-index: 2;
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
-  font-size: clamp(66px, 13.9vw, 268px);
-  line-height: 1;
+  font-size: clamp(54px, 11.2vw, 216px);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
   pointer-events: none;
 }
 .ln {
@@ -68,9 +69,7 @@
 }
 .ln:nth-child(3) > span {
   color: var(--fluo);
-  -webkit-text-stroke: 1px var(--ink);
-  paint-order: stroke fill;
-  text-shadow: 0 0 40px rgba(var(--fluo-rgb), 0.55);
+  text-shadow: 0 0 40px rgba(var(--fluo-rgb), 0.35);
 }
 .obj {
   position: absolute;
@@ -80,10 +79,21 @@
   width: clamp(150px, 17.6vw, 340px);
   aspect-ratio: 624 / 670;
   will-change: transform;
-  filter: drop-shadow(0 40px 60px rgba(35, 38, 43, 0.28));
   pointer-events: none;
 }
-.obj img { width: 100%; height: 100%; object-fit: contain; }
+/* the one object that travels the page (see FlowObject) */
+.flow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  aspect-ratio: 624 / 670;
+  pointer-events: none;
+  will-change: transform, width, opacity;
+  filter: drop-shadow(0 40px 70px rgba(0, 0, 0, 0.5));
+}
+.flow img { width: 100%; height: 100%; object-fit: contain; }
+.stSlot { width: min(34vw, 460px); aspect-ratio: 624 / 670; justify-self: end; align-self: center; }
 .markLg {
   width: clamp(40px, 6vw, 110px);
   height: auto;
@@ -92,7 +102,6 @@
   flex: 0 0 auto;
   filter: drop-shadow(0 0 18px rgba(var(--fluo-rgb), 0.5));
 }
-.markInk { filter: none; opacity: 1; }
 .foot {
   position: relative;
   z-index: 2;
@@ -113,16 +122,16 @@
 }
 .intro strong {
   display: block;
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
   font-size: 1.35em;
   line-height: 1.05;
-  color: var(--ink);
+  color: var(--fluo);
   margin-bottom: 0.6em;
   letter-spacing: 0.01em;
 }
-.intro .cta { display: inline-block; margin-top: 1.2em; color: var(--ink); border-bottom: 1px solid var(--fluo); padding-bottom: 0.15em; }
+.intro .cta { display: inline-block; margin-top: 1.2em; }
 .idx {
   display: grid;
   grid-template-columns: repeat(3, auto);
@@ -136,12 +145,13 @@
   white-space: nowrap;
 }
 .idx .n {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   font-size: clamp(18px, 1.5vw, 28px);
   letter-spacing: -0.1em;
   line-height: 1;
 }
-.idx .n b { font-weight: 400; color: var(--ink); opacity: 0.35; }
+.idx .n b { font-weight: inherit; color: var(--fluo); }
 .idx .l { opacity: 0.55; font-weight: 500; font-size: 0.85em; transition: opacity 0.4s; }
 .idx a:hover .l { opacity: 1; }
 @media (max-width: 760px) {
@@ -156,21 +166,22 @@
 .statement {
   padding: clamp(150px, 20vh, 240px) var(--pad) clamp(80px, 12vh, 160px);
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
+  grid-template-columns: 1.2fr 1fr;
   gap: clamp(24px, 4vw, 80px);
-  align-items: start;
+  align-items: center;
+  min-height: 90svh;
   background: var(--ink);
 }
 .statement h2 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
   font-size: clamp(30px, 3.6vw, 68px);
   line-height: 1;
   text-wrap: balance;
 }
-.statement p { font-size: 1.15em; max-width: 34ch; opacity: 0.85; line-height: 1.4; }
-@media (max-width: 760px) { .statement { grid-template-columns: 1fr; } }
+.statement p { font-size: 1.15em; max-width: 34ch; opacity: 0.85; line-height: 1.4; margin-top: 1.6em; }
+@media (max-width: 760px) { .statement { grid-template-columns: 1fr; } .stSlot { width: 50vw; justify-self: center; } }
 
 /* ============ MANIFESTO ============ */
 .manifesto {
@@ -207,16 +218,15 @@
   transform: translateY(-50%);
   will-change: transform;
   pointer-events: none;
-  filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.5));
 }
-.mobj img { width: 100%; height: 100%; object-fit: contain; }
 .manifesto .eyebrow { position: absolute; top: clamp(110px, 15vh, 160px); left: var(--pad-lg); }
 .mani {
   position: relative;
   z-index: 2;
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
-  font-size: clamp(34px, 5.2vw, 100px);
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
+  font-size: clamp(30px, 4.4vw, 84px);
+  letter-spacing: -0.02em;
   line-height: 1.02;
   max-width: min(52vw, 16ch);
   text-wrap: balance;
@@ -228,7 +238,8 @@
   left: var(--pad-lg);
   opacity: 0;
   color: var(--fluo);
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
   font-size: clamp(18px, 1.8vw, 34px);
   letter-spacing: 0.02em;
@@ -271,7 +282,6 @@
   will-change: transform;
   pointer-events: none;
 }
-.coreobj img { width: 100%; height: 100%; object-fit: contain; }
 .ring {
   --cw: min(15vw, 26svh, 250px);
   --r: calc(var(--cw) * 1.75);
@@ -313,15 +323,16 @@
 .card:hover::before { transform: translateX(60%); }
 .card > * { position: relative; }
 .card .n {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   font-size: clamp(20px, 1.6vw, 28px);
   letter-spacing: -0.08em;
   line-height: 1;
 }
-.card .n b { font-weight: 400; color: var(--fluo); }
+.card .n b { font-weight: 800; color: var(--fluo); }
 .card h3 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   font-size: clamp(22px, 2vw, 34px);
   line-height: 0.98;
   text-transform: uppercase;
@@ -339,7 +350,7 @@
 }
 .head {
   position: absolute;
-  top: clamp(40px, 6vh, 80px);
+  top: clamp(100px, 14vh, 150px);
   left: var(--pad);
   right: var(--pad);
   display: flex;
@@ -367,8 +378,8 @@
 .chain .eyebrow { grid-column: 1 / -1; margin-bottom: -8px; }
 .pillar { border-top: 1px solid var(--paper-20); padding-top: clamp(20px, 2.4vw, 44px); }
 .pillar h3 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
   font-size: clamp(30px, 3.2vw, 60px);
   line-height: 1;
@@ -382,7 +393,8 @@
 .chainNote {
   grid-column: 1 / -1;
   margin-top: clamp(24px, 3vw, 56px);
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 700;
   font-size: clamp(22px, 2.2vw, 40px);
   line-height: 1.15;
   max-width: 32ch;
@@ -400,8 +412,8 @@
   align-items: end;
 }
 .about h2 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   font-size: clamp(34px, 4.4vw, 84px);
   line-height: 0.98;
   text-wrap: balance;
@@ -415,7 +427,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.2em;
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   font-size: clamp(28px, 3.2vw, 60px);
   line-height: 1.05;
 }
@@ -444,10 +457,11 @@
   will-change: transform;
 }
 .closer h2 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
-  font-size: clamp(36px, 6.4vw, 124px);
+  font-size: clamp(32px, 5.6vw, 108px);
+  letter-spacing: -0.02em;
   line-height: 0.92;
   position: relative;
   text-wrap: balance;
