@@ -79,6 +79,16 @@ export const en: Copy = {
     confirm: "Received. We actually read it, and you'll hear from a human within two working days — not an autoresponder.",
     alt: "Rather talk right now?",
     meta: "An idea, a problem, an ambition? Tell Defy & Brand Events. You don't have to have it figured out.",
+    cine: {
+      eyebrow: "The creative behind the ideas",
+      name: "Njusja",
+      role: "Creative / ThinkRebel",
+      quote: "Some ideas need a strategy. Others just need someone crazy enough to make them happen.",
+      have: "Have an idea?",
+      make: "Let's make it happen.",
+      tell: "Tell us what you're thinking. We'll figure out what to do with it.",
+      cta: "Let's talk",
+    },
   },
   footer: { tagline: "We turn ideas into experiences.", another: "Got another idea? Let's talk." },
   services: [
