@@ -64,6 +64,7 @@ export type Copy = {
     confirm: string;
     alt: string;
     meta: string;
+    cine: { eyebrow: string; name: string; role: string; quote: string; have: string; make: string; tell: string; cta: string };
   };
   footer: { tagline: string; another: string };
   meta: { title: string; description: string };
