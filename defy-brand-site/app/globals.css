@@ -1,0 +1,202 @@
+:root {
+  --ink: #23262b;
+  --ink-2: #1b1d21;
+  --ink-3: #2c3037;
+  --paper: #ffffff;
+  --paper-80: rgba(255, 255, 255, 0.8);
+  --paper-50: rgba(255, 255, 255, 0.5);
+  --paper-20: rgba(255, 255, 255, 0.2);
+  --paper-08: rgba(255, 255, 255, 0.08);
+  --fluo: #e4ff2e;
+  --fluo-rgb: 228, 255, 46;
+  --teal: #4a8791;
+  --pad: clamp(28px, 3.7vw, 72px);
+  --pad-lg: clamp(28px, 7vw, 120px);
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body), system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: clamp(15px, 1.12vw, 21px);
+  line-height: 1.3;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.has-cursor,
+body.has-cursor a,
+body.has-cursor button {
+  cursor: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+::selection {
+  background: var(--fluo);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--fluo);
+  outline-offset: 4px;
+}
+
+.display {
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+
+.eyebrow {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72em;
+  opacity: 0.5;
+}
+
+.fluo {
+  color: var(--fluo);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.grain {
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 1.2s steps(6) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-2%, 3%); }
+  40% { transform: translate(3%, -1%); }
+  60% { transform: translate(-1%, -3%); }
+  80% { transform: translate(2%, 2%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Shared CTA button */
+.btn {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: clamp(150px, 14vw, 240px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid var(--fluo);
+  font-family: var(--font-display), Georgia, serif;
+  text-transform: uppercase;
+  font-size: clamp(14px, 1.05vw, 20px);
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 1em;
+  overflow: hidden;
+  will-change: transform;
+}
+.btn i {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--fluo);
+  transform: scale(0);
+  transition: transform 0.6s var(--ease);
+}
+.btn span {
+  position: relative;
+  transition: color 0.4s;
+  text-wrap: balance;
+}
+.btn:hover i { transform: scale(1); }
+.btn:hover span { color: var(--ink); }
+
+/* Inline arrow link */
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--font-display), Georgia, serif;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.95em;
+  color: var(--fluo);
+}
+.arrow-link::after {
+  content: "→";
+  transition: transform 0.4s var(--ease);
+}
+.arrow-link:hover::after { transform: translateX(0.4em); }
+
+/* Section rhythm */
+.section {
+  padding: clamp(90px, 14vh, 200px) var(--pad);
+  position: relative;
+}
+.section.alt { background: var(--ink-2); }
+
+.prose {
+  max-width: 62ch;
+  opacity: 0.85;
+  line-height: 1.45;
+}
+.prose p + p { margin-top: 1em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .grain { display: none; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

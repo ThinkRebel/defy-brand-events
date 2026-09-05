@@ -1,0 +1,42 @@
+import { nl } from "./nl";
+import { fr } from "./fr";
+import { en } from "./en";
+import { LANGS, type Copy, type Lang } from "./types";
+export { LANGS };
+export type { Copy, Lang, Service } from "./types";
+
+const all: Record<Lang, Copy> = { nl, fr, en };
+
+export function isLang(x: string): x is Lang {
+  return x === "nl" || x === "fr" || x === "en";
+}
+
+export function getCopy(lang: Lang): Copy {
+  return all[lang];
+}
+
+/** Path helpers — route segments are localised. */
+export function href(lang: Lang, key: "home" | "services" | "about" | "contact", slug?: string) {
+  const c = all[lang];
+  if (key === "home") return `/${lang}`;
+  if (key === "services") return slug ? `/${lang}/${c.routes.services}/${slug}` : `/${lang}/${c.routes.services}`;
+  if (key === "about") return `/${lang}/${c.routes.about}`;
+  return `/${lang}/${c.routes.contact}`;
+}
+
+/** Given any localised path, return the equivalent path in every language. */
+export function alternatesForPath(pathname: string): Record<Lang, string> {
+  const [, lang, section, slug] = pathname.split("/");
+  const out = (key: "home" | "services" | "about" | "contact", s?: string) =>
+    Object.fromEntries(LANGS.map((l) => [l, href(l, key, s)])) as Record<Lang, string>;
+  if (!isLang(lang) || !section) return out("home");
+  const c = all[lang];
+  if (section === c.routes.about) return out("about");
+  if (section === c.routes.contact) return out("contact");
+  if (section === c.routes.services) return out("services", slug);
+  return out("home");
+}
+
+
+export const SITE_URL = "https://defyandbrandevents.be";
+export const CONTACT_EMAIL = "hello@defyandbrandevents.be";

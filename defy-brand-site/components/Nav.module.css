@@ -1,0 +1,147 @@
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 40;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(22px, 3vw, 56px) var(--pad);
+  pointer-events: none;
+}
+.nav > * { pointer-events: auto; }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.9em;
+}
+.mark {
+  width: 26px;
+  height: 26px;
+  transform: rotate(-45deg);
+  transition: transform 0.8s var(--ease);
+}
+.brand:hover .mark { transform: rotate(315deg); }
+.burger {
+  width: 44px;
+  height: 16px;
+  position: relative;
+}
+.burger i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--paper);
+  transition: transform 0.5s var(--ease), width 0.5s var(--ease), top 0.5s var(--ease), bottom 0.5s var(--ease);
+}
+.burger i:first-child { top: 0; }
+.burger i:last-child { bottom: 0; width: 70%; left: auto; }
+.burger:hover i:last-child { width: 100%; }
+.burger.open i:first-child { top: 7px; transform: rotate(45deg); }
+.burger.open i:last-child { bottom: 8px; width: 100%; transform: rotate(-45deg); }
+
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 39;
+  background: var(--ink-2);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: end;
+  padding: clamp(100px, 16vh, 180px) var(--pad) var(--pad);
+  gap: clamp(32px, 4vw, 80px);
+}
+.menu ul { display: flex; flex-direction: column; gap: 0.15em; }
+.menu li a {
+  font-family: var(--font-display), Georgia, serif;
+  text-transform: uppercase;
+  font-size: clamp(38px, 6vw, 110px);
+  line-height: 1;
+  display: inline-block;
+  transition: color 0.4s, transform 0.6s var(--ease);
+}
+.menu li a:hover { color: var(--fluo); transform: translateX(0.15em); }
+.services { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6em 2em; font-size: 0.9em; }
+.services a { opacity: 0.6; transition: opacity 0.3s; display: flex; gap: 0.8em; }
+.services a:hover { opacity: 1; }
+.services b { font-family: var(--font-display), Georgia, serif; font-weight: 400; color: var(--fluo); }
+.services .role { display: block; font-size: 0.8em; opacity: 0.6; }
+@media (max-width: 760px) {
+  .menu { grid-template-columns: 1fr; align-items: start; overflow-y: auto; }
+  .services { grid-template-columns: 1fr; }
+}
+
+.lang {
+  position: fixed;
+  right: var(--pad);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vw, 36px);
+}
+.lang a {
+  width: clamp(48px, 4vw, 76px);
+  height: clamp(48px, 4vw, 76px);
+  border-radius: 50%;
+  border: 1px solid var(--paper-20);
+  font-family: var(--font-display), Georgia, serif;
+  text-transform: uppercase;
+  font-size: clamp(14px, 1.3vw, 26px);
+  display: grid;
+  place-items: center;
+  position: relative;
+  color: var(--paper-50);
+  transition: color 0.4s;
+}
+.lang a::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid var(--paper);
+  transform: scale(0.6);
+  opacity: 0;
+  transition: transform 0.5s var(--ease), opacity 0.5s;
+}
+.lang a[aria-current="true"] { color: var(--fluo); }
+.lang a[aria-current="true"]::before { border-color: var(--fluo); }
+.lang a[aria-current="true"]::before,
+.lang a:hover::before { transform: scale(1); opacity: 1; }
+@media (max-width: 760px) {
+  .lang { top: auto; bottom: 20px; transform: none; flex-direction: row; right: auto; left: var(--pad); }
+}
+
+.footer {
+  padding: var(--pad);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(24px, 3vw, 56px);
+  align-items: end;
+  border-top: 1px solid var(--paper-08);
+  background: var(--ink);
+}
+.footer .big {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(26px, 3vw, 56px);
+  line-height: 1;
+  text-transform: uppercase;
+}
+.footer .big span { color: var(--fluo); }
+.footer .meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  font-size: 0.8em;
+  opacity: 0.6;
+  text-align: right;
+}
+@media (max-width: 760px) {
+  .footer { grid-template-columns: 1fr; padding-bottom: 100px; }
+  .footer .meta { text-align: left; }
+}
