@@ -79,8 +79,9 @@ ol {
 }
 
 .display {
-  font-family: var(--font-display), Georgia, "Times New Roman", serif;
-  font-weight: 400;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .eyebrow {
@@ -127,6 +128,7 @@ ol {
 
 /* Shared CTA button */
 .btn {
+  font-weight: 800;
   position: relative;
   display: inline-grid;
   place-items: center;
@@ -134,7 +136,7 @@ ol {
   aspect-ratio: 1;
   border-radius: 50%;
   border: 1px solid var(--fluo);
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), "Arial Black", sans-serif;
   text-transform: uppercase;
   font-size: clamp(14px, 1.05vw, 20px);
   letter-spacing: 0.04em;
@@ -161,10 +163,11 @@ ol {
 
 /* Inline arrow link */
 .arrow-link {
+  font-weight: 800;
   display: inline-flex;
   align-items: center;
   gap: 0.6em;
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), "Arial Black", sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-size: 0.95em;
