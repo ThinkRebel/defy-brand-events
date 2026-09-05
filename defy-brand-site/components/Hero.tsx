@@ -2,7 +2,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { href, type Copy } from "@/content";
 import s from "./home.module.css";
 
@@ -14,7 +14,7 @@ export default function Hero({ copy }: { copy: Copy }) {
 
   useGSAP(
     () => {
-      if (prefersReducedMotion()) return;
+      if (prefersReducedMotion()) { document.body.classList.add("on-light"); return; }
       const q = gsap.utils.selector(root);
 
       // load sequence
@@ -45,6 +45,12 @@ export default function Hero({ copy }: { copy: Copy }) {
       };
       window.addEventListener("pointermove", move);
 
+      // hero is white: flip fixed nav/lang to ink while it is in view
+      ScrollTrigger.create({
+        trigger: root.current, start: "top bottom", end: "bottom 80px",
+        onToggle: (st) => document.body.classList.toggle("on-light", st.isActive),
+      });
+
       // scroll-out: words drift apart
       const st = { trigger: root.current, start: "top top", end: "bottom top", scrub: 1 };
       gsap.to(q(`.${s.ln}:nth-child(1) > span`), { xPercent: -25, scrollTrigger: st });
@@ -70,7 +76,7 @@ export default function Hero({ copy }: { copy: Copy }) {
         {WALL.map((w, i) => (
           <span className={s.ln} key={w}>
             <span>{w}</span>
-            {i === 2 && <Image className={s.markLg} src="/assets/mark-fluo.svg" alt="" width={110} height={110} aria-hidden="true" />}
+            {i === 2 && <Image className={`${s.markLg} ${s.markInk}`} src="/assets/mark-ink.svg" alt="" width={110} height={110} aria-hidden="true" />}
           </span>
         ))}
       </h1>
