@@ -6,6 +6,7 @@ import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import JsonLd from "@/components/JsonLd";
 import { PageHero, ContactForm } from "@/components/Page";
 import { Closer, Reveal } from "@/components/Sections";
+import Cinema from "@/components/Cinema";
 import p from "@/components/page.module.css";
 
 type Props = { params: Promise<{ lang: Lang; section: string }> };
@@ -101,10 +102,11 @@ export default async function SectionPage({ params }: Props) {
     return (
       <>
         <JsonLd data={breadcrumbJsonLd(crumbs)} />
-        <section className={p.contact}>
+        <Cinema copy={c} />
+        <section className={p.contact} id="form">
           <div>
             <span className="eyebrow">{c.nav.contact}</span>
-            <h1 className={p.ph1} style={{ marginTop: "0.4em" }}>{ct.h}</h1>
+            <h2 className={p.ph1} style={{ marginTop: "0.4em" }}>{ct.h}</h2>
             <ul className={p.lines}>
               {ct.lines.map((l, i) => (
                 <Reveal key={i} as="li" delay={0.3 + i * 0.1}>{l}</Reveal>
