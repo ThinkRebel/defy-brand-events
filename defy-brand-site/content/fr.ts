@@ -79,6 +79,16 @@ export const fr: Copy = {
     confirm: "Bien reçu. Nous le lisons vraiment, et un humain vous répond sous deux jours ouvrables — pas un répondeur automatique.",
     alt: "Vous préférez parler tout de suite ?",
     meta: "Une idée, un problème, une ambition ? Racontez-le à Defy & Brand Events. Pas besoin que ce soit prêt.",
+    cine: {
+      eyebrow: "La créative derrière les idées",
+      name: "Njusja",
+      role: "Creative / ThinkRebel",
+      quote: "Certaines idées ont besoin d’une stratégie. D’autres, juste de quelqu’un d’assez fou pour les réaliser.",
+      have: "Une idée ?",
+      make: "Let's make it happen.",
+      tell: "Dites-nous ce que vous avez en tête. On trouvera quoi en faire.",
+      cta: "Let's talk",
+    },
   },
   footer: { tagline: "We turn ideas into experiences.", another: "Une autre idée ? Let's talk." },
   services: [
