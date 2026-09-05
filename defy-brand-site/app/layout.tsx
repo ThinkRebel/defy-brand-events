@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Gilda_Display, Figtree } from "next/font/google";
+import { Syne, Figtree } from "next/font/google";
 import "./globals.css";
 
-const display = Gilda_Display({ subsets: ["latin"], weight: "400", variable: "--font-display", display: "swap" });
+const display = Syne({ subsets: ["latin"], weight: ["700", "800"], variable: "--font-display", display: "swap" });
 const body = Figtree({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-body", display: "swap" });
 
 export const metadata: Metadata = {
