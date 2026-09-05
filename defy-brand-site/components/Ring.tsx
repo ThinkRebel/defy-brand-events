@@ -83,9 +83,7 @@ export default function Ring({ copy }: { copy: Copy }) {
         </div>
         <div className={s.stage}>
           <div className={s.core} aria-hidden="true" />
-          <div className={s.coreobj} aria-hidden="true">
-            <Image src="/assets/object.webp" alt="" width={624} height={670} />
-          </div>
+          <div className={s.coreobj} data-flow="ring" aria-hidden="true" />
           <div ref={ringRef} className={s.ring} style={{ ["--n" as string]: n }}>
             {copy.services.map((sv, i) => (
               <Link
