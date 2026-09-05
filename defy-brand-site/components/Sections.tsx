@@ -28,8 +28,11 @@ export function Statement({ copy }: { copy: Copy }) {
   const [h, p] = copy.home.statement;
   return (
     <section className={s.statement}>
-      <Reveal as="h2">{h}</Reveal>
-      <Reveal as="p" delay={0.15}>{p}</Reveal>
+      <div>
+        <Reveal as="h2">{h}</Reveal>
+        <Reveal as="p" delay={0.15}>{p}</Reveal>
+      </div>
+      <div className={s.stSlot} data-flow="statement" aria-hidden="true" />
     </section>
   );
 }
