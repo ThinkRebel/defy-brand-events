@@ -145,3 +145,13 @@
   .footer { grid-template-columns: 1fr; padding-bottom: 100px; }
   .footer .meta { text-align: left; }
 }
+
+/* Hero is white: while it is in view the body carries .on-light and the chrome flips to ink */
+:global(body.on-light) .brand,
+:global(body.on-light) .burger { color: var(--ink); }
+:global(body.on-light) .burger i { background: var(--ink); }
+:global(body.on-light) .lang a { color: rgba(35, 38, 43, 0.5); border-color: rgba(35, 38, 43, 0.2); }
+:global(body.on-light) .lang a::before { border-color: var(--ink); }
+:global(body.on-light) .lang a[aria-current="true"] { color: var(--ink); }
+:global(body.on-light) .lang a[aria-current="true"]::before { border-color: var(--ink); background: rgba(var(--fluo-rgb), 0.35); }
+.brand, .burger, .lang a, .burger i, .lang a::before { transition: color 0.4s, background 0.4s, border-color 0.4s; }
