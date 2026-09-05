@@ -31,18 +31,20 @@
 }
 .pobj img { width: 100%; height: 100%; object-fit: contain; }
 .pnum {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   font-size: clamp(22px, 2vw, 36px);
   letter-spacing: -0.08em;
   line-height: 1;
 }
-.pnum b { font-weight: 400; color: var(--fluo); }
+.pnum b { font-weight: 800; color: var(--fluo); }
 .pnum span { margin-left: 0.6em; letter-spacing: 0; opacity: 0.6; font-size: 0.6em; font-family: var(--font-body), sans-serif; text-transform: uppercase; }
 .ph1 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
-  font-size: clamp(38px, 6.4vw, 124px);
+  font-size: clamp(34px, 5.6vw, 108px);
+  letter-spacing: -0.02em;
   line-height: 0.92;
   max-width: 16ch;
   text-wrap: balance;
@@ -52,7 +54,8 @@
 .ph1 .ln { display: block; overflow: hidden; padding-bottom: 0.06em; }
 .ph1 .ln > span { display: inline-block; }
 .psub {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   font-size: clamp(20px, 2vw, 36px);
   line-height: 1.15;
   color: var(--fluo);
@@ -70,7 +73,8 @@
 }
 .intro .eyebrow { padding-top: 0.5em; }
 .lead {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   font-size: clamp(22px, 2.4vw, 44px);
   line-height: 1.15;
   max-width: 30ch;
@@ -90,7 +94,8 @@
   flex-direction: column;
 }
 .list li {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   font-size: clamp(26px, 3.4vw, 64px);
   line-height: 1.05;
   padding: 0.35em 0;
@@ -115,8 +120,8 @@
   background: var(--ink-2);
 }
 .blocks h2 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
   font-size: clamp(28px, 3.4vw, 64px);
   line-height: 1;
@@ -129,8 +134,8 @@
 }
 .block { border-top: 1px solid var(--paper-20); padding-top: 1.2em; }
 .block h3 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   font-size: clamp(20px, 1.7vw, 30px);
   line-height: 1.05;
   text-wrap: balance;
@@ -158,8 +163,8 @@
 }
 .step.on::before { width: 100%; }
 .step h3 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
   font-size: clamp(24px, 2.6vw, 48px);
   line-height: 1;
@@ -178,8 +183,8 @@
   gap: clamp(28px, 4vw, 80px);
 }
 .honest h2 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
   font-size: clamp(24px, 2.6vw, 48px);
   line-height: 1;
@@ -199,7 +204,8 @@
   background: var(--ink);
 }
 .next a {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   font-size: clamp(24px, 3vw, 56px);
   text-transform: uppercase;
   line-height: 1;
@@ -209,7 +215,7 @@
   transition: color 0.3s;
 }
 .next a:hover { color: var(--fluo); }
-.next a b { font-weight: 400; color: var(--fluo); font-size: 0.6em; }
+.next a b { font-weight: 800; color: var(--fluo); font-size: 0.6em; }
 
 /* Services overview */
 .overview { padding: clamp(60px, 8vh, 120px) var(--pad) clamp(100px, 14vh, 200px); background: var(--ink-2); }
@@ -225,9 +231,9 @@
 }
 .row:last-child { border-bottom: 1px solid var(--paper-08); }
 .row:hover { padding-left: 1.5vw; }
-.row .num { font-family: var(--font-display), Georgia, serif; letter-spacing: -0.08em; font-size: clamp(20px, 1.8vw, 32px); }
-.row .num b { font-weight: 400; color: var(--fluo); }
-.row h2 { font-family: var(--font-display), Georgia, serif; font-weight: 400; text-transform: uppercase; font-size: clamp(24px, 3vw, 56px); line-height: 1; }
+.row .num { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; letter-spacing: -0.08em; font-size: clamp(20px, 1.8vw, 32px); }
+.row .num b { font-weight: 800; color: var(--fluo); }
+.row h2 { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(24px, 3vw, 56px); line-height: 1; }
 .row .role { opacity: 0.6; }
 .row .arrow { color: var(--fluo); font-size: 1.4em; transition: transform 0.4s var(--ease); }
 .row:hover .arrow { transform: translateX(0.4em); }
@@ -241,11 +247,12 @@
 .aboutWhy .lead:first-of-type { color: var(--fluo); }
 .nots { padding: clamp(70px, 10vh, 140px) var(--pad); background: var(--ink); }
 .nots h2, .how h2, .name h2 {
-  font-family: var(--font-display), Georgia, serif; font-weight: 400; text-transform: uppercase;
+  font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase;
   font-size: clamp(28px, 3.4vw, 64px); line-height: 1; margin-bottom: clamp(32px, 4vw, 72px);
 }
 .nots li {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-display), "Arial Black", sans-serif;
+  font-weight: 800;
   font-size: clamp(22px, 2.6vw, 48px);
   line-height: 1.1;
   padding: 0.5em 0;
@@ -253,25 +260,25 @@
   max-width: 34ch;
   text-wrap: balance;
 }
-.nots li strong { font-weight: 400; color: var(--fluo); }
+.nots li strong { font-weight: 800; color: var(--fluo); }
 .how { padding: clamp(70px, 10vh, 140px) var(--pad); background: var(--ink-2); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 80px); align-items: start; }
-.how .verbs { display: flex; flex-direction: column; gap: 0.15em; font-family: var(--font-display), Georgia, serif; font-size: clamp(30px, 4vw, 80px); line-height: 1.05; }
+.how .verbs { display: flex; flex-direction: column; gap: 0.15em; font-family: var(--font-display), "Arial Black", sans-serif; font-size: clamp(30px, 4vw, 80px); line-height: 1.05; }
 .how .verbs li { opacity: 0.45; }
 .how .verbs li:last-child { opacity: 1; color: var(--fluo); }
 .how p { max-width: 40ch; opacity: 0.8; line-height: 1.45; align-self: end; }
 .name { padding: clamp(70px, 10vh, 140px) var(--pad); background: var(--ink); }
 .name dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3vw, 60px); }
-.name dt { font-family: var(--font-display), Georgia, serif; text-transform: uppercase; font-size: clamp(38px, 5vw, 100px); line-height: 1; border-top: 1px solid var(--paper-20); padding-top: 0.3em; }
+.name dt { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(38px, 5vw, 100px); line-height: 1; border-top: 1px solid var(--paper-20); padding-top: 0.3em; }
 .name div:last-child dt { color: var(--fluo); }
 .name dd { margin-top: 1em; opacity: 0.8; max-width: 30ch; line-height: 1.45; }
 @media (max-width: 760px) { .aboutWhy, .how { grid-template-columns: 1fr; } .name dl { grid-template-columns: 1fr; } }
 
 /* Contact */
-.contact { padding: clamp(150px, 24vh, 260px) var(--pad) clamp(100px, 14vh, 200px); background: var(--ink); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 120px); position: relative; overflow: hidden; }
-.contact .lines { margin-top: 2em; display: flex; flex-direction: column; gap: 0.3em; font-family: var(--font-display), Georgia, serif; font-size: clamp(20px, 2vw, 36px); line-height: 1.15; }
+.contact { padding: clamp(90px, 14vh, 180px) var(--pad) clamp(100px, 14vh, 200px); background: var(--ink); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 120px); position: relative; overflow: hidden; }
+.contact .lines { margin-top: 2em; display: flex; flex-direction: column; gap: 0.3em; font-family: var(--font-display), "Arial Black", sans-serif; font-size: clamp(20px, 2vw, 36px); line-height: 1.15; }
 .contact .lines li { opacity: 0.55; }
 .contact .invite { margin-top: 2em; font-size: 1.1em; max-width: 36ch; }
-.contact .talk { display: block; margin-top: 0.4em; color: var(--fluo); font-family: var(--font-display), Georgia, serif; font-size: 1.6em; }
+.contact .talk { display: block; margin-top: 0.4em; color: var(--fluo); font-family: var(--font-display), "Arial Black", sans-serif; font-size: 1.6em; }
 .form { display: flex; flex-direction: column; gap: clamp(20px, 2.4vw, 36px); align-self: end; }
 .field { display: flex; flex-direction: column; gap: 0.5em; }
 .field label { font-weight: 500; font-size: 0.85em; opacity: 0.7; }
@@ -284,5 +291,5 @@
 .send { display: flex; align-items: center; gap: 2em; flex-wrap: wrap; margin-top: 0.5em; }
 .alt { font-size: 0.9em; opacity: 0.7; }
 .alt a { color: var(--fluo); }
-.confirm { font-family: var(--font-display), Georgia, serif; font-size: clamp(20px, 2vw, 36px); line-height: 1.2; color: var(--fluo); max-width: 30ch; text-wrap: balance; }
+.confirm { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; font-size: clamp(20px, 2vw, 36px); line-height: 1.2; color: var(--fluo); max-width: 30ch; text-wrap: balance; }
 @media (max-width: 760px) { .contact { grid-template-columns: 1fr; padding-top: 130px; } }
