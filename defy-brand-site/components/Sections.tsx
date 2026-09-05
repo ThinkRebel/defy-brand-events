@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { href, type Copy } from "@/content";
 import s from "./home.module.css";
+import Typewriter from "./Typewriter";
 
 const EASE = [0.2, 0.8, 0.2, 1] as const;
 
@@ -89,13 +90,7 @@ export function AboutTeaser({ copy }: { copy: Copy }) {
           </Link>
         </Reveal>
       </div>
-      <ol className={s.verbs}>
-        {a.verbs.map((v, i) => (
-          <Reveal key={v} as="li" delay={i * 0.1} className={i === a.verbs.length - 1 ? s.hi : undefined}>
-            {v}
-          </Reveal>
-        ))}
-      </ol>
+      <Typewriter className={s.verbs} lines={a.verbs} lastClass={s.hi} />
     </section>
   );
 }
