@@ -1,6 +1,5 @@
 "use client";
 import { useRef } from "react";
-import Image from "next/image";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import type { Copy } from "@/content";
 import s from "./home.module.css";
@@ -64,9 +63,7 @@ export default function Manifesto({ copy }: { copy: Copy }) {
   return (
     <section ref={root} className={s.manifesto} aria-label="Manifesto">
       <div className={s.feel} aria-hidden="true" />
-      <div className={s.mobj} aria-hidden="true">
-        <Image src="/assets/object.webp" alt="" width={624} height={670} />
-      </div>
+      <div className={s.mobj} data-flow="manifesto" aria-hidden="true" />
       <span className={`eyebrow ${s.eyebrow}`}>Manifesto</span>
       <p className={s.mani}>
         {words.map((w, i) => (
