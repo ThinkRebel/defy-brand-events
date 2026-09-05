@@ -81,6 +81,16 @@ export const nl: Copy = {
     confirm: "Aangekomen. We lezen het écht, en je hoort binnen twee werkdagen van een mens — niet van een autoresponder.",
     alt: "Liever meteen praten?",
     meta: "Een idee, een probleem, een ambitie? Vertel het aan Defy & Brand Events. Je hoeft het niet klaar te hebben.",
+    cine: {
+      eyebrow: "De creatieve kop achter de ideeën",
+      name: "Njusja",
+      role: "Creative / ThinkRebel",
+      quote: "Sommige ideeën hebben een strategie nodig. Andere gewoon iemand die gek genoeg is om ze te maken.",
+      have: "Een idee?",
+      make: "Let's make it happen.",
+      tell: "Vertel wat je in je hoofd hebt. Wij zoeken uit wat we ermee doen.",
+      cta: "Let's talk",
+    },
   },
   footer: { tagline: "We turn ideas into experiences.", another: "Nog een idee? Let's talk." },
   services: [
