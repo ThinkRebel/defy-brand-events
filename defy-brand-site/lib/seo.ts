@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getCopy, href, LANGS, SITE_URL, CONTACT_EMAIL, type Lang, type Service } from "@/content";
+import { getCopy, href, LANGS, SITE_URL, CONTACT_EMAIL, COMPANY, type Lang, type Service } from "@/content";
 
 type PageKey = "home" | "services" | "about" | "contact" | "portfolio";
 
@@ -36,9 +36,14 @@ export function orgJsonLd(lang: Lang) {
   const c = getCopy(lang);
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": ["Organization", "LocalBusiness", "ProfessionalService"],
     "@id": `${SITE_URL}/#organization`,
     name: "Defy & Brand Events",
+    legalName: COMPANY.legalName,
+    vatID: COMPANY.vat,
+    telephone: COMPANY.phone,
+    address: { "@type": "PostalAddress", streetAddress: COMPANY.street, postalCode: COMPANY.postalCode, addressLocality: COMPANY.city, addressCountry: COMPANY.country },
+    founder: { "@type": "Person", name: "Njusja Orban", jobTitle: "Creative" },
     alternateName: ["DB Events", "Defy & Brand"],
     url: SITE_URL,
     logo: `${SITE_URL}/assets/mark.svg`,
@@ -48,7 +53,7 @@ export function orgJsonLd(lang: Lang) {
     areaServed: "BE",
     knowsLanguage: ["nl", "fr", "en"],
     knowsAbout: c.services.map((s) => s.name),
-    contactPoint: { "@type": "ContactPoint", email: CONTACT_EMAIL, contactType: "sales", availableLanguage: ["Dutch", "French", "English"] },
+    contactPoint: { "@type": "ContactPoint", email: CONTACT_EMAIL, telephone: COMPANY.phone, contactType: "sales", availableLanguage: ["Dutch", "French", "English"] },
   };
 }
 
