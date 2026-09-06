@@ -192,8 +192,10 @@ export function Blender({ fallback }: { fallback: React.ReactNode }) {
       }
       raf = requestAnimationFrame(loop);
     };
-    if (!prefersReducedMotion()) raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
+    // only while the scene is on screen — no drawing for a canvas nobody sees
+    const io = new IntersectionObserver(([e]) => { cancelAnimationFrame(raf); if (e.isIntersecting && !prefersReducedMotion()) raf = requestAnimationFrame(loop); });
+    io.observe(c);
+    return () => { cancelAnimationFrame(raf); io.disconnect(); };
   }, [ok]);
 
   if (ok === false) return <>{fallback}</>;
@@ -246,9 +248,14 @@ export function HelixSprite() {
     const i = new Image(); i.onload = () => (img = i); i.src = "/assets/object.webp";
     const still = prefersReducedMotion();
     const N = 26;
+    const small = matchMedia("(max-width: 760px)").matches;
+    let last = 0;
     const draw = (tm: number) => {
+      // phones: half the frames, no retina canvas — the strand still flows, the battery does not
+      if (small && tm - last < 32) { raf = requestAnimationFrame(draw); return; }
+      last = tm;
       const r = c.getBoundingClientRect();
-      const dpr = Math.min(2, devicePixelRatio || 1);
+      const dpr = Math.min(small ? 1.25 : 2, devicePixelRatio || 1);
       if (c.width !== Math.round(r.width * dpr)) { c.width = Math.max(1, r.width * dpr); c.height = Math.max(1, r.height * dpr); }
       const ctx = c.getContext("2d")!;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);

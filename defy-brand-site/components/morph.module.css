@@ -39,21 +39,35 @@
 
 /* ---- card orbit (website design hero): device mockups ---- */
 .orbit { width: 100%; height: 100%; display: grid; place-items: center; perspective: 1400px; }
-.cloud { position: relative; width: 36%; aspect-ratio: 4 / 3; transform-style: preserve-3d; will-change: transform; }
+.cloud { position: relative; width: 44%; aspect-ratio: 4 / 3; transform-style: preserve-3d; will-change: transform; }
 .device {
   position: absolute; left: 50%; top: 50%;
   transform: translate(-50%, -50%) rotateY(calc(var(--i) * (360deg / var(--n)))) translateZ(calc(var(--cw, 100px) * 2.1 + 10vmin)) translateY(var(--lift));
   opacity: calc(0.3 + var(--depth, 1) * 0.7); filter: blur(calc((1 - var(--depth, 1)) * 1.5px)) drop-shadow(0 30px 50px rgba(0, 0, 0, 0.55));
 }
-.dScreen { position: relative; overflow: hidden; background: #0e0f11; border: 2px solid #2a2b2f; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.05); }
+/* ---- device mockups: laptop, phone, monitor — real proportions, bezels, keyboard deck, stand ---- */
+.dScreen { position: relative; overflow: hidden; background: #0e0f11; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 30px 60px rgba(0, 0, 0, 0.5); }
 .dScreen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
-.laptop .dScreen { width: 100%; aspect-ratio: 16 / 10; border-radius: 8px 8px 2px 2px; border-width: 6px 6px 8px; border-color: #1c1d20; }
-.dBase { display: block; width: 116%; margin-left: -8%; height: 7px; background: linear-gradient(180deg, #3a3b40, #1a1b1e); border-radius: 0 0 8px 8px; }
+.dGlare { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 35%, transparent 60%); }
+.dCam { position: absolute; top: 3px; left: 50%; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: #0a0a0c; box-shadow: inset 0 0 0 1px #2b2d33, 0 0 3px rgba(120, 180, 255, 0.5); }
+/* laptop: thin aluminium bezel, hinge, keyboard deck in perspective, trackpad, front lip */
+.laptop .dScreen { width: 100%; aspect-ratio: 16 / 10; border-radius: 10px 10px 3px 3px; border: 7px solid #121316; border-bottom-width: 9px; box-shadow: inset 0 0 0 1px #2a2c31, 0 0 0 2px #3a3c42, 0 30px 60px rgba(0, 0, 0, 0.5); background: #0e0f11; }
+.dBase { display: block; position: relative; width: 122%; margin-left: -11%; height: 26px; background: linear-gradient(180deg, #4a4c52 0%, #2d2f34 55%, #1b1c1f 100%); border-radius: 0 0 10px 10px / 0 0 14px 14px; transform-origin: 50% 0; transform: perspective(500px) rotateX(58deg); box-shadow: 0 8px 0 -2px #0b0b0d, 0 30px 40px rgba(0, 0, 0, 0.45); }
+.dKeys { position: absolute; left: 16%; right: 16%; top: 2px; height: 14px; border-radius: 2px; background: repeating-linear-gradient(90deg, #202226 0 5px, #2b2d32 5px 6px), repeating-linear-gradient(180deg, transparent 0 4px, #2b2d32 4px 5px); background-blend-mode: multiply; opacity: 0.95; }
+.dPad { position: absolute; left: 41%; right: 41%; top: 17px; height: 6px; border-radius: 2px; background: #35373c; box-shadow: inset 0 0 0 1px #46484e; }
+/* phone: deep corners, dynamic island, side buttons, titanium rim */
 .phone { width: 42% !important; }
-.phone .dScreen { width: 100%; aspect-ratio: 9 / 19; border-radius: 18px; border-width: 5px; border-color: #1c1d20; }
-.dNotch { position: absolute; top: 9px; left: 50%; width: 36%; height: 8px; transform: translateX(-50%); background: #1c1d20; border-radius: 6px; }
-.monitor .dScreen { width: 100%; aspect-ratio: 16 / 9; border-radius: 6px; border-width: 5px 5px 14px; border-color: #1c1d20; }
-.dStand { display: block; width: 30%; height: 12px; margin: 0 auto; background: linear-gradient(180deg, #2a2b2f, #16171a); border-radius: 0 0 6px 6px; }
+.phone .dScreen { width: 100%; aspect-ratio: 9 / 19.5; border-radius: 22% / 10%; border: 4px solid #101114; box-shadow: inset 0 0 0 1px #2c2e33, 0 0 0 2px #45474d, 0 30px 60px rgba(0, 0, 0, 0.5); }
+.dIsland { position: absolute; top: 6px; left: 50%; width: 34%; height: 9px; transform: translateX(-50%); background: #050506; border-radius: 6px; }
+.dBtnL, .dBtnR { position: absolute; width: 2px; background: #45474d; border-radius: 1px; }
+.dBtnL { left: -4px; top: 22%; height: 12%; box-shadow: 0 18px 0 #45474d; }
+.dBtnR { right: -4px; top: 26%; height: 16%; }
+/* monitor: slim bezel, chin, neck, foot */
+.monitor .dScreen { width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; border: 5px solid #121316; border-bottom-width: 18px; box-shadow: inset 0 0 0 1px #2a2c31, 0 0 0 2px #3a3c42, 0 30px 60px rgba(0, 0, 0, 0.5); }
+.monitor .dScreen::after { content: ""; position: absolute; left: 50%; bottom: -13px; width: 10px; height: 4px; margin-left: -5px; border-radius: 2px; background: #3f4147; }
+.dStand { display: grid; justify-items: center; }
+.dStand b:first-child { display: block; width: 9%; height: 22px; background: linear-gradient(90deg, #26282c, #45474d, #26282c); }
+.dStand b:last-child { display: block; width: 44%; height: 7px; border-radius: 40% 40% 6px 6px / 100% 100% 6px 6px; background: linear-gradient(180deg, #4a4c52, #26282c); box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5); }
 .device { width: 100%; }
 /* ---- card globe ---- */
 .globe { position: relative; height: min(78svh, 720px); perspective: 1400px; transform-style: preserve-3d; cursor: grab; touch-action: pan-y; }
@@ -107,3 +121,7 @@
 .miniPick:focus-visible { outline: 2px solid var(--fluo); outline-offset: 2px; }
 .miniOn { border-color: var(--fluo) !important; box-shadow: 0 0 0 1px var(--fluo), 0 0 40px rgba(var(--fluo-rgb), 0.35) !important; }
 .miniOn::before { content: "✓"; position: absolute; right: 12px; top: 10px; z-index: 2; width: 22px; height: 22px; border-radius: 50%; background: var(--fluo); color: #0e0e12; font-weight: 700; font-size: 13px; display: grid; place-items: center; }
+@media (max-width: 760px) {
+  .device { filter: none; }
+  .cloud { width: 62%; }
+}

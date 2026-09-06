@@ -1,0 +1,15 @@
+.faq { padding: clamp(60px, 9vh, 130px) var(--pad); background: var(--ink-2); display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(28px, 4vw, 80px); align-items: start; }
+.h2 { font-family: var(--font-display), sans-serif; font-weight: 700; font-size: clamp(28px, 3.2vw, 56px); line-height: 1.02; letter-spacing: -0.02em; margin-top: 0.4em; text-wrap: balance; }
+.list { margin: 0; border-top: 1px solid var(--paper-20); }
+.item { border-bottom: 1px solid var(--paper-20); }
+.item dt, .item dd { margin: 0; }
+.q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1em; padding: 1.1em 0; background: none; border: 0; color: var(--paper); font: inherit; font-family: var(--font-display), sans-serif; font-weight: 700; font-size: clamp(17px, 1.4vw, 24px); line-height: 1.2; text-align: left; cursor: pointer; }
+.q i { flex: none; width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--paper-20); position: relative; transition: transform 0.4s var(--ease), border-color 0.3s; }
+.q i::before, .q i::after { content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 1.5px; background: var(--paper); transform: translate(-50%, -50%); }
+.q i::after { transform: translate(-50%, -50%) rotate(90deg); transition: transform 0.4s var(--ease); }
+.on .q { color: var(--fluo); }
+.on .q i { border-color: var(--fluo); transform: rotate(45deg); }
+.on .q i::before, .on .q i::after { background: var(--fluo); }
+.q:hover i { border-color: var(--fluo); }
+.a p { max-width: 60ch; padding: 0 0 1.3em; line-height: 1.55; opacity: 0.88; }
+@media (max-width: 860px) { .faq { grid-template-columns: 1fr; } }

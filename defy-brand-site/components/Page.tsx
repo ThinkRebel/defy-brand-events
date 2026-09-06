@@ -17,8 +17,11 @@ import p from "./page.module.css";
 /** Sub-page hero with masked line reveal + drifting chrome object. */
 const BAND = new Set(["copywriting"]);
 const HANDOVER = new Set(["marketing", "seo", "agentic-workflow"]);
+/** pages that keep the chrome object itself as hero prop */
+const PLAIN = new Set(["strategy"]);
 
-export function PageHero({ num, label, title, sub, obj = true, scene, lang = "nl", variant = 0 }: { num?: string; label?: string; title: string; sub?: string; obj?: boolean; scene?: string; lang?: Lang; variant?: number }) {
+export function PageHero({ num, label, title, sub, obj = true, scene: sceneIn, lang = "nl", variant = 0 }: { num?: string; label?: string; title: string; sub?: string; obj?: boolean; scene?: string; lang?: Lang; variant?: number }) {
+  const scene = sceneIn && PLAIN.has(sceneIn) ? undefined : sceneIn;
   const root = useRef<HTMLElement>(null);
   const slotRef = useRef<HTMLDivElement>(null);
   useGSAP(

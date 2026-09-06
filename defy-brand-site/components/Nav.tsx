@@ -10,6 +10,7 @@ import styles from "./Nav.module.css";
 export function Nav({ copy }: { copy: Copy }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const alternates = alternatesForPath(pathname);
   const lang = copy.lang;
 
   useEffect(() => setOpen(false), [pathname]);
@@ -70,6 +71,11 @@ export function Nav({ copy }: { copy: Copy }) {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.6 }}
             >
+              <div className={styles.menuLang} role="group" aria-label="Taal / Langue / Language">
+                {LANGS.map((l) => (
+                  <Link key={l} href={alternates[l]} hrefLang={l} lang={l} aria-current={l === lang ? "true" : undefined}>{l}</Link>
+                ))}
+              </div>
               {copy.services.map((s) => (
                 <Link key={s.slug} href={href(lang, "services", s.slug)}>
                   <b>#{s.num}</b>

@@ -23,7 +23,8 @@ const t = (lang: Lang, o: T3) => o[lang];
 export function ServiceScene({ slug, lang, slotRef }: { slug: string; lang: Lang; slotRef?: React.RefObject<HTMLDivElement | null> }) {
   switch (slug) {
     case "strategy":
-      return <Radar />;
+      // the chrome object itself (PageHero falls back to it) — no separate prop on this page
+      return null;
     case "brand-creative":
       return <SwatchFan />;
     case "copywriting":
@@ -235,6 +236,7 @@ function SwatchFan() {
     <div ref={root} className={v.fan} aria-hidden="true">
       {items.map((w, i) => (
         <div key={w} className={v.swatch} style={{ ["--i" as string]: i - 2 }}>
+          <img src={photoFor("swatch" + w, 600)} alt="" loading="eager" />
           <span>{w}</span>
         </div>
       ))}

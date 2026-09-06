@@ -125,10 +125,15 @@ export function CardOrbit() {
           const kind = kinds[i % 3];
           return (
             <div key={i} className={`${m.device} ${m[kind]}`} style={{ ["--i" as string]: i, ["--n" as string]: N, ["--lift" as string]: `${(i % 4) * 22 - 33}px` }}>
-              <div className={m.dScreen}><img src={UI[i]} alt="" loading="lazy" /></div>
-              {kind === "laptop" && <i className={m.dBase} />}
-              {kind === "monitor" && <i className={m.dStand} />}
-              {kind === "phone" && <i className={m.dNotch} />}
+              <div className={m.dScreen}>
+                <img src={UI[i]} alt="" loading="lazy" />
+                {kind === "phone" && <i className={m.dIsland} />}
+                {kind !== "phone" && <i className={m.dCam} />}
+                <i className={m.dGlare} />
+              </div>
+              {kind === "laptop" && <i className={m.dBase}><b className={m.dKeys} /><b className={m.dPad} /></i>}
+              {kind === "monitor" && <i className={m.dStand}><b /><b /></i>}
+              {kind === "phone" && <><i className={m.dBtnL} /><i className={m.dBtnR} /></>}
             </div>
           );
         })}

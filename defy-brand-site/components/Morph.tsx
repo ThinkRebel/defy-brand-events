@@ -22,7 +22,7 @@ const smooth = (t: number) => t * t * (3 - 2 * t);
 
 function fitCanvas(c: HTMLCanvasElement) {
   const r = c.getBoundingClientRect();
-  const dpr = Math.min(2, devicePixelRatio || 1);
+  const dpr = Math.min(matchMedia("(max-width: 760px)").matches ? 1.25 : 2, devicePixelRatio || 1);
   c.width = Math.max(1, r.width * dpr);
   c.height = Math.max(1, r.height * dpr);
   const ctx = c.getContext("2d")!;

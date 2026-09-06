@@ -369,8 +369,10 @@
 .prog i { position: absolute; left: 0; top: 0; height: 100%; width: 0; background: var(--fluo); }
 .hint { position: absolute; bottom: clamp(20px, 3vh, 36px); left: 0; right: 0; text-align: center; z-index: 2; }
 @media (max-width: 760px) {
-  .ring { --cw: min(36vw, 150px); }
-  .stage { perspective: 1400px; }
+  .ring { --cw: min(30vw, 130px); --r: calc(var(--cw) * 2.35); }
+  .stage { perspective: 1600px; }
+  /* nine blurred glass panes in 3D is too much for a phone GPU: solid glass instead */
+  .card { backdrop-filter: none; -webkit-backdrop-filter: none; background: linear-gradient(150deg, rgba(40, 42, 48, 0.92), rgba(28, 29, 34, 0.94)); }
   .card h3 { font-size: 13px; }
   .card p { display: none; }
 }

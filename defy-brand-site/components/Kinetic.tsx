@@ -60,12 +60,13 @@ export default function Kinetic({ text, as: Tag = "h2", mode = "slide", classNam
     // slide: alternate sides per line
     const lines = new Map<number, HTMLElement[]>();
     words.forEach((w) => { const y = Math.round(w.offsetTop); (lines.get(y) ?? lines.set(y, []).get(y)!).push(w); });
+    const small = matchMedia("(max-width: 760px)").matches;
     let li = 0;
     for (const ws of lines.values()) {
       const dir = li % 2 === 0 ? -1 : 1;
-      gsap.fromTo(ws, { x: dir * 120, opacity: 0 }, { x: 0, opacity: 1, duration: 1.2, ease: "expo.out", stagger: 0.05, delay: delay + li * 0.08, scrollTrigger: { trigger: el, start } });
-      // subtle continuous drift with scroll, opposite per line — the block never sits still
-      gsap.to(ws, { x: dir * -30, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 1.2 } });
+      // entrance on the word itself; the slow scroll-drift lives on the mask wrapper, so the two never fight over `x`
+      gsap.fromTo(ws, { x: dir * (small ? 40 : 120), opacity: 0 }, { x: 0, opacity: 1, duration: 1.2, ease: "expo.out", stagger: 0.05, delay: delay + li * 0.08, scrollTrigger: { trigger: el, start } });
+      if (!small) gsap.to(ws.map((w) => w.parentElement!), { x: dir * -30, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 1.2 } });
       li++;
     }
   }, { scope: root, dependencies: [text, mode] });
