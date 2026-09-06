@@ -6,6 +6,9 @@ import FlowObject from "@/components/FlowObject";
 import Manifesto from "@/components/Manifesto";
 import Ring from "@/components/Ring";
 import { Statement, AboutTeaser, Closer } from "@/components/Sections";
+import Faq from "@/components/Faq";
+import JsonLd from "@/components/JsonLd";
+import { faqJsonLd } from "@/lib/seo";
 import Deck from "@/components/Deck";
 
 type Props = { params: Promise<{ lang: Lang }> };
@@ -28,6 +31,8 @@ export default async function Home({ params }: Props) {
       <Ring copy={copy} />
       <Deck copy={copy} />
       <AboutTeaser copy={copy} />
+      <Faq page="home" lang={lang} />
+      <JsonLd data={faqJsonLd(lang, "home")} />
       <Closer copy={copy} h={copy.home.closerH} cta={copy.home.closerCta} />
     </>
   );
