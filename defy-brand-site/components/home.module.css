@@ -249,55 +249,71 @@
   .mobj { opacity: 0.45; right: -10vw; width: 70vmin; }
 }
 
-/* ============ DECK (services) ============ */
+/* ============ RING ============ */
 .work { position: relative; background: var(--ink-2); }
 .pin { height: 100svh; overflow: hidden; position: relative; }
-.coreobj {
+.stage {
   position: absolute;
-  left: 0;
-  top: clamp(150px, 19vh, 220px);
-  width: min(14vmin, 130px);
-  aspect-ratio: 624 / 670;
-  z-index: 3;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  perspective: 2400px;
+  perspective-origin: 50% 42%;
+}
+.core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 52vmin;
+  height: 52vmin;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(var(--fluo-rgb), 0.55), rgba(var(--fluo-rgb), 0.12) 40%, transparent 70%);
+  filter: blur(36px);
   pointer-events: none;
 }
-.track {
+.coreobj {
   position: absolute;
-  left: 0;
+  left: 50%;
   top: 50%;
-  transform: translateY(-46%);
-  display: flex;
-  align-items: stretch;
-  gap: clamp(20px, 2.2vw, 40px);
-  padding: 0 var(--pad);
+  width: min(26vmin, 260px);
+  aspect-ratio: 624 / 670;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  pointer-events: none;
+}
+.ring {
+  --cw: min(16vw, 27svh, 260px);
+  --r: calc(var(--cw) * 1.75);
+  position: relative;
+  width: var(--cw);
+  height: calc(var(--cw) * 1.28);
+  transform-style: preserve-3d;
   will-change: transform;
 }
-.trackEnd { flex: 0 0 calc(var(--pad) * 2); }
 .card {
-  flex: 0 0 clamp(300px, 30vw, 460px);
-  min-height: min(50svh, 520px);
-  border-radius: 26px;
-  padding: clamp(22px, 2vw, 34px);
+  position: absolute;
+  inset: 0;
+  transform: rotateY(calc(var(--i) * 40deg)) translateZ(var(--r));
+  border-radius: 22px;
+  padding: clamp(14px, 1.3vw, 22px);
   display: flex;
   flex-direction: column;
-  gap: 0.6em;
-  position: relative;
+  justify-content: flex-end;
+  gap: 0.35em;
   overflow: hidden;
-  background: linear-gradient(150deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06) 45%, rgba(255, 255, 255, 0.11));
-  border: 1px solid rgba(255, 255, 255, 0.26);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06) 45%, rgba(255, 255, 255, 0.12));
+  border: 1px solid rgba(255, 255, 255, 0.28);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), inset 0 -1px 0 rgba(255, 255, 255, 0.08), 0 30px 80px rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(12px) saturate(1.4);
   -webkit-backdrop-filter: blur(12px) saturate(1.4);
   color: var(--paper);
-  will-change: transform, opacity;
-  transition: border-color 0.5s, box-shadow 0.5s;
 }
-.card.active { border-color: rgba(var(--fluo-rgb), 0.6); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 0 0 1px rgba(var(--fluo-rgb), 0.25), 0 30px 80px rgba(0, 0, 0, 0.5); }
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.16) 45%, transparent 60%);
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.18) 45%, transparent 60%);
   pointer-events: none;
   transform: translateX(-60%);
   transition: transform 1.4s var(--ease);
@@ -305,39 +321,31 @@
 .card:hover::before { transform: translateX(60%); }
 .card > * { position: relative; }
 .card .n {
+  position: absolute;
+  left: clamp(14px, 1.3vw, 22px);
+  top: clamp(14px, 1.3vw, 22px);
   font-family: var(--font-display), "Arial Black", sans-serif;
   font-weight: 800;
-  font-size: clamp(20px, 1.6vw, 28px);
-  letter-spacing: -0.06em;
+  font-size: clamp(15px, 1.15vw, 20px);
+  letter-spacing: -0.04em;
   line-height: 1;
 }
 .card .n b { font-weight: 800; color: var(--fluo); }
 .card h3 {
   font-family: var(--font-display), "Arial Black", sans-serif;
   font-weight: 800;
-  font-size: clamp(26px, 2.3vw, 40px);
-  line-height: 0.98;
+  font-size: clamp(15px, 1.25vw, 22px);
+  line-height: 1;
   text-transform: uppercase;
-  letter-spacing: -0.02em;
-  margin-top: 0.4em;
+  letter-spacing: -0.01em;
   text-wrap: balance;
 }
-.cardHead {
-  font-family: var(--font-display), "Arial Black", sans-serif;
-  font-weight: 700;
-  font-size: clamp(15px, 1.15vw, 20px);
-  line-height: 1.25;
-  color: var(--fluo);
-  margin-top: 0.6em;
-  text-wrap: balance;
-}
-.cardRole { opacity: 0.75; font-size: 0.9em; line-height: 1.4; margin-top: auto; padding-top: 1.2em; }
-.cardMore { font-size: 0.8em; margin-top: 0.8em; }
+.card p { opacity: 0.75; font-size: clamp(11px, 0.72vw, 13px); line-height: 1.3; }
 .card .mark {
   position: absolute;
-  right: clamp(18px, 1.6vw, 28px);
-  top: clamp(18px, 1.6vw, 28px);
-  width: clamp(20px, 1.6vw, 28px);
+  right: clamp(14px, 1.3vw, 22px);
+  top: clamp(14px, 1.3vw, 22px);
+  width: clamp(16px, 1.2vw, 22px);
   height: auto;
   transform: rotate(-45deg);
 }
@@ -355,9 +363,38 @@
 .prog i { position: absolute; left: 0; top: 0; height: 100%; width: 0; background: var(--fluo); }
 .hint { position: absolute; bottom: clamp(20px, 3vh, 36px); left: 0; right: 0; text-align: center; z-index: 2; }
 @media (max-width: 760px) {
-  .card { flex-basis: 78vw; min-height: 52svh; }
-  .coreobj { width: 22vw; top: 120px; }
+  .ring { --cw: min(36vw, 150px); }
+  .stage { perspective: 1400px; }
+  .card h3 { font-size: 13px; }
+  .card p { display: none; }
 }
+
+/* ============ DECK — from idea to action ============ */
+.deck { position: relative; background: var(--ink); }
+.dPin { height: 100svh; overflow: hidden; position: relative; }
+.dHead { position: absolute; top: clamp(100px, 14vh, 150px); left: var(--pad); z-index: 2; }
+.dSlot img { width: 100%; height: auto; display: block; filter: drop-shadow(0 20px 30px rgba(0,0,0,.5)); animation: dspin 40s linear infinite; }
+@keyframes dspin { to { transform: rotate(360deg); } }
+.dSlot { position: absolute; left: 0; top: clamp(150px, 19vh, 220px); width: min(14vmin, 130px); aspect-ratio: 624 / 670; z-index: 3; pointer-events: none; }
+.dTrack { position: absolute; left: 0; top: 50%; transform: translateY(-44%); display: flex; align-items: stretch; gap: clamp(20px, 2.2vw, 40px); padding: 0 var(--pad); will-change: transform; }
+.dEnd { flex: 0 0 calc(var(--pad) * 2); }
+.dCard {
+  flex: 0 0 clamp(320px, 34vw, 520px); min-height: min(48svh, 480px);
+  border-radius: 26px; padding: clamp(24px, 2.2vw, 40px);
+  display: flex; flex-direction: column; gap: 0.6em; position: relative; overflow: hidden;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.06) 45%, rgba(255, 255, 255, 0.11));
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 30px 80px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px) saturate(1.4); -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  will-change: transform, opacity; transition: border-color 0.5s;
+}
+.dActive { border-color: rgba(var(--fluo-rgb), 0.6); }
+.dLast { background: linear-gradient(150deg, rgba(var(--fluo-rgb), 0.3), rgba(var(--fluo-rgb), 0.08) 50%, rgba(255, 255, 255, 0.08)); }
+.dNum { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; color: var(--fluo); font-size: clamp(18px, 1.5vw, 26px); letter-spacing: 0.02em; }
+.dCard h3 { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(30px, 3vw, 56px); line-height: 0.96; letter-spacing: -0.02em; margin-top: 0.5em; text-wrap: balance; }
+.dCard p { opacity: 0.85; line-height: 1.4; margin-top: auto; padding-top: 1.4em; font-size: 1.05em; }
+.dLast h3 { color: var(--fluo); }
+@media (max-width: 760px) { .dCard { flex-basis: 80vw; } .dSlot { width: 22vw; top: 120px; } }
 
 /* ============ CHAIN ============ */
 .chain {

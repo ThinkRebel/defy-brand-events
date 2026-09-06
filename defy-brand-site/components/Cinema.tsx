@@ -4,6 +4,7 @@ import Link from "next/link";
 import { gsap, ScrollTrigger, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { href, type Copy } from "@/content";
 import c from "./cinema.module.css";
+import Typewriter from "./Typewriter";
 
 /**
  * A film inside an iPhone.
@@ -205,9 +206,10 @@ export default function Cinema({ copy }: { copy: Copy }) {
 
       // intro copy leaves as she approaches; the invitation arrives when she is "behind the glass"
       const tl = gsap.timeline({ scrollTrigger: { trigger: root.current, start: "top top", end: "bottom bottom", scrub: 0.6 } });
-      tl.to(q(`.${c.intro}`), { opacity: 0, y: -30, duration: 0.25, ease: "power2.in" }, 0.22)
-        .fromTo(q(`.${c.outro}`), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, 0.8)
-        .fromTo(q(`.${c.outro} .btn`), { scale: 0.8 }, { scale: 1, duration: 0.15, ease: "back.out(2)" }, 0.86)
+      // the two copy blocks cross-fade: there is never an empty column
+      tl.to(q(`.${c.intro}`), { opacity: 0, y: -30, duration: 0.14, ease: "power2.in" }, 0.52)
+        .fromTo(q(`.${c.outro}`), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.16, ease: "power2.out" }, 0.58)
+        .fromTo(q(`.${c.outro} .btn`), { scale: 0.8 }, { scale: 1, duration: 0.15, ease: "back.out(2)" }, 0.66)
         // the phone itself breathes slightly closer at the end — the viewer leans in too
         .fromTo(q(`.${c.phone}`), { scale: 1 }, { scale: 1.04, duration: 0.4, ease: "sine.inOut" }, 0.6);
     },
@@ -222,7 +224,7 @@ export default function Cinema({ copy }: { copy: Copy }) {
             <span className="eyebrow">{cine.eyebrow}</span>
             <h1 className={c.name}>{cine.name}</h1>
             <p className={c.role}>{cine.role}</p>
-            <p className={c.quote}>{cine.quote}</p>
+            <Typewriter className={c.quote} lines={[cine.quote]} caret speed={26} />
           </div>
           <div className={c.outro}>
             <span className="eyebrow">{cine.have}</span>

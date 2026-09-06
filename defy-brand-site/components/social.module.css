@@ -1,0 +1,27 @@
+.wall { padding: clamp(80px, 12vh, 160px) var(--pad); background: var(--ink); overflow: hidden; }
+.head { display: flex; flex-direction: column; gap: 0.6em; margin-bottom: clamp(32px, 4vw, 64px); }
+.head h2 { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(28px, 3.4vw, 64px); line-height: 1; letter-spacing: -0.02em; max-width: 18ch; text-wrap: balance; }
+.grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(16px, 1.8vw, 28px); align-items: start; }
+.slot1 { transform: translateY(clamp(24px, 4vw, 64px)); }
+.slot3 { transform: translateY(clamp(24px, 4vw, 64px)); }
+.slot2 { transform: translateY(clamp(-16px, -1.5vw, -8px)); }
+.post { padding: clamp(14px, 1.2vw, 20px); display: flex; flex-direction: column; gap: 0.7em; font-size: 0.85em; }
+.top { display: grid; grid-template-columns: auto 1fr auto; gap: 0.7em; align-items: center; }
+.avatar { width: 2.4em; height: 2.4em; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display), sans-serif; font-weight: 800; color: var(--ink); }
+.who { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+.who b { font-weight: 500; }
+.who small { opacity: 0.55; font-size: 0.8em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.net { width: 1.4em; height: 1.4em; color: var(--paper); opacity: 0.9; }
+.net svg { width: 100%; height: 100%; display: block; }
+.visual { aspect-ratio: 4 / 5; border-radius: 14px; position: relative; overflow: hidden; }
+.visual::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.35), transparent 50%); mix-blend-mode: overlay; }
+.tag { position: absolute; left: 10px; top: 10px; font-size: 0.7em; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3em 0.6em; border-radius: 999px; background: rgba(0,0,0,0.45); }
+.a { background: linear-gradient(140deg, #e4ff2e, #6b7a00 70%); }
+.b { background: linear-gradient(140deg, #4a8791, #1b1d21 80%); }
+.c { background: linear-gradient(140deg, #ffffff, #8a8f99 60%, #23262b); }
+.d { background: linear-gradient(140deg, #cfe2c2, #3a5a3a 70%); }
+.e { background: linear-gradient(140deg, #f1d7b0, #7a4b22 75%); }
+.text { line-height: 1.35; }
+.meta { opacity: 0.5; font-size: 0.8em; }
+@media (max-width: 1100px) { .grid { grid-template-columns: repeat(3, 1fr); } .slot1, .slot3 { transform: none; } .slot2 { transform: none; } }
+@media (max-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } }

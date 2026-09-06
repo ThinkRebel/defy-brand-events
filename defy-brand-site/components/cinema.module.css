@@ -24,7 +24,7 @@
   font-family: var(--font-display), "Arial Black", sans-serif;
   font-weight: 800;
   text-transform: uppercase;
-  font-size: clamp(56px, 8.5vw, 168px);
+  font-size: clamp(44px, 6.6vw, 128px);
   line-height: 0.9;
   letter-spacing: -0.03em;
   margin-top: 0.4em;
@@ -37,6 +37,7 @@
   font-size: 0.85em;
 }
 .role::before { content: "— "; color: var(--fluo); }
+.role b { color: var(--fluo); font-weight: 500; }
 .quote {
   margin-top: 2em;
   font-family: var(--font-display), "Arial Black", sans-serif;

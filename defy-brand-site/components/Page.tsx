@@ -2,12 +2,16 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
-import { CONTACT_EMAIL, type Copy, type Service } from "@/content";
+import { CONTACT_EMAIL, type Copy, type Service, type Lang } from "@/content";
 import { Reveal } from "./Sections";
+import TiltCard from "./TiltCard";
+import { ServiceScene, ServiceFeature } from "./Visuals";
+import Deck from "./Deck";
+import SocialWall from "./SocialWall";
 import p from "./page.module.css";
 
 /** Sub-page hero with masked line reveal + drifting chrome object. */
-export function PageHero({ num, label, title, sub, obj = true }: { num?: string; label?: string; title: string; sub?: string; obj?: boolean }) {
+export function PageHero({ num, label, title, sub, obj = true, scene, lang = "nl", variant = 0 }: { num?: string; label?: string; title: string; sub?: string; obj?: boolean; scene?: string; lang?: Lang; variant?: number }) {
   const root = useRef<HTMLElement>(null);
   const lines = splitLines(title);
   useGSAP(
@@ -25,11 +29,16 @@ export function PageHero({ num, label, title, sub, obj = true }: { num?: string;
     { scope: root }
   );
   return (
-    <header ref={root} className={p.phero}>
+    <header ref={root} className={`${p.phero} ${p["v" + variant]}`}>
       <div className={p.pglow} aria-hidden="true" />
-      {obj && (
+      {obj && !scene && (
         <div className={p.pobj} aria-hidden="true">
           <Image src="/assets/object.webp" alt="" width={624} height={670} priority />
+        </div>
+      )}
+      {obj && scene && (
+        <div className={`${p.pobj} ${p.pscene}`} aria-hidden="true">
+          <ServiceScene slug={scene} lang={lang} />
         </div>
       )}
       {num && (
@@ -57,12 +66,17 @@ function splitLines(t: string): string[] {
   return parts.length > 1 ? parts : [t];
 }
 
-export function ServiceBody({ service, copy, next }: { service: Service; copy: Copy; next: Service }) {
+export function ServiceBody({ service, copy, next, index = 0 }: { service: Service; copy: Copy; next: Service; index?: number }) {
   const sv = service;
   return (
     <>
-      <section className={p.intro}>
-        <span className="eyebrow">{sv.name}</span>
+      <section className={`${p.intro} ${index % 2 ? p.introFlip : ""}`}>
+        <div className={p.introSide}>
+          <span className="eyebrow">{sv.name}</span>
+          <div className={p.introObj} aria-hidden="true">
+            <Image src="/assets/object.webp" alt="" width={624} height={670} />
+          </div>
+        </div>
         <div>
           {sv.intro.map((t, i) => (
             <Reveal key={i} as="p" className={p.lead} delay={i * 0.1}>
@@ -72,14 +86,16 @@ export function ServiceBody({ service, copy, next }: { service: Service; copy: C
         </div>
       </section>
 
+      <ServiceFeature slug={sv.slug} lang={copy.lang} />
+
       {sv.list && (
         <section className={p.list} aria-label={sv.listTitle}>
           <span className="eyebrow">{sv.listTitle}</span>
-          <ol style={{ marginTop: "1.5em" }}>
+          <ol className={p.listRow}>
             {sv.list.map((t, i) => (
-              <Reveal key={i} as="li" delay={i * 0.05}>
-                {t}
-              </Reveal>
+              <li key={i}>
+                <TiltCard delay={i * 0.06} from="up"><span className={p.listNum}>{String(i + 1).padStart(2, "0")}</span><p>{t}</p></TiltCard>
+              </li>
             ))}
           </ol>
         </section>
@@ -87,24 +103,25 @@ export function ServiceBody({ service, copy, next }: { service: Service; copy: C
 
       {sv.steps && <Steps steps={sv.steps} />}
 
-      <section className={p.blocks}>
-        <Reveal as="h2">{sv.blocksTitle}</Reveal>
-        <div className={p.grid}>
-          {sv.blocks.map((b, i) => (
-            <Reveal key={b.h} className={p.block} delay={(i % 3) * 0.08}>
-              <h3>{b.h}</h3>
-              <p>{b.p}</p>
-            </Reveal>
-          ))}
-        </div>
-      </section>
+      <Deck copy={copy} eyebrow={sv.blocksTitle} items={sv.blocks} flow={`svc-${sv.slug}`} />
+
+      {sv.slug === "marketing" && <SocialWall eyebrow={sv.name} title={copy.lang === "fr" ? "Des canaux que nous gérons comme des marques" : copy.lang === "en" ? "Channels we run like brands" : "Kanalen die we runnen als merken"} />}
+
+      {sv.product && (
+        <section className={p.product}>
+          <TiltCard from="left">
+            <span className="eyebrow">DB Events product</span>
+            <h2>{sv.product.h}</h2>
+            <p>{sv.product.p}</p>
+            <a className="arrow-link" href={sv.product.url} target="_blank" rel="noopener">{sv.product.cta}</a>
+          </TiltCard>
+        </section>
+      )}
 
       {sv.honest && (
         <section className={p.honest}>
           <Reveal as="h2">{sv.honest.h}</Reveal>
-          <Reveal as="p" delay={0.1}>
-            {sv.honest.p}
-          </Reveal>
+          <TiltCard delay={0.1} from="right"><p>{sv.honest.p}</p></TiltCard>
         </section>
       )}
 

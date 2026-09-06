@@ -106,12 +106,12 @@ export function Footer({ copy }: { copy: Copy }) {
   return (
     <footer className={styles.footer}>
       <Link className={styles.big} href={href(copy.lang, "contact")}>
-        {copy.footer.another.replace("Let's talk.", "")}
-        <span>Let&apos;s talk.</span>
+        {copy.footer.another.replace("Let's make some noise.", "")}
+        <span>Let&apos;s make some noise.</span>
       </Link>
       <div className={styles.meta}>
         <span>Defy &amp; Brand Events — {copy.footer.tagline}</span>
-        <a href="mailto:hello@defyandbrandevents.be">hello@defyandbrandevents.be</a>
+        <a href="mailto:marketing@defyandbrandevents.be">marketing@defyandbrandevents.be</a>
         <span>© {new Date().getFullYear()} Defy &amp; Brand Events</span>
       </div>
     </footer>
