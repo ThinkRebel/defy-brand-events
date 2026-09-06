@@ -69,7 +69,7 @@ export const en: Copy = {
       "A project that needs to go somewhere — and doesn't know where yet.",
     ],
     invite: "You don't have to have it figured out. You just have to tell us.",
-    talk: "Let's talk.",
+    talk: "Let's make some noise.",
     labels: {
       who: "Who are you?",
       reach: "How do we reach you?",
@@ -81,16 +81,16 @@ export const en: Copy = {
     meta: "An idea, a problem, an ambition? Tell Defy & Brand Events. You don't have to have it figured out.",
     cine: {
       eyebrow: "The creative behind the ideas",
-      name: "Njusja",
-      role: "Creative / ThinkRebel",
+      name: "ThinkRebel",
+      role: "Njusja Orban — Creative",
       quote: "Some ideas need a strategy. Others just need someone crazy enough to make them happen.",
       have: "Have an idea?",
       make: "Let's make it happen.",
       tell: "Tell us what you're thinking. We'll figure out what to do with it.",
-      cta: "Let's talk",
+      cta: "Let's make some noise",
     },
   },
-  footer: { tagline: "We turn ideas into experiences.", another: "Got another idea? Let's talk." },
+  footer: { tagline: "We turn ideas into experiences.", another: "Got another idea? Let's make some noise." },
   services: [
     {
       slug: "strategy",
@@ -280,6 +280,12 @@ export const en: Copy = {
         { h: "Reliability", p: "Sources, numbers, cases, context. The more an AI can verify, the sooner it takes you seriously." },
         { h: "Relevance", p: "Matching the questions your customers actually ask — not the terms you use internally." },
       ],
+      product: {
+        h: "ceeme — our own GEO product",
+        p: "With ceeme we measure how AI systems understand and mention your brand today, and what you can improve. Built by DB Events, used on this very site.",
+        cta: "Discover ceeme",
+        url: "https://www.ceeme.be",
+      },
       honest: {
         h: "Honest about what GEO is",
         p: "GEO doesn't guarantee an AI will recommend you. Nobody can promise that — those systems make their own decisions. What GEO does do: make sure you're understood. And what's understood can be chosen.",

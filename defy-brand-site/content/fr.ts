@@ -69,7 +69,7 @@ export const fr: Copy = {
       "Un projet qui doit aller quelque part — et ne sait pas encore où.",
     ],
     invite: "Vous n'avez pas besoin que ce soit prêt. Vous avez juste besoin de le raconter.",
-    talk: "Let's talk.",
+    talk: "Let's make some noise.",
     labels: {
       who: "Qui êtes-vous ?",
       reach: "Comment vous joindre ?",
@@ -81,16 +81,16 @@ export const fr: Copy = {
     meta: "Une idée, un problème, une ambition ? Racontez-le à Defy & Brand Events. Pas besoin que ce soit prêt.",
     cine: {
       eyebrow: "La créative derrière les idées",
-      name: "Njusja",
-      role: "Creative / ThinkRebel",
+      name: "ThinkRebel",
+      role: "Njusja Orban — Creative",
       quote: "Certaines idées ont besoin d’une stratégie. D’autres, juste de quelqu’un d’assez fou pour les réaliser.",
       have: "Une idée ?",
       make: "Let's make it happen.",
       tell: "Dites-nous ce que vous avez en tête. On trouvera quoi en faire.",
-      cta: "Let's talk",
+      cta: "Let's make some noise",
     },
   },
-  footer: { tagline: "We turn ideas into experiences.", another: "Une autre idée ? Let's talk." },
+  footer: { tagline: "We turn ideas into experiences.", another: "Une autre idée ? Let's make some noise." },
   services: [
     {
       slug: "strategy",
@@ -280,6 +280,12 @@ export const fr: Copy = {
         { h: "Fiabilité", p: "Sources, chiffres, cas, contexte. Plus une IA peut vérifier, plus vite elle vous prend au sérieux." },
         { h: "Pertinence", p: "Coller aux questions que vos clients posent vraiment — pas aux termes que vous utilisez en interne." },
       ],
+      product: {
+        h: "ceeme — notre propre produit GEO",
+        p: "Avec ceeme, nous mesurons comment les systèmes d’IA comprennent et citent votre marque aujourd’hui, et ce que vous pouvez améliorer. Conçu par DB Events, utilisé sur ce site.",
+        cta: "Découvrir ceeme",
+        url: "https://www.ceeme.be",
+      },
       honest: {
         h: "Honnêtement, ce qu'est le GEO",
         p: "Le GEO ne garantit pas qu'une IA vous recommandera. Personne ne peut le promettre — ces systèmes décident seuls. Ce que le GEO fait : s'assurer que vous êtes compris. Et ce qui est compris peut être choisi.",

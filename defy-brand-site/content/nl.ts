@@ -71,7 +71,7 @@ export const nl: Copy = {
       "Een project dat ergens naartoe moet — en nog niet weet waar.",
     ],
     invite: "Je hoeft het niet klaar te hebben. Je hoeft het alleen te vertellen.",
-    talk: "Let's talk.",
+    talk: "Let's make some noise.",
     labels: {
       who: "Wie ben je?",
       reach: "Hoe bereiken we je?",
@@ -83,16 +83,16 @@ export const nl: Copy = {
     meta: "Een idee, een probleem, een ambitie? Vertel het aan Defy & Brand Events. Je hoeft het niet klaar te hebben.",
     cine: {
       eyebrow: "De creatieve kop achter de ideeën",
-      name: "Njusja",
-      role: "Creative / ThinkRebel",
+      name: "ThinkRebel",
+      role: "Njusja Orban — Creative",
       quote: "Sommige ideeën hebben een strategie nodig. Andere gewoon iemand die gek genoeg is om ze te maken.",
       have: "Een idee?",
       make: "Let's make it happen.",
       tell: "Vertel wat je in je hoofd hebt. Wij zoeken uit wat we ermee doen.",
-      cta: "Let's talk",
+      cta: "Let's make some noise",
     },
   },
-  footer: { tagline: "We turn ideas into experiences.", another: "Nog een idee? Let's talk." },
+  footer: { tagline: "We turn ideas into experiences.", another: "Nog een idee? Let's make some noise." },
   services: [
     {
       slug: "strategy",
@@ -282,6 +282,12 @@ export const nl: Copy = {
         { h: "Betrouwbaarheid", p: "Bronnen, cijfers, cases, context. Hoe meer een AI kan verifiëren, hoe eerder hij je serieus neemt." },
         { h: "Relevantie", p: "Aansluiten bij de vragen die jouw klanten écht stellen — niet bij de termen die jij intern gebruikt." },
       ],
+      product: {
+        h: "ceeme — ons eigen GEO-product",
+        p: "Met ceeme meten we hoe AI-systemen jouw merk vandaag begrijpen en noemen, en wat je kunt verbeteren. Gebouwd door DB Events, gebruikt op deze site.",
+        cta: "Ontdek ceeme",
+        url: "https://www.ceeme.be",
+      },
       honest: {
         h: "Eerlijk over wat GEO is",
         p: "GEO geeft geen garantie dat een AI je aanbeveelt. Niemand kan dat beloven — die systemen beslissen zelf. Wat GEO wél doet: zorgen dat je begrepen wordt. En wie begrepen wordt, kan gekozen worden.",

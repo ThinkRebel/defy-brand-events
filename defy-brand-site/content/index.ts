@@ -39,4 +39,4 @@ export function alternatesForPath(pathname: string): Record<Lang, string> {
 
 
 export const SITE_URL = "https://defyandbrandevents.be";
-export const CONTACT_EMAIL = "hello@defyandbrandevents.be";
+export const CONTACT_EMAIL = "marketing@defyandbrandevents.be";

@@ -17,6 +17,7 @@ export type Service = {
   blocks: Block[];
   steps?: { k: string; p: string }[];
   honest?: { h: string; p: string };
+  product?: { h: string; p: string; cta: string; url: string };
   closer: string[];
   cta: string;
   meta: string;
