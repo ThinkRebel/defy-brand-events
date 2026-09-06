@@ -222,13 +222,31 @@ const DONE: Record<Lang, { h: string; mailed: string; noMail: string; again: str
   en: { h: "Sent.", mailed: "A confirmation just left for your inbox — check your spam folder too.", noMail: "You left a phone number: we'll call or text you.", again: "Send another", home: "Back to the homepage" },
 };
 
-type Sent = { name: string; contact: string; service: string; confirmed: boolean };
+/** how the visitor sends it: through the site (mail) or in their own WhatsApp (wa.me opens with the message prepared) */
+type Channel = "mail" | "whatsapp";
+const CHAN: Record<Lang, { pick: string; mail: string; wa: string; waSend: string; waNote: string; waDone: string }> = {
+  nl: { pick: "Hoe wil je het versturen?", mail: "Per mail", wa: "Via WhatsApp", waSend: "Open WhatsApp", waNote: `Je bericht wordt klaargezet in WhatsApp; je verstuurt het zelf naar ${COMPANY.whatsappDisplay}.`, waDone: `WhatsApp is geopend met je bericht — druk daar nog op verzenden. Geen venster? Stuur het zelf naar ${COMPANY.whatsappDisplay}.` },
+  fr: { pick: "Comment voulez-vous l'envoyer ?", mail: "Par e-mail", wa: "Via WhatsApp", waSend: "Ouvrir WhatsApp", waNote: `Votre message est préparé dans WhatsApp ; vous l'envoyez vous-même au ${COMPANY.whatsappDisplay}.`, waDone: `WhatsApp s'est ouvert avec votre message — il ne reste qu'à l'envoyer. Pas de fenêtre ? Écrivez directement au ${COMPANY.whatsappDisplay}.` },
+  en: { pick: "How do you want to send it?", mail: "By e-mail", wa: "Via WhatsApp", waSend: "Open WhatsApp", waNote: `Your message is prepared in WhatsApp; you send it yourself to ${COMPANY.whatsapp}.`, waDone: `WhatsApp opened with your message — just hit send there. No window? Message us directly on ${COMPANY.whatsapp}.` },
+};
+
+type Sent = { name: string; contact: string; service: string; confirmed: boolean; channel: Channel };
 
 export function ContactForm({ copy, service = "", onService }: { copy: Copy; service?: string; onService?: (s: string) => void }) {
   const c = copy.contact;
+  const ch = CHAN[copy.lang];
   const [sent, setSent] = useState<Sent | null>(null);
+  const [channel, setChannel] = useState<Channel>("mail");
   const [busy, setBusy] = useState(false);
   const doneRef = useRef<HTMLDivElement>(null);
+
+  // #whatsapp (where the footer button lands) preselects WhatsApp
+  useEffect(() => {
+    const fromHash = () => { if (location.hash === "#whatsapp") setChannel("whatsapp"); };
+    fromHash();
+    window.addEventListener("hashchange", fromHash);
+    return () => window.removeEventListener("hashchange", fromHash);
+  }, []);
 
   // the confirmation replaces the form in the same spot: bring it into view and focus it (screen readers announce it)
   useEffect(() => {
@@ -248,11 +266,19 @@ export function ContactForm({ copy, service = "", onService }: { copy: Copy; ser
       message: String(data.get("message") || ""),
       lang: copy.lang,
     };
+    if (channel === "whatsapp") {
+      // the visitor sends it themselves: their WhatsApp opens with the message prepared
+      const text = `${body.service ? body.service + "\n" : ""}${body.message}\n\n— ${body.name}${body.contact ? ` (${body.contact})` : ""}`;
+      window.open(`https://wa.me/${COMPANY.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+      setSent({ name: body.name, contact: body.contact, service: body.service, confirmed: false, channel });
+      setBusy(false);
+      return;
+    }
     try {
       const r = await fetch("/api/contact", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
       if (!r.ok) throw new Error("bad");
       const j = (await r.json().catch(() => ({}))) as { confirmed?: boolean };
-      setSent({ name: body.name, contact: body.contact, service: body.service, confirmed: j.confirmed ?? /@/.test(body.contact) });
+      setSent({ name: body.name, contact: body.contact, service: body.service, confirmed: j.confirmed ?? /@/.test(body.contact), channel: "mail" });
     } catch {
       // graceful fallback: open the mail client with the message prefilled
       const subject = encodeURIComponent(`${body.service || "Idee"} — ${body.name}`);
@@ -275,7 +301,7 @@ export function ContactForm({ copy, service = "", onService }: { copy: Copy; ser
           <div><dt>{c.labels.reach}</dt><dd>{sent.contact}</dd></div>
           {sent.service && <div><dt>{c.subject}</dt><dd>{sent.service}</dd></div>}
         </dl>
-        <p className={p.doneNote}>{sent.confirmed ? d.mailed : d.noMail}</p>
+        <p className={p.doneNote}>{sent.channel === "whatsapp" ? ch.waDone : sent.confirmed ? d.mailed : d.noMail}</p>
         <div className={p.doneRow}>
           <button className="btn" type="button" onClick={() => setSent(null)}>
             <i />
@@ -289,6 +315,11 @@ export function ContactForm({ copy, service = "", onService }: { copy: Copy; ser
 
   return (
     <form className={p.form} onSubmit={onSubmit}>
+      <div className={p.channel} id="whatsapp" role="group" aria-label={ch.pick}>
+        <span className={p.channelLabel}>{ch.pick}</span>
+        <button type="button" className={`${p.chip} ${channel === "mail" ? p.chipOn : ""}`} aria-pressed={channel === "mail"} onClick={() => setChannel("mail")} data-cursor>{ch.mail}</button>
+        <button type="button" className={`${p.chip} ${channel === "whatsapp" ? p.chipOn : ""}`} aria-pressed={channel === "whatsapp"} onClick={() => setChannel("whatsapp")} data-cursor>{ch.wa}</button>
+      </div>
       <div className={p.field}>
         <label htmlFor="service">{c.subject}</label>
         <select id="service" name="service" value={service} onChange={(e) => onService?.(e.target.value)}>
@@ -302,7 +333,7 @@ export function ContactForm({ copy, service = "", onService }: { copy: Copy; ser
       </div>
       <div className={p.field}>
         <label htmlFor="contact">{c.labels.reach}</label>
-        <input id="contact" name="contact" required autoComplete="email" inputMode="email" />
+        <input id="contact" name="contact" required={channel === "mail"} autoComplete="email" inputMode="email" />
       </div>
       <div className={p.field}>
         <label htmlFor="message">{c.labels.what}</label>
@@ -311,10 +342,10 @@ export function ContactForm({ copy, service = "", onService }: { copy: Copy; ser
       <div className={p.send}>
         <button className="btn" type="submit" disabled={busy}>
           <i />
-          <span>{c.labels.send}</span>
+          <span>{channel === "whatsapp" ? ch.waSend : c.labels.send}</span>
         </button>
         <span className={p.alt}>
-          {c.alt} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+          {channel === "whatsapp" ? ch.waNote : <>{c.alt} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></>}
         </span>
       </div>
     </form>
