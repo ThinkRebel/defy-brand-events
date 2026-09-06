@@ -53,7 +53,7 @@ Everything a visitor reads is in `content/<lang>.ts`. English brand statements (
 
 ## Before go-live
 
-- [ ] Replace `hello@defyandbrandevents.be` in `content/index.ts` if different.
+- [ ] Replace `marketing@defyandbrandevents.be` in `content/index.ts` if different.
 - [ ] Add `public/og.jpg` (1200×630).
 - [ ] Set `CONTACT_WEBHOOK_URL` (or swap the API route for your mail provider).
 - [ ] Confirm the "within two working days" promise in `contact.confirm`.
