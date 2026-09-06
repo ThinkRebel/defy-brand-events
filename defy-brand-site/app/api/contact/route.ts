@@ -16,7 +16,8 @@ export async function POST(req: Request) {
   }
   const name = String(body.name).slice(0, 200), contact = String(body.contact).slice(0, 200), message = String(body.message).slice(0, 5000);
   const service = body.service ? String(body.service).slice(0, 100) : "";
-  const key = process.env.RESEND_API_KEY;
+  // RESEND_API_KEY is the canonical name; DB_events_mail is the name used in the Vercel project.
+  const key = process.env.RESEND_API_KEY || process.env.DB_events_mail;
   if (key) {
     const to = process.env.CONTACT_TO || CONTACT_EMAIL;
     const from = process.env.CONTACT_FROM || "DB Events website <onboarding@resend.dev>";
