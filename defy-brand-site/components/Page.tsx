@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { CONTACT_EMAIL, COMPANY, href, type Copy, type Service, type Lang } from "@/content";
@@ -17,8 +17,8 @@ import p from "./page.module.css";
 /** Sub-page hero with masked line reveal + drifting chrome object. */
 const BAND = new Set(["copywriting"]);
 const HANDOVER = new Set(["marketing", "seo", "agentic-workflow"]);
-/** pages that keep the chrome object itself as hero prop */
-const PLAIN = new Set(["strategy"]);
+/** pages that keep the chrome object itself as hero prop (none right now: strategy got the king, see Visuals) */
+const PLAIN = new Set<string>();
 
 export function PageHero({ num, label, title, sub, obj = true, scene: sceneIn, lang = "nl", variant = 0 }: { num?: string; label?: string; title: string; sub?: string; obj?: boolean; scene?: string; lang?: Lang; variant?: number }) {
   const scene = sceneIn && PLAIN.has(sceneIn) ? undefined : sceneIn;
@@ -216,10 +216,26 @@ export function ContactPicker({ copy }: { copy: Copy }) {
   );
 }
 
+const DONE: Record<Lang, { h: string; mailed: string; noMail: string; again: string; home: string }> = {
+  nl: { h: "Verzonden.", mailed: "Er is net een bevestiging naar je mailbox vertrokken — kijk ook even bij ongewenste mail.", noMail: "Je liet een telefoonnummer achter: we bellen of sturen een berichtje.", again: "Nog een bericht", home: "Terug naar de startpagina" },
+  fr: { h: "Envoyé.", mailed: "Une confirmation vient de partir vers votre boîte mail — vérifiez aussi les indésirables.", noMail: "Vous avez laissé un numéro : on vous appelle ou on vous écrit.", again: "Un autre message", home: "Retour à l'accueil" },
+  en: { h: "Sent.", mailed: "A confirmation just left for your inbox — check your spam folder too.", noMail: "You left a phone number: we'll call or text you.", again: "Send another", home: "Back to the homepage" },
+};
+
+type Sent = { name: string; contact: string; service: string; confirmed: boolean };
+
 export function ContactForm({ copy, service = "", onService }: { copy: Copy; service?: string; onService?: (s: string) => void }) {
   const c = copy.contact;
-  const [sent, setSent] = useState(false);
+  const [sent, setSent] = useState<Sent | null>(null);
   const [busy, setBusy] = useState(false);
+  const doneRef = useRef<HTMLDivElement>(null);
+
+  // the confirmation replaces the form in the same spot: bring it into view and focus it (screen readers announce it)
+  useEffect(() => {
+    if (!sent) return;
+    doneRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    doneRef.current?.focus({ preventScroll: true });
+  }, [sent]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -235,7 +251,8 @@ export function ContactForm({ copy, service = "", onService }: { copy: Copy; ser
     try {
       const r = await fetch("/api/contact", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
       if (!r.ok) throw new Error("bad");
-      setSent(true);
+      const j = (await r.json().catch(() => ({}))) as { confirmed?: boolean };
+      setSent({ name: body.name, contact: body.contact, service: body.service, confirmed: j.confirmed ?? /@/.test(body.contact) });
     } catch {
       // graceful fallback: open the mail client with the message prefilled
       const subject = encodeURIComponent(`${body.service || "Idee"} — ${body.name}`);
@@ -246,7 +263,29 @@ export function ContactForm({ copy, service = "", onService }: { copy: Copy; ser
     }
   }
 
-  if (sent) return <p className={p.confirm}>{c.confirm}</p>;
+  if (sent) {
+    const d = DONE[copy.lang];
+    return (
+      <div ref={doneRef} className={p.done} role="status" aria-live="polite" tabIndex={-1}>
+        <span className={p.doneMark} aria-hidden="true">✓</span>
+        <h3>{d.h}</h3>
+        <p className={p.confirm}>{c.confirm}</p>
+        <dl className={p.doneSum}>
+          <div><dt>{c.labels.who}</dt><dd>{sent.name}</dd></div>
+          <div><dt>{c.labels.reach}</dt><dd>{sent.contact}</dd></div>
+          {sent.service && <div><dt>{c.subject}</dt><dd>{sent.service}</dd></div>}
+        </dl>
+        <p className={p.doneNote}>{sent.confirmed ? d.mailed : d.noMail}</p>
+        <div className={p.doneRow}>
+          <button className="btn" type="button" onClick={() => setSent(null)}>
+            <i />
+            <span>{d.again}</span>
+          </button>
+          <a className="arrow-link" href={href(copy.lang, "home")}>{d.home}</a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form className={p.form} onSubmit={onSubmit}>
