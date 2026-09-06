@@ -59,7 +59,7 @@ export function PageHero({ num, label, title, sub, obj = true, scene, lang = "nl
           {label && <span>{label}</span>}
         </div>
       )}
-      <h1 className={p.ph1}>
+      <h1 className={`${p.ph1} ${title.length > 70 ? p.long : ""}`}>
         {lines.map((l, i) => (
           <span className={p.ln} key={i}>
             <span>{l}</span>

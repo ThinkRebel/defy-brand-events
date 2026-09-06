@@ -56,6 +56,8 @@
   position: relative;
   z-index: 1;
 }
+.ph1.long { font-size: clamp(28px, 4.2vw, 80px); max-width: min(20ch, 58vw); }
+@media (max-width: 760px) { .ph1.long { max-width: none; font-size: clamp(28px, 8vw, 60px); } }
 .ph1 .ln { display: block; overflow: hidden; padding-bottom: 0.06em; }
 .ph1 .ln > span { display: inline-block; }
 .psub {

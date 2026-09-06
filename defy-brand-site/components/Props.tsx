@@ -49,7 +49,7 @@ export function Compass({ fallback }: { fallback: React.ReactNode }) {
     tl.from(slices, { x: (i) => (i - SLICES / 2) * 70, opacity: 0, duration: 1.6, ease: "expo.out", stagger: { each: 0.05, from: "center" } })
       .to(slices, { x: (i) => (SLICES / 2 - i) * (100 / SLICES) + "%", scaleX: 1.15, duration: 1.2, ease: "power3.inOut" }, "+=0.3")
       .to(q(`.${p.exploded}`), { opacity: 0, scale: 0.9, duration: 0.6 }, "-=0.2")
-      .from(q(`.${p.pose}`), { scale: 0.7, opacity: 0, duration: 1, ease: "expo.out" }, "-=0.5");
+      .from(q(`.${p.poseWrap}`), { scale: 0.7, duration: 1, ease: "expo.out", clearProps: "scale", onStart: () => setBuilt(true) }, "-=0.5");
     // then the compass follows the pointer in every direction
     const move = (e: PointerEvent) => {
       const r = root.current!.getBoundingClientRect();
