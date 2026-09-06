@@ -5,6 +5,7 @@ import Image from "next/image";
 import { gsap, ScrollTrigger, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { href, type Copy } from "@/content";
 import s from "./home.module.css";
+import { SERVICE_IMG } from "./Rings";
 
 /** Glass ring of the nine services — scroll rotates it, time keeps it drifting, pointer tilts it. */
 export default function Ring({ copy }: { copy: Copy }) {
@@ -86,6 +87,7 @@ export default function Ring({ copy }: { copy: Copy }) {
           <div ref={ringRef} className={s.ring} style={{ ["--n" as string]: n }}>
             {copy.services.map((sv, i) => (
               <Link key={sv.slug} href={href(copy.lang, "services", sv.slug)} className={s.card} style={{ ["--i" as string]: i }} data-cursor>
+                <img className={s.cardImg} src={SERVICE_IMG[sv.num]} alt="" loading="lazy" />
                 <Image className={s.mark} src="/assets/mark.svg" alt="" width={28} height={28} />
                 <span className={s.n}>
                   <b>#</b>

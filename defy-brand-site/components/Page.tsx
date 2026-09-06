@@ -6,7 +6,7 @@ import { CONTACT_EMAIL, type Copy, type Service, type Lang } from "@/content";
 import { Reveal } from "./Sections";
 import TiltCard from "./TiltCard";
 import { ServiceScene, ServiceFeature } from "./Visuals";
-import { CompassSprite, HelixSprite } from "./Props";
+import { CompassSprite, HelixSprite, AgentSprite } from "./Props";
 import Kinetic from "./Kinetic";
 import Deck from "./Deck";
 import FlowObject from "./FlowObject";
@@ -15,7 +15,7 @@ import p from "./page.module.css";
 
 /** Sub-page hero with masked line reveal + drifting chrome object. */
 const BAND = new Set(["copywriting"]);
-const HANDOVER = new Set(["marketing", "seo"]);
+const HANDOVER = new Set(["marketing", "seo", "agentic-workflow"]);
 
 export function PageHero({ num, label, title, sub, obj = true, scene, lang = "nl", variant = 0 }: { num?: string; label?: string; title: string; sub?: string; obj?: boolean; scene?: string; lang?: Lang; variant?: number }) {
   const root = useRef<HTMLElement>(null);
@@ -84,7 +84,7 @@ export function ServiceBody({ service, copy, next, index = 0 }: { service: Servi
       </section>
 
       <ServiceFeature slug={sv.slug} lang={copy.lang} />
-      <FlowObject>{sv.slug === "seo" ? <CompassSprite /> : sv.slug === "marketing" ? <HelixSprite /> : undefined}</FlowObject>
+      <FlowObject>{sv.slug === "seo" ? <CompassSprite /> : sv.slug === "marketing" ? <HelixSprite /> : sv.slug === "agentic-workflow" ? <AgentSprite /> : undefined}</FlowObject>
 
       {sv.list && (
         <section className={p.list} aria-label={sv.listTitle}>

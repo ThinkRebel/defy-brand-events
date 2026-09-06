@@ -2,6 +2,7 @@
 import TiltCard from "./TiltCard";
 import { SocialCubes } from "./Props";
 import s from "./social.module.css";
+import { FACES } from "@/lib/photos";
 
 /* ------------------------------------------------------------------------------
  *  Five posts, each drawn in the real chrome of its platform (wordmark, action row,
@@ -22,7 +23,8 @@ const Media = ({ tall = false, src }: { tall?: boolean; src: string }) => (
     <img src={src} alt="" loading="lazy" onError={(e) => ((e.currentTarget.style.display = "none"))} />
   </div>
 );
-const Avatar = ({ tone }: { tone: string }) => <span className={`${s.avatar} ${s[tone]}`} />;
+const FACE: Record<string, number> = { a: 0, b: 1, c: 2, d: 3, e: 4 };
+const Avatar = ({ tone }: { tone: string }) => <img className={s.avatar} src={FACES[FACE[tone] ?? 0]} alt="" loading="lazy" />;
 
 const Heart = <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.2C1.2 8.5 3.3 5 6.8 5c2 0 3.4 1.1 4.2 2.4C11.8 6.1 13.2 5 15.2 5c3.5 0 5.6 3.5 4.3 6.8C17.5 16.4 12 21 12 21z" fill="none" stroke="currentColor" strokeWidth="1.7"/></svg>;
 const Bubble = <svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.2L4 21l1.8-4.6A8 8 0 1 1 21 12z" fill="none" stroke="currentColor" strokeWidth="1.7"/></svg>;

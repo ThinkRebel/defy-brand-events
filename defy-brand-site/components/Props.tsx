@@ -24,20 +24,26 @@ function useImage(src: string) {
 }
 
 /* ============================ COMPASS (SEO) ============================ */
-// sheet cells as fractions [x, y, w, h]; ordered so neighbours look like one tumbling turn
+// every pose as its exact bounding box on the 1536 x 1024 sheet [x0, y0, x1, y1] — measured from the
+// alpha, so no neighbour ever bleeds into a frame. Ordered as one tumbling turn (pointer angle → pose).
+const SHEET_W = 1536, SHEET_H = 1024, POSE_UNIT = 456; // the tallest pose: the common scale
 const CELLS: [number, number, number, number][] = [
-  [0, 0, 0.2, 0.43], [0.2, 0, 0.2, 0.43], [0.4, 0, 0.2, 0.43], [0.33, 0.43, 0.34, 0.25], [0.8, 0, 0.2, 0.43], [0.75, 0.68, 0.25, 0.32],
-  [0.5, 0.68, 0.25, 0.32], [0.6, 0, 0.2, 0.43], [0, 0.43, 0.33, 0.25], [0.25, 0.68, 0.25, 0.32], [0.66, 0.43, 0.34, 0.25], [0, 0.68, 0.25, 0.32],
+  [16, 3, 373, 445], [384, 6, 697, 452], [716, 4, 836, 447], [877, 9, 1171, 456], [1180, 3, 1522, 456], [898, 690, 1136, 1004],
+  [1166, 801, 1492, 962], [559, 543, 1037, 680], [1059, 467, 1506, 702], [47, 458, 506, 701], [28, 728, 403, 1004], [444, 699, 804, 996],
 ];
 /* The exploded render (2172 x 724). Every part sits between two of these x-positions: the
  * cuts follow the natural gaps in the artwork (the thin axle / the valleys between the rings),
  * so each piece is a real component — ring, crown, case, fluo bezel, glass, dial, bearing… */
 const EXPL_W = 2172;
 const CUTS = [29, 112, 200, 362, 515, 652, 724, 846, 1035, 1103, 1188, 1275, 1518, 1655, 1845, 2149];
-/** the assembled compass on the pose sheet: cell 0 as a plain background style */
+/** one pose, cut exactly to its outline and placed at the common scale, centred in a square box */
 export const compassPoseStyle = (i = 0): React.CSSProperties => {
-  const c = CELLS[i];
-  return { backgroundImage: "url(/assets/152C0B15-979C-4348-A194-21C7A8C94082.PNG)", backgroundRepeat: "no-repeat", backgroundPosition: `${(c[0] / (1 - c[2])) * 100}% ${(c[1] / (1 - c[3])) * 100}%`, backgroundSize: `${100 / c[2]}% ${100 / c[3]}%` };
+  const [x0, y0, x1, y1] = CELLS[i], w = x1 - x0, h = y1 - y0;
+  return {
+    backgroundImage: "url(/assets/152C0B15-979C-4348-A194-21C7A8C94082.PNG)", backgroundRepeat: "no-repeat",
+    backgroundSize: `${(SHEET_W / w) * 100}% ${(SHEET_H / h) * 100}%`, backgroundPosition: `${(x0 / (SHEET_W - w)) * 100}% ${(y0 / (SHEET_H - h)) * 100}%`,
+    width: `${(w / POSE_UNIT) * 100}%`, height: `${(h / POSE_UNIT) * 100}%`, left: `${50 - (w / POSE_UNIT) * 50}%`, top: `${50 - (h / POSE_UNIT) * 50}%`,
+  };
 };
 
 export function Compass({ fallback, slotRef }: { fallback: React.ReactNode; slotRef?: React.RefObject<HTMLDivElement | null> }) {
@@ -79,24 +85,12 @@ export function Compass({ fallback, slotRef }: { fallback: React.ReactNode; slot
   );
 }
 
-/** The assembled compass as a floating sprite: it turns towards the pointer in every direction. */
+/** The assembled compass as the page's floating object: one full compass, always the same view,
+ *  so it stays consistent after the assembly (the FlowObject gives it its slow turn and float). */
 export function CompassSprite() {
-  const root = useRef<HTMLDivElement>(null);
-  const [pose, setPose] = useState(0);
-  useEffect(() => {
-    if (prefersReducedMotion()) return;
-    const move = (e: PointerEvent) => {
-      const r = root.current?.getBoundingClientRect(); if (!r) return;
-      const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
-      const ang = Math.atan2(dy, dx) + Math.PI;
-      setPose(Math.round((ang / (Math.PI * 2)) * 12) % 12);
-    };
-    window.addEventListener("pointermove", move);
-    return () => window.removeEventListener("pointermove", move);
-  }, []);
   return (
-    <div ref={root} className={p.sprite} aria-hidden="true">
-      {CELLS.map((_, i) => <div key={i} className={`${p.pose} ${i === pose ? p.poseOn : ""}`} style={compassPoseStyle(i)} />)}
+    <div className={p.sprite} aria-hidden="true">
+      <div className={`${p.pose} ${p.poseOn}`} style={compassPoseStyle(0)} />
     </div>
   );
 }
@@ -315,24 +309,57 @@ const cellStyle = (c: [number, number, number, number]): React.CSSProperties => 
   aspectRatio: `${c[2] * SHEET_AR} / ${c[3]}`,
 });
 
-export function AgentSwarm() {
+/** the parts fly together in the hero, then the finished agent is handed to the page's floating object */
+export function AgentBuild({ slotRef }: { slotRef?: React.RefObject<HTMLDivElement | null> }) {
   const ok = useImage(AGENTS_SRC);
   const root = useRef<HTMLDivElement>(null);
   useGSAP(() => {
     if (!ok) return;
     const q = gsap.utils.selector(root);
-    const build = q(`.${p.aBuild}`), mult = q(`.${p.aMult}`), poses = q(`.${p.aPose}`);
-    if (prefersReducedMotion()) { gsap.set([build, mult], { opacity: 0 }); gsap.set(poses, { opacity: 1 }); return; }
-    gsap.set([build, mult], { opacity: 0 }); gsap.set(build[0], { opacity: 1 }); gsap.set(poses, { opacity: 0, scale: 0.4, x: 0, y: 0 });
-    // play once, as soon as a third of the scene is on screen (observer: independent of scroll maths)
-    const tl = gsap.timeline({ paused: true });
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { tl.play(); io.disconnect(); } }, { threshold: 0.3 });
-    io.observe(root.current!);
-    // the parts fly together: frame by frame
-    for (let i = 1; i < build.length; i++) tl.set(build[i - 1], { opacity: 0 }, `+=${i === 1 ? 0.6 : 0.45}`).set(build[i], { opacity: 1 });
+    const build = q(`.${p.aBuild}`) as HTMLElement[];
+    const handover = () => { slotRef?.current?.style.setProperty("--reveal", "1"); };
+    if (prefersReducedMotion()) { gsap.set(build, { opacity: 0 }); handover(); return; }
+    gsap.set(build, { opacity: 0 });
+    const tl = gsap.timeline({ delay: 0.5 });
+    tl.fromTo(build[0], { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.8, ease: "expo.out" });
+    for (let i = 1; i < build.length; i++) tl.set(build[i - 1], { opacity: 0 }, "+=0.55").set(build[i], { opacity: 1 });
     tl.to(build[3], { scale: 1.06, duration: 0.25, yoyo: true, repeat: 1, ease: "power2.inOut" }, "+=0.3")
+      .add(handover, "-=0.1")
+      .to(build[3], { opacity: 0, duration: 0.4 });
+  }, { scope: root, dependencies: [ok] });
+  if (!ok) return null;
+  return (
+    <div ref={root} className={p.aHero} aria-hidden="true">
+      {BUILD.map((c, i) => <div key={i} className={p.aBuild} style={cellStyle(c)} />)}
+    </div>
+  );
+}
+
+/** the assembled agent as the floating object of the page */
+export function AgentSprite() {
+  return <div className={p.aSprite} style={cellStyle(BUILD[3])} aria-hidden="true" />;
+}
+
+/** "A night's work, in seconds": the floating agent lands on the stage, multiplies, five agents take their places */
+export function AgentSwarm() {
+  const ok = useImage(AGENTS_SRC);
+  const root = useRef<HTMLDivElement>(null);
+  const slotRef = useRef<HTMLDivElement>(null);
+  useGSAP(() => {
+    if (!ok) return;
+    const q = gsap.utils.selector(root);
+    const one = q(`.${p.aOne}`), mult = q(`.${p.aMult}`), poses = q(`.${p.aPose}`);
+    const land = () => slotRef.current?.style.setProperty("--reveal", "0");
+    if (prefersReducedMotion()) { land(); gsap.set([one, mult], { opacity: 0 }); gsap.set(poses, { opacity: 1 }); return; }
+    gsap.set([one, mult], { opacity: 0 }); gsap.set(poses, { opacity: 0, scale: 0.4, x: 0, y: 0 });
+    // play once, as soon as most of the stage is on screen — the floating agent has arrived by then
+    const tl = gsap.timeline({ paused: true });
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { tl.play(); io.disconnect(); } }, { threshold: 0.6 });
+    io.observe(root.current!);
+    tl.add(land).set(one, { opacity: 1 })
+      .to(one, { scale: 1.06, duration: 0.25, yoyo: true, repeat: 1, ease: "power2.inOut" }, "+=0.5")
       // it multiplies
-      .set(build[3], { opacity: 0 }, "+=0.2").set(mult[0], { opacity: 1 })
+      .set(one, { opacity: 0 }, "+=0.2").set(mult[0], { opacity: 1 })
       .set(mult[0], { opacity: 0 }, "+=0.55").set(mult[1], { opacity: 1 })
       .set(mult[1], { opacity: 0 }, "+=0.55")
       // five agents take their places
@@ -344,7 +371,8 @@ export function AgentSwarm() {
   return (
     <div ref={root} className={p.agents} aria-hidden="true">
       <div className={p.aStage}>
-        {BUILD.map((c, i) => <div key={i} className={p.aBuild} style={cellStyle(c)} />)}
+        <div ref={slotRef} className={p.aSlot} data-flow="swarm" style={{ ["--reveal" as string]: 1 }} />
+        <div className={p.aOne} style={cellStyle(BUILD[3])} />
         {MULTIPLY.map((c, i) => <div key={i} className={p.aMult} style={cellStyle(c)} />)}
       </div>
       <div className={p.aRow}>

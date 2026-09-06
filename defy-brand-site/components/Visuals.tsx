@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Lang } from "@/content";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { CardStack, CardOrbit } from "./Rings";
-import { Compass, Blender, AgentSwarm } from "./Props";
+import { Compass, Blender, AgentSwarm, AgentBuild } from "./Props";
 import Typewriter from "./Typewriter";
 import TiltCard from "./TiltCard";
 import v from "./visuals.module.css";
@@ -37,7 +37,8 @@ export function ServiceScene({ slug, lang, slotRef }: { slug: string; lang: Lang
     case "agent-ready":
       return <SchemaCheck />;
     case "agentic-workflow":
-      return <NodeGraph />;
+      // the agent is assembled here, then travels with the page (FlowObject → AgentSprite) and multiplies further down
+      return <AgentBuild slotRef={slotRef} />;
     default:
       return null;
   }
