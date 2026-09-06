@@ -62,7 +62,7 @@ export const COMPANY = {
   vat: "BE 0891.225.112",
   phone: "+32 59 70 99 69",
   phoneDisplay: "059 70 99 69",
-  street: "Zeedijk 133, bus 3",
+  street: "Zeedijk 133 bus 00.02",
   postalCode: "8400",
   city: "Oostende",
   country: "BE",
