@@ -32,8 +32,8 @@ const CELLS: [number, number, number, number][] = [
 const SLICES = 14;
 
 export function Compass({ fallback }: { fallback: React.ReactNode }) {
-  const sheet = useImage("/assets/compass-sheet.png");
-  const expl = useImage("/assets/compass-exploded.png");
+  const sheet = useImage("/assets/152C0B15-979C-4348-A194-21C7A8C94082.PNG");
+  const expl = useImage("/assets/5678EFB9-EC12-4624-B9C3-A37911AF8AC9.PNG");
   const root = useRef<HTMLDivElement>(null);
   const [pose, setPose] = useState(0);
   const [built, setBuilt] = useState(false);
@@ -82,7 +82,7 @@ export function Compass({ fallback }: { fallback: React.ReactNode }) {
 
 /* ============================ BLENDER (GEO) ============================ */
 export function Blender({ fallback }: { fallback: React.ReactNode }) {
-  const ok = useImage("/assets/blender.png");
+  const ok = useImage("/assets/B0B76787-2EFB-48E6-8E4A-D017E7F3A2B4.PNG");
   const root = useRef<HTMLDivElement>(null);
   const cv = useRef<HTMLCanvasElement>(null);
   useGSAP(() => {
@@ -120,14 +120,14 @@ export function Blender({ fallback }: { fallback: React.ReactNode }) {
   return (
     <div ref={root} className={p.blender} aria-hidden="true">
       <canvas ref={cv} className={p.drops} />
-      <img src="/assets/blender.png" alt="" />
+      <img src="/assets/B0B76787-2EFB-48E6-8E4A-D017E7F3A2B4.PNG" alt="" />
     </div>
   );
 }
 
 /* ============================ SOCIAL CUBES (Marketing) ============================ */
 export function SocialCubes() {
-  const ok = useImage("/assets/social-cubes.png");
+  const ok = useImage("/assets/6645658C-5269-49D9-8EE6-CB18B2B8F8F7.PNG");
   const root = useRef<HTMLDivElement>(null);
   useGSAP(() => {
     if (!ok || prefersReducedMotion()) return;
@@ -142,7 +142,7 @@ export function SocialCubes() {
   if (!ok) return null;
   return (
     <div ref={root} className={p.cubes} aria-hidden="true">
-      <img src="/assets/social-cubes.png" alt="" />
+      <img src="/assets/6645658C-5269-49D9-8EE6-CB18B2B8F8F7.PNG" alt="" />
     </div>
   );
 }

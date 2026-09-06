@@ -214,7 +214,7 @@ export function Tornado({ children }: { children?: React.ReactNode }) {
     let raf = 0, parts: TP[] = [], W = 0, H = 0, burstAt = -1;
     const build = async () => {
       const { w, h } = fitCanvas(c); W = w; H = h;
-      const img = await loadImg("/contact/tornado.png");
+      const img = await loadImg("/assets/77332CB1-433B-4473-82F6-02E39851E243%202.PNG");
       parts = [];
       if (img) {
         // particles straight from the artwork: keep its colours, arrange by row so it can spin

@@ -11,7 +11,7 @@ import s from "./social.module.css";
 
 const Media = ({ tall = false }: { tall?: boolean }) => (
   <div className={`${s.media} ${tall ? s.tall : ""}`}>
-    <img src="/contact/tornado.png" alt="" loading="lazy" onError={(e) => ((e.currentTarget.style.display = "none"))} />
+    <img src="/assets/77332CB1-433B-4473-82F6-02E39851E243%202.PNG" alt="" loading="lazy" onError={(e) => ((e.currentTarget.style.display = "none"))} />
   </div>
 );
 const Avatar = ({ tone }: { tone: string }) => <span className={`${s.avatar} ${s[tone]}`} />;
