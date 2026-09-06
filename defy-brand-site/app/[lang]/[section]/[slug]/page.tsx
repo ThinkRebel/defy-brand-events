@@ -46,8 +46,8 @@ export default async function ServicePage({ params }: Props) {
           ]),
         ]}
       />
-      <PageHero num={s.num} label={s.role} title={s.headline} sub={s.sub} />
-      <ServiceBody service={s} copy={c} next={next} />
+      <PageHero num={s.num} label={s.role} title={s.headline} sub={s.sub} scene={s.slug} lang={lang} variant={i % 3} />
+      <ServiceBody service={s} copy={c} next={next} index={i} />
       <Closer copy={c} h={s.closer.join(" ")} cta={s.cta} />
     </>
   );
