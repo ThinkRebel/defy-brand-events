@@ -15,7 +15,8 @@ import s from "./home.module.css";
  */
 type Seg = { el: HTMLElement; start: number; hold: number };
 
-export default function FlowObject() {
+/** `children` swaps the chrome object for another sprite (the compass on SEO, the DNA strand on marketing). */
+export default function FlowObject({ children }: { children?: React.ReactNode }) {
   const el = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -97,7 +98,7 @@ export default function FlowObject() {
 
   return (
     <div ref={el} className={s.flow} aria-hidden="true">
-      <Image src="/assets/object.webp" alt="" width={624} height={670} priority />
+      {children ?? <Image src="/assets/object.webp" alt="" width={624} height={670} priority />}
     </div>
   );
 }

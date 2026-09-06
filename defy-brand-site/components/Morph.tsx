@@ -134,8 +134,9 @@ export function DustMorph({ text = "DB EVENTS", slotRef: given }: { text?: strin
   const prog = useRef(0);
   useGSAP(() => {
     if (prefersReducedMotion()) { prog.current = 1; return; }
-    ScrollTrigger.create({ trigger: root.current, start: "top top", end: "+=220%", pin: true, scrub: 0.6, onUpdate: (st) => (prog.current = st.progress) });
+    ScrollTrigger.create({ trigger: root.current, start: "top top", end: "+=340%", pin: true, scrub: 0.8, onUpdate: (st) => (prog.current = st.progress) });
   }, { scope: root });
+  const chrome = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const c = ref.current!;
     let raf = 0, parts: P[] = [], A: [number, number][] = [], B: [number, number, number[]][] = [], W = 0, H = 0;
@@ -155,11 +156,21 @@ export function DustMorph({ text = "DB EVENTS", slotRef: given }: { text?: strin
       ctx.clearRect(0, 0, W, H);
       const t = tm / 1000, p = prog.current;
       const cx = W / 2, cy = H / 2;
-      const toText = smooth(clamp(p / 0.28));
-      const spin = clamp((p - 0.3) / 0.3) * Math.PI * 2 * 1.5;
-      const toObj = smooth(clamp((p - 0.5) / 0.3));
+      // 0 → .2 dust gathers into the letters · .2 → .3 the letters turn to chrome · .35 → .62 the chrome
+      // name spins and shrinks · .5 → .78 the dust reforms as the object · .82 → the real object takes over
+      const toText = smooth(clamp(p / 0.2));
+      const textShow = smooth(clamp((p - 0.2) / 0.1)) * (1 - smooth(clamp((p - 0.5) / 0.12)));
+      const spinT = clamp((p - 0.35) / 0.27);
+      const spin = spinT * Math.PI * 2 * 1.5;
+      const toObj = smooth(clamp((p - 0.5) / 0.28));
       const reveal = clamp((p - 0.82) / 0.18);
       if (slotRef?.current) slotRef.current.style.setProperty("--reveal", String(reveal));
+      if (chrome.current) {
+        chrome.current.style.opacity = String(textShow);
+        chrome.current.style.transform = `perspective(1200px) rotateY(${spinT * 540}deg) scale(${1 - smooth(spinT) * 0.6})`;
+      }
+      // the dots hide while the chrome name is on stage, and return as the object forms
+      const dotsAlpha = Math.max(1 - smooth(clamp((p - 0.2) / 0.1)), smooth(clamp((p - 0.5) / 0.12)));
       const n = parts.length;
       for (let i = 0; i < n; i++) {
         const q = parts[i];
@@ -181,7 +192,7 @@ export function DustMorph({ text = "DB EVENTS", slotRef: given }: { text?: strin
         q.vy = (q.vy + (gy - q.y) * ease) * 0.72;
         q.x += q.vx; q.y += q.vy;
         const col = toObj > 0.5 && B.length ? b[2] : q.c;
-        ctx.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${(0.35 + toText * 0.65) * (1 - reveal)})`;
+        ctx.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${(0.35 + toText * 0.65) * (1 - reveal) * dotsAlpha})`;
         ctx.beginPath(); ctx.arc(q.x, q.y, q.r * (1 + toObj * 0.6), 0, Math.PI * 2); ctx.fill();
       }
       raf = requestAnimationFrame(draw);
@@ -192,84 +203,77 @@ export function DustMorph({ text = "DB EVENTS", slotRef: given }: { text?: strin
   return (
     <div ref={root} className={m.dust}>
       <canvas ref={ref} className={m.fill} aria-hidden="true" />
+      <div ref={chrome} className={m.chromeText} aria-hidden="true"><span>{text}</span></div>
       <div ref={slotRef} className={m.dustSlot} data-flow="dust" aria-hidden="true" />
     </div>
   );
 }
 
 /* ============================== TORNADO ============================== */
-type TP = { u: number; row: number; ang: number; rad: number; c: number[]; r: number; bx: number; by: number; bvx: number; bvy: number; spin: number };
+const TORNADO_SRC = "/assets/77332CB1-433B-4473-82F6-02E39851E243%202.PNG";
+type Tile = { c: number; r: number; x: number; y: number; vx: number; vy: number; rot: number; vr: number };
 
+/**
+ * The real tornado render, alive: it sways row by row like a real vortex. As you scroll it
+ * breaks into pieces of the picture that fly apart — and "Let's make some noise" is what is left.
+ */
 export function Tornado({ children }: { children?: React.ReactNode }) {
   const root = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLCanvasElement>(null);
   const prog = useRef(0);
   useGSAP(() => {
     if (prefersReducedMotion()) return;
-    ScrollTrigger.create({ trigger: root.current, start: "top top", end: "+=180%", pin: true, scrub: 0.5, onUpdate: (st) => (prog.current = st.progress) });
-    gsap.to(root.current!.querySelector(`.${m.tornadoCopy}`), { opacity: 1, y: 0, ease: "none", scrollTrigger: { trigger: root.current, start: "top top", end: "+=110%", scrub: true } });
+    ScrollTrigger.create({ trigger: root.current, start: "top top", end: "+=220%", pin: true, scrub: 0.6, onUpdate: (st) => (prog.current = st.progress) });
+    gsap.to(root.current!.querySelector(`.${m.tornadoCopy}`), { opacity: 1, y: 0, ease: "none", scrollTrigger: { trigger: root.current, start: "35% top", end: "+=90%", scrub: true } });
   }, { scope: root });
   useEffect(() => {
     const c = ref.current!;
-    let raf = 0, parts: TP[] = [], W = 0, H = 0, burstAt = -1;
-    const build = async () => {
-      const { w, h } = fitCanvas(c); W = w; H = h;
-      const img = await loadImg("/assets/77332CB1-433B-4473-82F6-02E39851E243%202.PNG");
-      parts = [];
-      if (img) {
-        // particles straight from the artwork: keep its colours, arrange by row so it can spin
-        const off = document.createElement("canvas");
-        const iw = 220, ih = Math.round((img.height / img.width) * iw);
-        off.width = iw; off.height = ih;
-        const o = off.getContext("2d")!; o.drawImage(img, 0, 0, iw, ih);
-        const d = o.getImageData(0, 0, iw, ih).data;
-        for (let y = 0; y < ih; y += 2) for (let x = 0; x < iw; x += 2) {
-          const i = (y * iw + x) * 4, br = (d[i] + d[i + 1] + d[i + 2]) / 3;
-          if (d[i + 3] < 120 || br < 70) continue;
-          if (d[i] > 232 && d[i + 1] > 232 && d[i + 2] > 232) continue; // white background in the render
-          const u = y / ih, rad = (x / iw - 0.5) * 2;
-          parts.push({ u, row: y, ang: Math.asin(clamp(rad, -1, 1)) + (Math.random() < 0.5 ? 0 : Math.PI), rad: Math.abs(rad), c: [d[i], d[i + 1], d[i + 2]], r: 1.2 + Math.random() * 1.6, bx: 0, by: 0, bvx: 0, bvy: 0, spin: 0 });
-        }
-      } else {
-        for (let i = 0; i < 4200; i++) {
-          const u = Math.pow(Math.random(), 0.8);
-          parts.push({ u, row: 0, ang: Math.random() * Math.PI * 2, rad: 0.6 + Math.random() * 0.5, c: Math.random() < 0.45 ? FLUO : pick(CHROME), r: 1 + Math.random() * 2.2, bx: 0, by: 0, bvx: 0, bvy: 0, spin: 0 });
-        }
+    let raf = 0, img: HTMLImageElement | null = null, tiles: Tile[] = [], W = 0, H = 0, seeded = false;
+    const COLS = 14, ROWS = 24;
+    loadImg(TORNADO_SRC).then((i) => (img = i));
+    const seed = () => {
+      tiles = [];
+      for (let r = 0; r < ROWS; r++) for (let cc = 0; cc < COLS; cc++) {
+        const a = Math.random() * Math.PI * 2, sp = 6 + Math.random() * 16;
+        tiles.push({ c: cc, r, x: 0, y: 0, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 6, rot: 0, vr: (Math.random() - 0.5) * 0.25 });
       }
     };
-    build();
-    const ro = new ResizeObserver(() => build());
-    ro.observe(c);
     const draw = (tm: number) => {
-      const ctx = c.getContext("2d")!;
-      ctx.clearRect(0, 0, W, H);
+      const { ctx, w, h } = fitCanvas(c); W = w; H = h;
       const t = tm / 1000, p = prog.current;
-      const burst = smooth(clamp((p - 0.25) / 0.45));
-      if (burst > 0 && burstAt < 0) { burstAt = t; for (const q of parts) { const a = Math.random() * Math.PI * 2, s = 3 + Math.random() * 9; q.bvx = Math.cos(a) * s; q.bvy = Math.sin(a) * s - 4; } }
-      if (burst === 0) burstAt = -1;
-      const cx = W / 2, top = H * 0.06, span = H * 0.88;
-      const wide = Math.min(W, H) * 0.42;
-      ctx.globalCompositeOperation = "lighter";
-      for (const q of parts) {
-        // funnel: wide on top, tight at the bottom, spinning faster low down
-        const width = wide * (1 - q.u) * 0.92 + wide * 0.06;
-        const a = q.ang + t * (1.2 + q.u * 2.2);
-        const x = cx + Math.cos(a) * width * q.rad, y = top + q.u * span + Math.sin(a) * width * q.rad * 0.18;
-        const depth = (Math.sin(a) + 1) / 2;
-        if (burst > 0) {
-          q.bx += q.bvx * 0.35; q.by += q.bvy * 0.35; q.bvy += 0.12; q.bvx *= 0.995;
-        } else { q.bx = 0; q.by = 0; }
-        const px = x + q.bx * burst * 3, py = y + q.by * burst * 3;
-        const alpha = (0.35 + depth * 0.65) * (1 - burst * 0.9);
-        if (alpha < 0.02) continue;
-        ctx.fillStyle = `rgba(${q.c[0]},${q.c[1]},${q.c[2]},${alpha})`;
-        ctx.beginPath(); ctx.arc(px, py, q.r * (0.7 + depth * 0.6) * (1 + burst * 1.5), 0, Math.PI * 2); ctx.fill();
+      ctx.clearRect(0, 0, W, H);
+      if (img) {
+        // the picture sits centred, 92% of the height
+        const ih = H * 0.92, iw = ih * (img.width / img.height), ox = (W - iw) / 2, oy = H * 0.04;
+        const burst = smooth(clamp((p - 0.22) / 0.5));
+        if (burst > 0 && !seeded) { seed(); seeded = true; }
+        if (burst === 0) seeded = false;
+        const tw = iw / COLS, th = ih / ROWS, sw = img.width / COLS, sh = img.height / ROWS;
+        for (let r = 0; r < ROWS; r++) {
+          const u = r / ROWS;
+          // sway: the funnel bends, more at the top, like a slow vortex
+          const sway = Math.sin(t * 1.1 + u * 5) * (1 - u) * iw * 0.06;
+          for (let cc = 0; cc < COLS; cc++) {
+            const k = r * COLS + cc;
+            let x = ox + cc * tw + sway, y = oy + r * th, rot = 0, alpha = 1, scale = 1;
+            if (burst > 0 && tiles.length) {
+              const tl = tiles[k];
+              tl.x += tl.vx * 0.12; tl.y += tl.vy * 0.12; tl.vy += 0.16; tl.rot += tl.vr * 0.12;
+              x += tl.x * burst * 4; y += tl.y * burst * 4; rot = tl.rot * burst * 4;
+              alpha = 1 - burst * 0.95; scale = 1 + burst * 0.6;
+            }
+            if (alpha < 0.02) continue;
+            ctx.save(); ctx.globalAlpha = alpha;
+            ctx.translate(x + tw / 2, y + th / 2); ctx.rotate(rot); ctx.scale(scale, scale);
+            ctx.drawImage(img, cc * sw, r * sh, sw, sh, -tw / 2, -th / 2, tw + 0.6, th + 0.6);
+            ctx.restore();
+          }
+        }
       }
-      ctx.globalCompositeOperation = "source-over";
       raf = requestAnimationFrame(draw);
     };
     raf = requestAnimationFrame(draw);
-    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+    return () => cancelAnimationFrame(raf);
   }, []);
   return (
     <div ref={root} className={m.tornado}>

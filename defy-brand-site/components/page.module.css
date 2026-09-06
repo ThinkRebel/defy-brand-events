@@ -6,7 +6,9 @@
   gap: clamp(20px, 2.4vw, 40px);
   padding: clamp(140px, 22vh, 240px) var(--pad) clamp(60px, 8vh, 120px);
   position: relative;
-  overflow: hidden;
+  /* objects are never cropped: a scene may spill over the edge into the next section */
+  overflow: visible;
+  z-index: 2;
   background: var(--ink);
 }
 .pglow {
@@ -33,24 +35,24 @@
 .pdna { width: clamp(180px, 20vw, 360px); aspect-ratio: 1 / 1.6; top: 6%; right: 8%; filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5)); }
 .dnaCanvas { width: 100%; height: 100%; display: block; }
 .product { padding: clamp(60px, 8vh, 120px) var(--pad); background: var(--ink); }
-.product h2 { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; font-size: clamp(26px, 3vw, 56px); line-height: 1; letter-spacing: -0.02em; margin: 0.6em 0 0.6em; }
+.product h2 { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; font-size: clamp(26px, 3vw, 56px); line-height: 1; letter-spacing: -0.02em; margin: 0.6em 0 0.6em; }
 .product p { max-width: 60ch; opacity: 0.85; line-height: 1.45; margin-bottom: 1.4em; }
 .pnum {
   font-family: var(--font-display), "Arial Black", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(22px, 2vw, 36px);
   letter-spacing: -0.08em;
   line-height: 1;
 }
-.pnum b { font-weight: 800; color: var(--fluo); }
+.pnum b { font-weight: 700; color: var(--fluo); }
 .pnum span { margin-left: 0.6em; letter-spacing: 0; opacity: 0.6; font-size: 0.6em; font-family: var(--font-body), sans-serif; text-transform: uppercase; }
 .ph1 {
   font-family: var(--font-display), "Arial Black", sans-serif;
-  font-weight: 800;
-  text-transform: uppercase;
+  font-weight: 700;
+  text-transform: none;
   font-size: clamp(34px, 5.6vw, 108px);
   letter-spacing: -0.02em;
-  line-height: 0.92;
+  line-height: 1.02;
   max-width: 16ch;
   text-wrap: balance;
   position: relative;
@@ -62,7 +64,7 @@
 .ph1 .ln > span { display: inline-block; }
 .psub {
   font-family: var(--font-display), "Arial Black", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(20px, 2vw, 36px);
   line-height: 1.15;
   color: var(--fluo);
@@ -103,7 +105,7 @@
 .listRow { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: clamp(16px, 1.8vw, 28px); margin-top: 1.5em; }
 .listRow li { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; font-size: clamp(17px, 1.35vw, 24px); line-height: 1.2; text-wrap: balance; }
 .listRow li:last-child p { color: var(--fluo); }
-.listNum { display: block; font-size: 0.7em; color: var(--fluo); font-weight: 800; letter-spacing: 0.05em; margin-bottom: 1em; }
+.listNum { display: block; font-size: 0.7em; color: var(--fluo); font-weight: 700; letter-spacing: 0.05em; margin-bottom: 1em; }
 .list ol.legacy {
   counter-reset: li;
   display: flex;
@@ -111,7 +113,7 @@
 }
 .list li.legacy {
   font-family: var(--font-display), "Arial Black", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(26px, 3.4vw, 64px);
   line-height: 1.05;
   padding: 0.35em 0;
@@ -137,8 +139,8 @@
 }
 .blocks h2 {
   font-family: var(--font-display), "Arial Black", sans-serif;
-  font-weight: 800;
-  text-transform: uppercase;
+  font-weight: 700;
+  text-transform: none;
   font-size: clamp(28px, 3.4vw, 64px);
   line-height: 1;
   margin-bottom: clamp(32px, 4vw, 72px);
@@ -149,10 +151,10 @@
   gap: clamp(28px, 3vw, 56px) clamp(24px, 3vw, 56px);
 }
 .block { min-height: 240px; display: flex; flex-direction: column; }
-.blockNum { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; color: var(--fluo); font-size: 0.85em; letter-spacing: 0.04em; margin-bottom: 1.2em; }
+.blockNum { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; color: var(--fluo); font-size: 0.85em; letter-spacing: 0.04em; margin-bottom: 1.2em; }
 .block h3 {
   font-family: var(--font-display), "Arial Black", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(20px, 1.7vw, 30px);
   line-height: 1.05;
   text-wrap: balance;
@@ -181,8 +183,8 @@
 .step.on::before { width: 100%; }
 .step h3 {
   font-family: var(--font-display), "Arial Black", sans-serif;
-  font-weight: 800;
-  text-transform: uppercase;
+  font-weight: 700;
+  text-transform: none;
   font-size: clamp(24px, 2.6vw, 48px);
   line-height: 1;
 }
@@ -201,8 +203,8 @@
 }
 .honest h2 {
   font-family: var(--font-display), "Arial Black", sans-serif;
-  font-weight: 800;
-  text-transform: uppercase;
+  font-weight: 700;
+  text-transform: none;
   font-size: clamp(24px, 2.6vw, 48px);
   line-height: 1;
   color: var(--fluo);
@@ -222,9 +224,9 @@
 }
 .next a {
   font-family: var(--font-display), "Arial Black", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(24px, 3vw, 56px);
-  text-transform: uppercase;
+  text-transform: none;
   line-height: 1;
   display: inline-flex;
   gap: 0.5em;
@@ -232,7 +234,7 @@
   transition: color 0.3s;
 }
 .next a:hover { color: var(--fluo); }
-.next a b { font-weight: 800; color: var(--fluo); font-size: 0.6em; }
+.next a b { font-weight: 700; color: var(--fluo); font-size: 0.6em; }
 
 /* Services overview — card grid */
 .overview { padding: clamp(60px, 8vh, 120px) var(--pad) clamp(100px, 14vh, 200px); background: var(--ink-2); }
@@ -250,9 +252,9 @@
 .scard:hover { transform: translateY(-8px); border-color: rgba(var(--fluo-rgb), 0.6); }
 .scard::before { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.14) 45%, transparent 60%); transform: translateX(-60%); transition: transform 1.2s var(--ease); pointer-events: none; }
 .scard:hover::before { transform: translateX(60%); }
-.scard .num { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; letter-spacing: -0.06em; font-size: clamp(20px, 1.6vw, 28px); }
-.scard .num b { font-weight: 800; color: var(--fluo); }
-.scard h2 { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(24px, 2.2vw, 38px); line-height: 0.98; letter-spacing: -0.02em; margin-top: 0.4em; text-wrap: balance; }
+.scard .num { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; letter-spacing: -0.06em; font-size: clamp(20px, 1.6vw, 28px); }
+.scard .num b { font-weight: 700; color: var(--fluo); }
+.scard h2 { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; text-transform: none; font-size: clamp(24px, 2.2vw, 38px); line-height: 1.02; letter-spacing: -0.02em; margin-top: 0.4em; text-wrap: balance; }
 .scard .head { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; color: var(--fluo); font-size: clamp(15px, 1.1vw, 19px); line-height: 1.25; margin-top: 0.5em; text-wrap: balance; }
 .scard .role { opacity: 0.7; font-size: 0.9em; margin-top: auto; padding-top: 1.2em; }
 .scard .arrow { position: absolute; right: clamp(22px, 2vw, 34px); top: clamp(22px, 2vw, 34px); color: var(--fluo); font-size: 1.4em; transition: transform 0.4s var(--ease); }
@@ -271,9 +273,9 @@
 }
 .row:last-child { border-bottom: 1px solid var(--paper-08); }
 .row:hover { padding-left: 1.5vw; }
-.row .num { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; letter-spacing: -0.08em; font-size: clamp(20px, 1.8vw, 32px); }
-.row .num b { font-weight: 800; color: var(--fluo); }
-.row h2 { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(24px, 3vw, 56px); line-height: 1; }
+.row .num { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; letter-spacing: -0.08em; font-size: clamp(20px, 1.8vw, 32px); }
+.row .num b { font-weight: 700; color: var(--fluo); }
+.row h2 { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; text-transform: none; font-size: clamp(24px, 3vw, 56px); line-height: 1; }
 .row .role { opacity: 0.6; }
 .row .arrow { color: var(--fluo); font-size: 1.4em; transition: transform 0.4s var(--ease); }
 .row:hover .arrow { transform: translateX(0.4em); }
@@ -287,12 +289,12 @@
 .aboutWhy .lead:first-of-type { color: var(--fluo); }
 .nots { padding: clamp(70px, 10vh, 140px) var(--pad); background: var(--ink); }
 .nots h2, .how h2, .name h2 {
-  font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase;
+  font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; text-transform: none;
   font-size: clamp(28px, 3.4vw, 64px); line-height: 1; margin-bottom: clamp(32px, 4vw, 72px);
 }
 .nots li {
   font-family: var(--font-display), "Arial Black", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(22px, 2.6vw, 48px);
   line-height: 1.1;
   padding: 0.5em 0;
@@ -300,7 +302,7 @@
   max-width: 34ch;
   text-wrap: balance;
 }
-.nots li strong { font-weight: 800; color: var(--fluo); }
+.nots li strong { font-weight: 700; color: var(--fluo); }
 .how { padding: clamp(70px, 10vh, 140px) var(--pad); background: var(--ink-2); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 80px); align-items: start; }
 .how .verbs { display: flex; flex-direction: column; gap: 0.15em; font-family: var(--font-display), "Arial Black", sans-serif; font-size: clamp(30px, 4vw, 80px); line-height: 1.05; }
 .how .verbs li { opacity: 0.45; }
@@ -308,7 +310,7 @@
 .how p { max-width: 40ch; opacity: 0.8; line-height: 1.45; align-self: end; }
 .name { padding: clamp(70px, 10vh, 140px) var(--pad); background: var(--ink); }
 .name dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3vw, 60px); }
-.name dt { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(38px, 5vw, 100px); line-height: 1; border-top: 1px solid var(--paper-20); padding-top: 0.3em; }
+.name dt { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; text-transform: none; font-size: clamp(38px, 5vw, 100px); line-height: 1; border-top: 1px solid var(--paper-20); padding-top: 0.3em; }
 .name div:last-child dt { color: var(--fluo); }
 .name dd { margin-top: 1em; opacity: 0.8; max-width: 30ch; line-height: 1.45; }
 @media (max-width: 760px) { .aboutWhy, .how { grid-template-columns: 1fr; } .name dl { grid-template-columns: 1fr; } .intro { grid-template-columns: 1fr; } .introObj { width: 40vw; } }
@@ -331,7 +333,7 @@
 .send { display: flex; align-items: center; gap: 2em; flex-wrap: wrap; margin-top: 0.5em; }
 .alt { font-size: 0.9em; opacity: 0.7; }
 .alt a { color: var(--fluo); }
-.confirm { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; font-size: clamp(20px, 2vw, 36px); line-height: 1.2; color: var(--fluo); max-width: 30ch; text-wrap: balance; }
+.confirm { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; font-size: clamp(20px, 2vw, 36px); line-height: 1.2; color: var(--fluo); max-width: 30ch; text-wrap: balance; }
 @media (max-width: 760px) { .contact { grid-template-columns: 1fr; padding-top: 130px; } }
 
 /* hero variants — break the sameness */
@@ -361,9 +363,23 @@
 .aboutHead { padding: clamp(80px, 12vh, 160px) var(--pad) clamp(30px, 5vh, 60px); background: var(--ink); display: grid; gap: 1em; }
 .ringBlock { padding: clamp(40px, 6vh, 90px) var(--pad); background: var(--ink); }
 .ringBlock .eyebrow { display: block; margin-bottom: 1em; }
-.noise { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(44px, 9vw, 160px); line-height: 0.9; letter-spacing: -0.02em; margin: 0.3em 0 0.35em; text-shadow: 0 20px 60px rgba(0, 0, 0, 0.6); }
+.noise { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; text-transform: none; font-size: clamp(44px, 9vw, 160px); line-height: 1.02; letter-spacing: -0.02em; margin: 0.3em 0 0.35em; text-shadow: 0 20px 60px rgba(0, 0, 0, 0.6); }
 .noiseSub { max-width: 34ch; margin: 0 auto 1.6em; opacity: 0.85; font-size: clamp(16px, 1.4vw, 24px); line-height: 1.35; }
 /* hover on every card-like element */
 .scard, .block, .listRow li > * , .product > *, .honest > * { transition: transform 0.5s var(--ease), border-color 0.35s, box-shadow 0.35s; }
 .scard:hover { transform: translateY(-6px) scale(1.02); border-color: rgba(var(--fluo-rgb), 0.8); box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 40px rgba(var(--fluo-rgb), 0.2); }
 .scard:hover h2 { color: var(--fluo); }
+
+/* ---- hero with a scene: copy and scene each get their own column, nothing overlaps ---- */
+.hasScene { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); column-gap: clamp(24px, 4vw, 80px); align-items: end; align-content: end; }
+.hasScene .pnum, .hasScene .ph1, .hasScene .psub { grid-column: 1; }
+.hasScene .pscene, .v1.hasScene .pscene, .v2.hasScene .pscene { position: relative; inset: auto; grid-column: 2; grid-row: 1 / span 3; align-self: center; justify-self: end; width: 100%; max-width: 520px; aspect-ratio: 1 / 1; margin: 0; }
+.hasScene .pdna, .v1.hasScene .pdna, .v2.hasScene .pdna { aspect-ratio: 1 / 1.6; max-width: 360px; }
+.hasScene .ph1, .v1.hasScene .ph1, .v2.hasScene .ph1 { max-width: none; margin-left: 0; text-align: left; font-size: clamp(30px, 4.6vw, 88px); }
+.hasScene .ph1.long { font-size: clamp(26px, 3.6vw, 68px); }
+.hasScene .psub, .v2.hasScene .psub { margin-left: 0; text-align: left; }
+@media (max-width: 760px) {
+  .hasScene { grid-template-columns: 1fr; }
+  .hasScene .pscene, .v1.hasScene .pscene, .v2.hasScene .pscene { grid-column: 1; grid-row: auto; justify-self: center; max-width: min(70vw, 340px); margin-bottom: 20px; }
+  .hasScene .ph1.long { font-size: clamp(26px, 7vw, 56px); }
+}

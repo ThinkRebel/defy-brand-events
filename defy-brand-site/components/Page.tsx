@@ -6,6 +6,8 @@ import { CONTACT_EMAIL, type Copy, type Service, type Lang } from "@/content";
 import { Reveal } from "./Sections";
 import TiltCard from "./TiltCard";
 import { ServiceScene, ServiceFeature } from "./Visuals";
+import { CompassSprite, HelixSprite } from "./Props";
+import Kinetic from "./Kinetic";
 import Deck from "./Deck";
 import FlowObject from "./FlowObject";
 import SocialWall from "./SocialWall";
@@ -13,20 +15,18 @@ import p from "./page.module.css";
 
 /** Sub-page hero with masked line reveal + drifting chrome object. */
 const BAND = new Set(["copywriting"]);
-const HANDOVER = new Set(["marketing"]);
+const HANDOVER = new Set(["marketing", "seo"]);
 
 export function PageHero({ num, label, title, sub, obj = true, scene, lang = "nl", variant = 0 }: { num?: string; label?: string; title: string; sub?: string; obj?: boolean; scene?: string; lang?: Lang; variant?: number }) {
   const root = useRef<HTMLElement>(null);
   const slotRef = useRef<HTMLDivElement>(null);
-  const lines = splitLines(title);
   useGSAP(
     () => {
       if (prefersReducedMotion()) return;
       const q = gsap.utils.selector(root);
-      gsap.from(q(`.${p.ph1} .${p.ln} > span`), { yPercent: 110, duration: 1.3, stagger: 0.1, ease: "expo.out", delay: 0.2 });
       gsap.from(q(`.${p.psub}, .${p.pnum}`), { opacity: 0, y: 16, duration: 1, stagger: 0.1, ease: "expo.out", delay: 0.6 });
       if (obj) {
-        gsap.from(q(`.${p.pobj}`), { scale: 0.6, opacity: 0, rotate: -40, duration: 1.8, ease: "expo.out", delay: 0.3 });
+        if (!(scene && HANDOVER.has(scene))) gsap.from(q(`.${p.pobj}`), { scale: 0.6, opacity: 0, rotate: -40, duration: 1.8, ease: "expo.out", delay: 0.3 });
         gsap.to(q(`.${p.pobj}`), { y: -24, rotate: 8, duration: 5, yoyo: true, repeat: -1, ease: "sine.inOut", delay: 2 });
         gsap.to(q(`.${p.pobj}`), { yPercent: 40, scale: 1.2, scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: 1.5 } });
       }
@@ -34,7 +34,7 @@ export function PageHero({ num, label, title, sub, obj = true, scene, lang = "nl
     { scope: root }
   );
   return (
-    <header ref={root} className={`${p.phero} ${p["v" + variant]}`}>
+    <header ref={root} className={`${p.phero} ${p["v" + variant]} ${obj && scene && !BAND.has(scene) ? p.hasScene : ""}`}>
       <div className={p.pglow} aria-hidden="true" />
       {obj && !scene && (
         <div className={p.pobj} aria-hidden="true">
@@ -42,9 +42,9 @@ export function PageHero({ num, label, title, sub, obj = true, scene, lang = "nl
         </div>
       )}
       {obj && scene && !BAND.has(scene) && (
-        <div className={`${p.pobj} ${p.pscene} ${HANDOVER.has(scene) ? p.pwide : ""}`} aria-hidden="true">
+        <div className={`${p.pobj} ${p.pscene} ${scene === "marketing" ? p.pdna : ""}`} aria-hidden="true">
           <ServiceScene slug={scene} lang={lang} slotRef={slotRef} />
-          {HANDOVER.has(scene) && <div ref={slotRef} className={p.pslot} data-flow="hero" style={{ ["--reveal" as string]: 0 }} />}
+          {HANDOVER.has(scene) && <div ref={slotRef} className={p.pslot} data-flow="hero" style={{ ["--reveal" as string]: scene === "marketing" ? 1 : 0 }} />}
         </div>
       )}
       {obj && scene && BAND.has(scene) && (
@@ -59,22 +59,10 @@ export function PageHero({ num, label, title, sub, obj = true, scene, lang = "nl
           {label && <span>{label}</span>}
         </div>
       )}
-      <h1 className={`${p.ph1} ${title.length > 70 ? p.long : ""}`}>
-        {lines.map((l, i) => (
-          <span className={p.ln} key={i}>
-            <span>{l}</span>
-          </span>
-        ))}
-      </h1>
+      <Kinetic as="h1" text={title} mode={variant === 1 ? "flip" : "slide"} start="top 95%" delay={0.2} className={`${p.ph1} ${title.length > 70 ? p.long : ""}`} />
       {sub && <p className={p.psub}>{sub}</p>}
     </header>
   );
-}
-
-/** Break a headline into lines at sentence boundaries so each line can be masked. */
-function splitLines(t: string): string[] {
-  const parts = t.split(/(?<=[.!?])\s+/).filter(Boolean);
-  return parts.length > 1 ? parts : [t];
 }
 
 export function ServiceBody({ service, copy, next, index = 0 }: { service: Service; copy: Copy; next: Service; index?: number }) {
@@ -96,7 +84,7 @@ export function ServiceBody({ service, copy, next, index = 0 }: { service: Servi
       </section>
 
       <ServiceFeature slug={sv.slug} lang={copy.lang} />
-      <FlowObject />
+      <FlowObject>{sv.slug === "seo" ? <CompassSprite /> : sv.slug === "marketing" ? <HelixSprite /> : undefined}</FlowObject>
 
       {sv.list && (
         <section className={p.list} aria-label={sv.listTitle}>

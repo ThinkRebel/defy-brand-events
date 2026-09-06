@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { Lang } from "@/content";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
-import { ObjectHelix } from "./Morph";
 import { CardStack, CardOrbit } from "./Rings";
 import { Compass, Blender } from "./Props";
 import Typewriter from "./Typewriter";
@@ -29,9 +28,10 @@ export function ServiceScene({ slug, lang, slotRef }: { slug: string; lang: Lang
     case "website-design":
       return <CardOrbit />;
     case "marketing":
-      return <ObjectHelix slotRef={slotRef} />;
+      // the DNA strand is the page's floating object itself (FlowObject → HelixSprite); the hero only offers the slot
+      return null;
     case "seo":
-      return <Compass fallback={<RankClimb lang={lang} />} />;
+      return <Compass fallback={<RankClimb lang={lang} />} slotRef={slotRef} />;
     case "geo":
       return <Blender fallback={<AiAnswer lang={lang} />} />;
     case "agent-ready":
@@ -80,13 +80,13 @@ export function ServiceFeature({ slug, lang }: { slug: string; lang: Lang }) {
       return (
         <Feature eyebrow={t(lang, { nl: "Wat een site bij ons altijd is", fr: "Ce qu'un site est toujours, chez nous", en: "What a site always is, with us" })}>
           <CardStack items={[
-            { h: t(lang, { nl: "Snel", fr: "Rapide", en: "Fast" }), p: t(lang, { nl: "Traagheid voel je eerst.", fr: "La lenteur se sent en premier.", en: "Slowness is felt first." }) },
-            { h: t(lang, { nl: "Eén verhaal", fr: "Une histoire", en: "One story" }), p: t(lang, { nl: "Met een volgorde.", fr: "Avec un ordre.", en: "With an order." }) },
-            { h: "Motion", p: t(lang, { nl: "Waar het richting geeft.", fr: "Là où ça guide.", en: "Where it gives direction." }) },
-            { h: t(lang, { nl: "Eerlijk", fr: "Honnête", en: "Honest" }), p: t(lang, { nl: "Geen dark patterns.", fr: "Pas de dark patterns.", en: "No dark patterns." }) },
-            { h: "Responsive", p: t(lang, { nl: "Op de trein even sterk.", fr: "Aussi fort dans le train.", en: "As strong on the train." }) },
-            { h: "SEO & GEO", p: t(lang, { nl: "Vanaf dag één ingebouwd.", fr: "Intégrés dès le premier jour.", en: "Built in from day one." }) },
-            { h: t(lang, { nl: "Van jou", fr: "À vous", en: "Yours" }), p: t(lang, { nl: "Merk in elke pixel.", fr: "La marque dans chaque pixel.", en: "Brand in every pixel." }) },
+            { img: "https://images.unsplash.com/photo-1525453719223-4e781eb83a4c?w=900&q=75&auto=format&fit=crop", h: t(lang, { nl: "Snel", fr: "Rapide", en: "Fast" }), p: t(lang, { nl: "Traagheid voel je eerst.", fr: "La lenteur se sent en premier.", en: "Slowness is felt first." }) },
+            { img: "https://images.unsplash.com/photo-1502979932800-33d311b7ce56?w=900&q=75&auto=format&fit=crop", h: t(lang, { nl: "Eén verhaal", fr: "Une histoire", en: "One story" }), p: t(lang, { nl: "Met een volgorde.", fr: "Avec un ordre.", en: "With an order." }) },
+            { img: "https://images.unsplash.com/photo-1531318701087-32c11653dd77?w=900&q=75&auto=format&fit=crop", h: "Motion", p: t(lang, { nl: "Waar het richting geeft.", fr: "Là où ça guide.", en: "Where it gives direction." }) },
+            { img: "https://images.unsplash.com/photo-1649326609138-09de2b661544?w=900&q=75&auto=format&fit=crop", h: t(lang, { nl: "Eerlijk", fr: "Honnête", en: "Honest" }), p: t(lang, { nl: "Geen dark patterns.", fr: "Pas de dark patterns.", en: "No dark patterns." }) },
+            { img: "https://images.unsplash.com/photo-1582133456304-2f5cb1c2afbb?w=900&q=75&auto=format&fit=crop", h: "Responsive", p: t(lang, { nl: "Op de trein even sterk.", fr: "Aussi fort dans le train.", en: "As strong on the train." }) },
+            { img: "https://images.unsplash.com/photo-1598944999410-e93772fc48a5?w=900&q=75&auto=format&fit=crop", h: "SEO & GEO", p: t(lang, { nl: "Vanaf dag één ingebouwd.", fr: "Intégrés dès le premier jour.", en: "Built in from day one." }) },
+            { img: "https://images.unsplash.com/photo-1611330500121-d9439ddc3d9d?w=900&q=75&auto=format&fit=crop", h: t(lang, { nl: "Van jou", fr: "À vous", en: "Yours" }), p: t(lang, { nl: "Merk in elke pixel.", fr: "La marque dans chaque pixel.", en: "Brand in every pixel." }) },
           ]} />
         </Feature>
       );

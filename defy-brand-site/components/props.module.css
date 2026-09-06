@@ -1,14 +1,21 @@
 /* compass */
 .compass { position: relative; width: 100%; height: 100%; }
-.exploded { position: absolute; inset: 0; display: flex; }
-.slice { flex: 1 0 0; background-image: url("/assets/5678EFB9-EC12-4624-B9C3-A37911AF8AC9.PNG"); background-size: auto 100%; background-repeat: no-repeat; will-change: transform; }
-.poseWrap { position: absolute; inset: 0; opacity: 0; transition: opacity 0.4s; }
-.built { opacity: 1; }
-.pose { position: absolute; inset: 0; background-image: url("/assets/152C0B15-979C-4348-A194-21C7A8C94082.PNG"); background-repeat: no-repeat; opacity: 0; transition: opacity 0.28s ease; filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.55)); }
+/* the exploded artwork is 3:1 — it is laid over the square scene box, three times as wide, centred,
+   so the parts really travel across the hero before they stack in the box */
+.exploded { position: absolute; top: 50%; left: 50%; width: 300%; aspect-ratio: 2172 / 724; transform: translate(-50%, -50%); }
+.piece { position: absolute; top: 0; height: 100%; background-image: url("/assets/5678EFB9-EC12-4624-B9C3-A37911AF8AC9.PNG"); background-repeat: no-repeat; will-change: transform; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45)); }
+.sprite { position: relative; width: 100%; aspect-ratio: 1 / 1; }
+.pose { position: absolute; inset: 0; background-repeat: no-repeat; opacity: 0; transition: opacity 0.28s ease; filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.55)); }
 .poseOn { opacity: 1; }
+/* DNA sprite */
+.helix { position: relative; width: 100%; aspect-ratio: 1 / 1.6; }
+.helix canvas { width: 100%; height: 100%; display: block; }
 /* blender */
 .blender { position: relative; width: 100%; height: 100%; display: grid; place-items: end center; }
-.blender img { width: auto; height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.5)); }
+.scene { position: relative; height: 100%; aspect-ratio: 1024 / 1536; max-width: 100%; filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.5)); will-change: transform; }
+.base { position: absolute; inset: 0; width: 100%; height: 100%; }
+.bs { position: absolute; will-change: transform; }
+.lid { z-index: 2; }
 .drops { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
 /* cubes */
 .cubes { display: grid; place-items: center; perspective: 900px; margin: clamp(10px, 2vh, 30px) 0 clamp(20px, 4vh, 50px); }

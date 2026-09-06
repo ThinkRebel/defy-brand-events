@@ -1,4 +1,5 @@
 "use client";
+import Kinetic from "./Kinetic";
 import { useRef, type ReactNode } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -119,7 +120,6 @@ export function Closer({ copy, h, p, cta }: { copy: Copy; h: string; p?: string;
       const leave = () => gsap.to(btn, { x: 0, y: 0, duration: 0.8, ease: "elastic.out(1,.4)" });
       btn.addEventListener("pointermove", mag);
       btn.addEventListener("pointerleave", leave);
-      gsap.from(q("h2"), { scale: 0.9, opacity: 0, duration: 1.4, ease: "expo.out", scrollTrigger: { trigger: root.current, start: "top 60%" } });
       return () => {
         window.removeEventListener("pointermove", move);
         btn.removeEventListener("pointermove", mag);
@@ -132,7 +132,7 @@ export function Closer({ copy, h, p, cta }: { copy: Copy; h: string; p?: string;
     <section ref={root} className={s.closer} id="contact">
       <div className={s.halo} aria-hidden="true" />
       <div>
-        <h2>{h}</h2>
+        <Kinetic as="h2" text={h} mode="type" start="top 70%" />
         {p && <p>{p}</p>}
         <Link className="btn" href={href(copy.lang, "contact")}>
           <i />

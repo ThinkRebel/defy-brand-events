@@ -4,7 +4,7 @@ import Link from "next/link";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import m from "./morph.module.css";
 
-type Item = { h: string; p?: string; href?: string; num?: string };
+type Item = { h: string; p?: string; href?: string; num?: string; img?: string };
 
 /**
  * MiniRing — the glass ring from the homepage, in a lighter form for sub-pages:
@@ -165,7 +165,7 @@ export function CardStack({ items }: { items: Item[] }) {
   return (
     <div ref={root} className={m.stack} style={{ ["--n" as string]: n }}>
       {items.map((it, i) => {
-        const inner = <>{it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}<h3>{it.h}</h3>{it.p && <p>{it.p}</p>}</>;
+        const inner = <>{it.img && <img className={m.cardImg} src={it.img} alt="" loading="lazy" />}{it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}<h3>{it.h}</h3>{it.p && <p>{it.p}</p>}</>;
         return it.href ? <Link key={i} href={it.href} className={m.sCard} data-cursor>{inner}</Link> : <div key={i} className={m.sCard}>{inner}</div>;
       })}
     </div>

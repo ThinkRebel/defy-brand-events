@@ -9,9 +9,17 @@ import s from "./social.module.css";
  *  chrome/fluo tornado (/contact/tornado.png) — the house material, everywhere.
  * ---------------------------------------------------------------------------- */
 
-const Media = ({ tall = false }: { tall?: boolean }) => (
+const U = (id: string, w = 900) => `https://images.unsplash.com/${id}?w=${w}&q=75&auto=format&fit=crop`;
+const PHOTOS = {
+  coffee: U("photo-1613158556069-e7d8eae76214"),
+  bakery: U("photo-1623334044303-241021148842"),
+  studio: U("photo-1681949103006-70066fb25dfe"),
+  plant: U("photo-1525498128493-380d1990a112"),
+  gym: U("photo-1605296867304-46d5465a13f1", 700),
+};
+const Media = ({ tall = false, src }: { tall?: boolean; src: string }) => (
   <div className={`${s.media} ${tall ? s.tall : ""}`}>
-    <img src="/assets/77332CB1-433B-4473-82F6-02E39851E243%202.PNG" alt="" loading="lazy" onError={(e) => ((e.currentTarget.style.display = "none"))} />
+    <img src={src} alt="" loading="lazy" onError={(e) => ((e.currentTarget.style.display = "none"))} />
   </div>
 );
 const Avatar = ({ tone }: { tone: string }) => <span className={`${s.avatar} ${s[tone]}`} />;
@@ -48,7 +56,7 @@ export default function SocialWall({ eyebrow, title }: { eyebrow: string; title:
         <TiltCard className={`${s.post} ${s.ig}`} from="up" delay={0}>
           <header className={s.igTop}><span className={s.igWord}>Instagram</span><span className={s.ico}>{Send}</span></header>
           <div className={s.row}><Avatar tone="a" /><b>kaboom.coffee</b><span className={s.dots}>···</span></div>
-          <Media />
+          <Media src={PHOTOS.coffee} />
           <div className={s.actions}><span className={s.ico}>{Heart}</span><span className={s.ico}>{Bubble}</span><span className={s.ico}>{Send}</span><span className={s.dotsNav}><i className={s.dotOn} /><i /><i /><i /></span><span className={`${s.ico} ${s.right}`}>{Book}</span></div>
           <p className={s.cap}><b>kaboom.coffee</b> Nieuwe blend. Oude gewoonte: te vroeg op, te veel ideeën.</p>
           <p className={s.count}>2 341 vind-ik-leuks</p>
@@ -59,7 +67,7 @@ export default function SocialWall({ eyebrow, title }: { eyebrow: string; title:
           <header className={s.fbTop}><span className={s.fbWord}>facebook</span><span className={s.fbBtns}><i>+</i><i>⌕</i><i>✉</i></span></header>
           <div className={s.row}><Avatar tone="e" /><span><b>Bakkerij Soet</b><small>2 u · 🌐</small></span><span className={s.dots}>···</span></div>
           <p className={s.capTop}>Zaterdag 7u. De eerste croissants. Wie staat er vooraan?</p>
-          <Media />
+          <Media src={PHOTOS.bakery} />
           <div className={s.fbStats}><span><i className={s.rxL}>👍</i><i className={s.rxH}>❤️</i><i className={s.rxW}>😮</i> 128</span><span>12 opmerkingen · 8 keer gedeeld</span></div>
           <div className={s.fbActions}><span>{Thumb} Vind ik leuk</span><span>{Bubble} Opmerking plaatsen</span><span>{Share} Delen</span></div>
         </TiltCard>
@@ -69,7 +77,7 @@ export default function SocialWall({ eyebrow, title }: { eyebrow: string; title:
           <header className={s.liTop}>{LI}<span className={s.dots}>···</span></header>
           <div className={s.row}><Avatar tone="b" /><span><b>Nordlicht Studio</b><small>4 812 volgers · 2 u · 🌐</small></span></div>
           <p className={s.capTop}>We hebben zes maanden lang nee gezegd tegen projecten die niet pasten. Dit is wat er daarna gebeurde.</p>
-          <Media />
+          <Media src={PHOTOS.studio} />
           <div className={s.fbStats}><span><i className={s.rxL}>👍</i><i className={s.rxH}>❤️</i><i className={s.rxC}>👏</i> 273</span><span>17 comments · 6 reposts</span></div>
           <div className={s.fbActions}><span>{Thumb} Like</span><span>{Bubble} Comment</span><span>{Repost} Repost</span><span>{Send} Send</span></div>
         </TiltCard>
@@ -79,14 +87,14 @@ export default function SocialWall({ eyebrow, title }: { eyebrow: string; title:
           <header className={s.xTop}><span className={s.xMark}>𝕏</span><span className={s.dots}>···</span></header>
           <div className={s.row}><Avatar tone="d" /><span><b>Maison Verte</b><small>@maisonverte · 2h</small></span><span className={s.dots}>···</span></div>
           <p className={s.capTop}>Een plant vraagt niets. Behalve dat je even stopt.</p>
-          <Media />
+          <Media src={PHOTOS.plant} />
           <div className={s.xActions}><span>{Bubble} 12</span><span>{Repost} 48</span><span>{Heart} 273</span><span>{Stats} 12K</span><span>{Up}</span></div>
         </TiltCard>
 
         {/* TikTok */}
         <TiltCard className={`${s.post} ${s.tt}`} from="right" delay={0.2}>
           <div className={s.ttTop}><span className={s.live}>LIVE</span><span>Following</span><b>For You</b><span className={s.ico}>⌕</span></div>
-          <Media tall />
+          <Media tall src={PHOTOS.gym} />
           <aside className={s.rail}>
             <span className={s.railAv}><Avatar tone="c" /><i>+</i></span>
             <span>{Heart}<small>25.4K</small></span>
