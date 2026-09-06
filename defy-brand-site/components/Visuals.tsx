@@ -4,6 +4,7 @@ import type { Lang } from "@/content";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { CardStack, CardOrbit } from "./Rings";
 import { Compass, Blender, AgentSwarm, AgentBuild } from "./Props";
+import Image from "next/image";
 import { photoFor } from "@/lib/photos";
 import Typewriter from "./Typewriter";
 import TiltCard from "./TiltCard";
@@ -23,8 +24,8 @@ const t = (lang: Lang, o: T3) => o[lang];
 export function ServiceScene({ slug, lang, slotRef }: { slug: string; lang: Lang; slotRef?: React.RefObject<HTMLDivElement | null> }) {
   switch (slug) {
     case "strategy":
-      // the chrome object itself (PageHero falls back to it) — no separate prop on this page
-      return null;
+      // the king: chrome, with fluo details (the cross, the collar) — see King below
+      return <King />;
     case "brand-creative":
       return <SwatchFan />;
     case "copywriting":
@@ -526,5 +527,30 @@ function ComingSoon({ lang }: { lang: Lang }) {
       <h3>{c.h}</h3>
       <p>{c.p}</p>
     </TiltCard>
+  );
+}
+/* ---------------- STRATEGY: the king — chrome, with fluo details (the cross, the collar), lit from below ---------------- */
+function King() {
+  const root = useRef<HTMLDivElement>(null);
+  useGSAP(() => {
+    if (prefersReducedMotion()) return;
+    const piece = root.current!.querySelector(`.${v.kingPiece}`) as HTMLElement;
+    const floor = root.current!.querySelector(`.${v.kingFloor}`) as HTMLElement;
+    gsap.from(piece, { y: 90, opacity: 0, rotate: -5, duration: 1.7, ease: "expo.out", delay: 0.3 });
+    gsap.from(floor, { opacity: 0, scaleX: 0.5, duration: 1.6, ease: "expo.out", delay: 0.6 });
+    gsap.to(piece, { y: -14, rotate: 1.5, duration: 4.6, yoyo: true, repeat: -1, ease: "sine.inOut", delay: 2 });
+    gsap.to(floor, { scaleX: 1.12, opacity: 0.8, duration: 4.6, yoyo: true, repeat: -1, ease: "sine.inOut", delay: 2 });
+  }, { scope: root });
+  const src = "/assets/3CFEF266-1FA2-4561-BC75-8998CF22262C.PNG";
+  const sizes = "(max-width: 760px) 70vw, 32vw";
+  return (
+    <div ref={root} className={v.king} aria-hidden="true">
+      <div className={v.kingFloor} />
+      <div className={v.kingPiece}>
+        <Image src={src} alt="" width={1024} height={1536} sizes={sizes} priority />
+        <Image className={v.kingCross} src={src} alt="" width={1024} height={1536} sizes={sizes} />
+        <Image className={v.kingCollar} src={src} alt="" width={1024} height={1536} sizes={sizes} />
+      </div>
+    </div>
   );
 }
