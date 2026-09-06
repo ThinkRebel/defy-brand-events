@@ -73,7 +73,10 @@ export default async function SectionPage({ params }: Props) {
           <Kinetic as="h1" text={a.h} mode="flip" className={p.ph1} />
         </section>
         <section className={p.aboutWhy}>
-          <span className="eyebrow">{a.eyebrow}</span>
+          <div className={p.introSide}>
+            <span className="eyebrow">{a.eyebrow}</span>
+            <div className={p.introObj} data-flow="why" aria-hidden="true" />
+          </div>
           <div>
             {a.why.map((t, i) => (
               <Reveal key={i} as="p" className={p.lead} delay={i * 0.1}>{t}</Reveal>
