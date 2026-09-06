@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   icons: { icon: "/assets/mark-fluo.svg" },
 };
 
-export const viewport: Viewport = { themeColor: "#23262b", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#050609", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   // <html lang> is set per-locale in app/[lang]/layout.tsx via the LangAttr client component.
