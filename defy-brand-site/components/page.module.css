@@ -426,3 +426,9 @@
 .doneNote { opacity: 0.8; line-height: 1.45; }
 .doneRow { display: flex; align-items: center; gap: 1.6em; flex-wrap: wrap; margin-top: 0.4em; }
 .doneRow .btn { width: clamp(120px, 10vw, 160px); }
+
+/* contact form: pick the channel — mail (through the site) or WhatsApp (opens wa.me with the message prepared); #whatsapp is the footer's landing spot */
+.channel { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5em; scroll-margin-top: 140px; }
+.channelLabel { width: 100%; font-weight: 500; font-size: 0.85em; opacity: 0.7; margin-bottom: 0.2em; }
+.channel .chip { display: inline-flex; align-items: center; gap: 0.5em; }
+.channel .chip svg { width: 1.1em; height: 1.1em; fill: currentColor; }
