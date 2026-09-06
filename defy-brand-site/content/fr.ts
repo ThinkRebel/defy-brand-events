@@ -2,8 +2,9 @@ import type { Copy } from "./types";
 
 export const fr: Copy = {
   lang: "fr",
-  nav: { work: "Créations", services: "Services", about: "Qui & pourquoi", contact: "Contact" },
-  routes: { services: "services", about: "a-propos", contact: "contact" },
+  nav: { work: "Portfolio", services: "Services", about: "Qui & pourquoi", contact: "Contact" },
+  routes: { services: "services", about: "a-propos", contact: "contact", portfolio: "portfolio" },
+  portfolio: { eyebrow: "Ce qu'on a déjà créé", h: "Chaque projet ici est né d'une seule idée : ça doit rester.", hint: "Survolez un nom. Cliquez pour ouvrir le site.", live: "En ligne", wip: "En cours", visit: "Ouvrir le site", meta: "Sites et campagnes signés Defy & Brand Events : Rhumerie Louis, AI in de klas, DPODR, EcoClean Luxembourg, Karweiservice Vanden Berghe, Oostende.ai, Customm." },
   meta: {
     title: "Defy & Brand Events — We turn ideas into experiences",
     description:

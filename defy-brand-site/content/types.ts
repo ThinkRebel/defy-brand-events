@@ -26,7 +26,8 @@ export type Service = {
 export type Copy = {
   lang: Lang;
   nav: { work: string; services: string; about: string; contact: string };
-  routes: { services: string; about: string; contact: string };
+  routes: { services: string; about: string; contact: string; portfolio: string };
+  portfolio: { eyebrow: string; h: string; hint: string; live: string; wip: string; visit: string; meta: string };
   home: {
     heroLead: string;
     heroIntro: string;
