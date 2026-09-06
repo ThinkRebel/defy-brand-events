@@ -1,8 +1,9 @@
 "use client";
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import m from "./morph.module.css";
+import { PORTFOLIO } from "@/content";
 
 type Item = { h: string; p?: string; href?: string; num?: string; img?: string };
 
@@ -78,10 +79,23 @@ export function MiniRing({ items, size = "m", slot = false }: { items: Item[]; s
  * Each card is a tiny fake website: header bar, hero block, text lines. Rotates with time,
  * tilts with the pointer; cards in front are sharp, cards behind fade.
  */
+/** A screenshot of one of the portfolio sites (own file → live capture). */
+function SiteShot({ host, url }: { host: string; url: string }) {
+  const [tier, setTier] = useState(0);
+  const src = tier === 0 ? `/portfolio/${host}.jpg` : tier === 1 ? `https://image.thum.io/get/width/900/crop/700/wait/5/noanimate/${url}` : `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url&waitForTimeout=4000`;
+  return <img src={src} alt="" loading="lazy" onError={() => setTier((t) => Math.min(2, t + 1))} />;
+}
+
+/**
+ * CardOrbit — website design hero: a ring of device mockups (laptop, phone, monitor) that
+ * carry the portfolio sites, turning slowly and leaning with the pointer.
+ */
 export function CardOrbit() {
   const root = useRef<HTMLDivElement>(null);
   const cloud = useRef<HTMLDivElement>(null);
-  const N = 14;
+  const live = PORTFOLIO.filter((w) => w.live);
+  const N = Math.max(9, live.length);
+  const kinds = ["laptop", "phone", "monitor"] as const;
   useGSAP(() => {
     const el = cloud.current!;
     if (prefersReducedMotion()) return;
@@ -93,7 +107,7 @@ export function CardOrbit() {
     const move = (e: PointerEvent) => { qx(-10 + (e.clientY / innerHeight - 0.5) * -20); qy((e.clientX / innerWidth - 0.5) * 24); };
     window.addEventListener("pointermove", move);
     const tick = (_t: number, dt: number) => {
-      a += dt * 0.012;
+      a += dt * 0.01;
       el.style.transform = `rotateX(${tx}deg) rotateY(${a + ty}deg)`;
       cards.forEach((c, i) => {
         const ang = ((i * 360) / N + a + ty) % 360;
@@ -108,11 +122,17 @@ export function CardOrbit() {
   return (
     <div ref={root} className={m.orbit} aria-hidden="true">
       <div ref={cloud} className={m.cloud}>
-        {Array.from({ length: N }, (_, i) => (
-          <div key={i} className={`${m.screen} ${i % 3 === 0 ? m.screenHot : ""}`} style={{ ["--i" as string]: i, ["--n" as string]: N, ["--lift" as string]: `${(i % 4) * 22 - 33}px` }}>
-            <i className={m.sBar} /><i className={m.sHero} /><i className={m.sLine} /><i className={m.sLineShort} />
-          </div>
-        ))}
+        {Array.from({ length: N }, (_, i) => {
+          const w = live[i % live.length], kind = kinds[i % 3];
+          return (
+            <div key={i} className={`${m.device} ${m[kind]}`} style={{ ["--i" as string]: i, ["--n" as string]: N, ["--lift" as string]: `${(i % 4) * 22 - 33}px` }}>
+              <div className={m.dScreen}><SiteShot host={w.host} url={w.url} /></div>
+              {kind === "laptop" && <i className={m.dBase} />}
+              {kind === "monitor" && <i className={m.dStand} />}
+              {kind === "phone" && <i className={m.dNotch} />}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
