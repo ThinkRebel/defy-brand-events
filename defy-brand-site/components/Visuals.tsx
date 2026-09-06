@@ -4,8 +4,11 @@ import type { Lang } from "@/content";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { CardStack, CardOrbit } from "./Rings";
 import { Compass, Blender, AgentSwarm, AgentBuild } from "./Props";
+import { photoFor } from "@/lib/photos";
 import Typewriter from "./Typewriter";
 import TiltCard from "./TiltCard";
+import { Shot } from "./Portfolio";
+import pf from "./portfolio.module.css";
 import v from "./visuals.module.css";
 
 /* ------------------------------------------------------------------ */
@@ -57,7 +60,7 @@ export function ServiceFeature({ slug, lang }: { slug: string; lang: Lang }) {
               { nl: "Wat laten we bewust liggen?", fr: "Qu'est-ce qu'on laisse sciemment de côté ?", en: "What do we deliberately leave out?" },
               { nl: "Waaraan zien we dat het werkt?", fr: "À quoi verra-t-on que ça marche ?", en: "How will we know it works?" },
             ].map((q, i) => (
-              <TiltCard key={i} from={i % 2 ? "right" : "left"} delay={i * 0.08} className={v.qcard}>
+              <TiltCard key={i} from={i % 2 ? "right" : "left"} delay={i * 0.08} className={v.qcard} img={photoFor("q" + q.en)}>
                 <b>0{i + 1}</b>
                 <p>{t(lang, q)}</p>
               </TiltCard>
@@ -99,9 +102,12 @@ export function ServiceFeature({ slug, lang }: { slug: string; lang: Lang }) {
       );
     case "geo":
       return (
-        <Feature eyebrow={t(lang, { nl: "Hoe een AI je leest", fr: "Comment une IA vous lit", en: "How an AI reads you" })}>
-          <CiteChain lang={lang} />
-        </Feature>
+        <>
+          <Feature eyebrow={t(lang, { nl: "Hoe een AI je leest", fr: "Comment une IA vous lit", en: "How an AI reads you" })}>
+            <CiteChain lang={lang} />
+          </Feature>
+          <CeemeFilm lang={lang} />
+        </>
       );
     case "agent-ready":
       return (
@@ -114,6 +120,7 @@ export function ServiceFeature({ slug, lang }: { slug: string; lang: Lang }) {
         <Feature eyebrow={t(lang, { nl: "Een nacht werk, in seconden", fr: "Une nuit de travail, en secondes", en: "A night's work, in seconds" })}>
           <AgentSwarm />
           <Pipeline lang={lang} />
+          <ComingSoon lang={lang} />
         </Feature>
       );
     default:
@@ -287,7 +294,7 @@ function BeforeAfter({ lang }: { lang: Lang }) {
   return (
     <div className={v.ba}>
       {pairs.map(([a, b], i) => (
-        <TiltCard key={i} from={i % 2 ? "right" : "left"} className={v.baCard}>
+        <TiltCard key={i} from={i % 2 ? "right" : "left"} className={v.baCard} img={photoFor("ba" + b)}>
           <s>{a}</s>
           <Typewriter className={v.baAfter} lines={[b]} caret speed={28} />
         </TiltCard>
@@ -381,7 +388,7 @@ function CiteChain({ lang }: { lang: Lang }) {
     <ol className={v.chain}>
       {steps.map((s, i) => (
         <li key={s}>
-          <TiltCard from="up" delay={i * 0.1} className={v.chainCard}>
+          <TiltCard from="up" delay={i * 0.1} className={v.chainCard} img={photoFor("chain" + i + s)}>
             <b>{i + 1}</b>
             <p>{s}</p>
           </TiltCard>
@@ -419,9 +426,9 @@ function SchemaCheck() {
 function TwoViews({ lang }: { lang: Lang }) {
   return (
     <div className={v.two}>
-      <TiltCard from="left" className={v.twoCard}>
+      <TiltCard from="left" className={v.twoCard} img={photoFor("two-human")}>
         <span className="eyebrow">{t(lang, { nl: "Wat een mens ziet", fr: "Ce qu'un humain voit", en: "What a human sees" })}</span>
-        <h3>WE TURN IDEAS INTO EXPERIENCES.</h3>
+        <h3>We turn ideas into experiences.</h3>
         <p>{t(lang, { nl: "Beeld, ritme, toon. Een gevoel voor je iets leest.", fr: "Image, rythme, ton. Une sensation avant même de lire.", en: "Image, rhythm, tone. A feeling before you read." })}</p>
       </TiltCard>
       <TiltCard from="right" delay={0.1} className={`${v.twoCard} ${v.code}`}>
@@ -470,12 +477,52 @@ function Pipeline({ lang }: { lang: Lang }) {
   return (
     <div className={v.pipe}>
       {steps.map((s, i) => (
-        <TiltCard key={s.k} from="right" delay={i * 0.1} className={v.pipeCard}>
+        <TiltCard key={s.k} from="right" delay={i * 0.1} className={v.pipeCard} img={photoFor("pipe" + s.k)}>
           <b>{s.k}</b>
           <p>{s.p}</p>
           {i < steps.length - 1 && <i className={v.pipeArrow} />}
         </TiltCard>
       ))}
     </div>
+  );
+}
+
+/* ---------------- GEO: ceeme, the tool we built for this ---------------- */
+function CeemeFilm({ lang }: { lang: Lang }) {
+  const c = {
+    nl: { eyebrow: "Ons eigen instrument", h: "ceeme meet hoe AI over je praat.", p: "ceeme.be is de tool die we hiervoor bouwden. Je geeft je website in, ceeme stelt de vragen die je klanten aan ChatGPT, Gemini, Perplexity en Claude stellen, en laat zien of jouw naam in het antwoord staat, welke bronnen de AI wél citeert en wat er op je site ontbreekt om vaker genoemd te worden. Daarna volgt een lijst met concrete aanpassingen, in volgorde van impact.", cta: "Bekijk ceeme.be", note: "Wat je ziet: de startpagina van ceeme, live." },
+    fr: { eyebrow: "Notre propre outil", h: "ceeme mesure ce que l'IA dit de vous.", p: "ceeme.be est l'outil que nous avons construit pour ça. Vous entrez votre site, ceeme pose les questions que vos clients posent à ChatGPT, Gemini, Perplexity et Claude, et montre si votre nom apparaît dans la réponse, quelles sources l'IA cite à votre place et ce qui manque sur votre site pour être cité plus souvent. Ensuite : une liste d'ajustements concrets, classés par impact.", cta: "Voir ceeme.be", note: "Ce que vous voyez : la page d'accueil de ceeme, en direct." },
+    en: { eyebrow: "Our own instrument", h: "ceeme measures how AI talks about you.", p: "ceeme.be is the tool we built for this. You enter your website, ceeme asks the questions your customers ask ChatGPT, Gemini, Perplexity and Claude, and shows whether your name is in the answer, which sources the AI cites instead, and what your site is missing to be mentioned more often. Then you get a list of concrete fixes, ordered by impact.", cta: "Visit ceeme.be", note: "What you see: ceeme's homepage, live." },
+  }[lang];
+  return (
+    <section className={v.ceeme}>
+      <div className={v.ceemeCopy}>
+        <span className="eyebrow">{c.eyebrow}</span>
+        <h2>{c.h}</h2>
+        <p>{c.p}</p>
+        <a className={v.ceemeCta} href="https://www.ceeme.be/" target="_blank" rel="noopener" data-cursor>{c.cta} ↗</a>
+      </div>
+      <a className={`${pf.frame} ${v.ceemeFrame}`} href="https://www.ceeme.be/" target="_blank" rel="noopener" aria-label="ceeme.be" data-cursor>
+        <div className={pf.bar}><i /><i /><i /><span>www.ceeme.be</span></div>
+        <div className={pf.screen}><Shot host="ceeme.be" url="https://www.ceeme.be/" /></div>
+        <span className={v.ceemeNote}>{c.note}</span>
+      </a>
+    </section>
+  );
+}
+
+/* ---------------- AGENTIC WORKFLOW: the agent programme ---------------- */
+function ComingSoon({ lang }: { lang: Lang }) {
+  const c = {
+    nl: { tag: "Binnenkort", h: "Agent-programma in de maak.", p: "We bouwen aan een reeks agents die je zelf in je dagelijkse workflow inzet — inbox, offertes, opvolging, content. Wil je erbij zijn als de eerste opengaan? Laat het ons weten." },
+    fr: { tag: "Bientôt", h: "Programme d'agents en préparation.", p: "Nous construisons une série d'agents que vous utiliserez vous-même dans votre travail quotidien — boîte mail, devis, suivi, contenu. Envie d'être là quand les premiers ouvrent ? Dites-le-nous." },
+    en: { tag: "Coming soon", h: "Agent programme in the works.", p: "We're building a set of agents you can use in your own daily workflow — inbox, quotes, follow-up, content. Want in when the first ones open? Let us know." },
+  }[lang];
+  return (
+    <TiltCard from="up" className={v.soon} img={photoFor("agent-programme")}>
+      <span className={v.soonTag}>{c.tag}</span>
+      <h3>{c.h}</h3>
+      <p>{c.p}</p>
+    </TiltCard>
   );
 }

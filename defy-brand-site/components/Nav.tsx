@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { href, type Copy, LANGS, alternatesForPath } from "@/content";
+import { COMPANY, href, type Copy, LANGS, alternatesForPath } from "@/content";
 import styles from "./Nav.module.css";
 
 export function Nav({ copy }: { copy: Copy }) {
@@ -112,6 +112,9 @@ export function Footer({ copy }: { copy: Copy }) {
       <div className={styles.meta}>
         <span>Defy &amp; Brand Events — {copy.footer.tagline}</span>
         <a href="mailto:marketing@defyandbrandevents.be">marketing@defyandbrandevents.be</a>
+        <a href={`tel:${COMPANY.phone}`}>{COMPANY.phoneDisplay}</a>
+        <span>{COMPANY.street} — {COMPANY.postalCode} {COMPANY.city}</span>
+        <span>{COMPANY.legalName} — BTW {COMPANY.vat}</span>
         <span>© {new Date().getFullYear()} Defy &amp; Brand Events</span>
       </div>
     </footer>

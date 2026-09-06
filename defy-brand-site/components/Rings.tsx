@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import m from "./morph.module.css";
-import { UI } from "@/lib/photos";
+import { UI, photoFor } from "@/lib/photos";
 
 type Item = { h: string; p?: string; href?: string; num?: string; img?: string };
 
@@ -21,6 +21,8 @@ export const SERVICE_IMG: Record<string, string> = {
   "09": U("photo-1583198432859-635beb4e8600"), // agentic workflow — gears
 };
 const imgFor = (it: Item) => it.img ?? (it.num ? SERVICE_IMG[it.num] : undefined);
+/** every card gets a photo: its own, the service photo, or one chosen by its text */
+const imgAny = (it: Item) => imgFor(it) ?? photoFor("card" + it.h + (it.p ?? ""));
 
 /**
  * MiniRing — the glass ring from the homepage, in a lighter form for sub-pages:
@@ -55,8 +57,10 @@ export function MiniRing({ items, size = "m", slot = false }: { items: Item[]; s
       {slot && <div className={m.miniSlot} data-flow="ring" aria-hidden="true" />}
       <div ref={ringRef} className={m.miniRing} style={{ ["--n" as string]: n }}>
         {items.map((it, i) => {
+          const im = imgFor(it) ?? photoFor("mini" + it.h);
           const inner = (
             <>
+              <img className={m.cardImg} src={im} alt="" loading="lazy" />
               {it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}
               <h3>{it.h}</h3>
               {it.p && <p>{it.p}</p>}
@@ -168,7 +172,7 @@ export function CardGlobe({ items }: { items: Item[] }) {
   return (
     <div ref={root} className={m.globe}>
       {items.map((it, i) => {
-        const im = imgFor(it);
+        const im = imgAny(it);
         const inner = <>{im && <img className={m.cardImg} src={im} alt="" loading="lazy" />}{it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}<h3>{it.h}</h3>{it.p && <p>{it.p}</p>}</>;
         return it.href ? <Link key={i} href={it.href} className={m.gCard} data-cursor>{inner}</Link> : <div key={i} className={m.gCard}>{inner}</div>;
       })}
@@ -193,7 +197,7 @@ export function CardStack({ items }: { items: Item[] }) {
   return (
     <div ref={root} className={m.stack} style={{ ["--n" as string]: n }}>
       {items.map((it, i) => {
-        const inner = <>{it.img && <img className={m.cardImg} src={it.img} alt="" loading="lazy" />}{it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}<h3>{it.h}</h3>{it.p && <p>{it.p}</p>}</>;
+        const inner = <><img className={m.cardImg} src={imgAny(it)} alt="" loading="lazy" />{it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}<h3>{it.h}</h3>{it.p && <p>{it.p}</p>}</>;
         return it.href ? <Link key={i} href={it.href} className={m.sCard} data-cursor>{inner}</Link> : <div key={i} className={m.sCard}>{inner}</div>;
       })}
     </div>
@@ -235,7 +239,7 @@ export function CardBloom({ items }: { items: Item[] }) {
     <div ref={root} className={m.bloom}>
       <div ref={stage} className={m.bloomStage}>
         {items.map((it, i) => {
-          const im = imgFor(it);
+          const im = imgAny(it);
           const inner = <>{im && <img className={m.cardImg} src={im} alt="" loading="lazy" />}{it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}<h3>{it.h}</h3>{it.p && <p>{it.p}</p>}</>;
           return it.href ? <Link key={i} href={it.href} className={m.bCard} data-cursor>{inner}</Link> : <div key={i} className={m.bCard}>{inner}</div>;
         })}

@@ -3,7 +3,7 @@ import { useRef, type ReactNode } from "react";
 import { motion } from "framer-motion";
 
 /** Glass card with pointer tilt and a scroll-in from the side. Used for every card grid on the site. */
-export default function TiltCard({ children, className, delay = 0, from = "right" }: { children: ReactNode; className?: string; delay?: number; from?: "right" | "left" | "up" }) {
+export default function TiltCard({ children, className, delay = 0, from = "right", img }: { children: ReactNode; className?: string; delay?: number; from?: "right" | "left" | "up"; img?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const move = (e: React.PointerEvent) => {
     const el = ref.current!; const r = el.getBoundingClientRect();
@@ -16,8 +16,9 @@ export default function TiltCard({ children, className, delay = 0, from = "right
   return (
     <motion.div initial={init} whileInView={{ x: 0, y: 0, opacity: 1, rotate: 0 }} viewport={{ once: true, margin: "-8% 0px" }} transition={{ duration: 0.9, delay, ease: [0.2, 0.8, 0.2, 1] }} style={{ height: "100%" }}>
       <div ref={ref} className={`tilt ${className ?? ""}`} onPointerMove={move} onPointerLeave={leave}>
+        {img && <img className="tilt-img" src={img} alt="" loading="lazy" />}
         <span className="tilt-shine" aria-hidden="true" />
-        {children}
+        <div className="tilt-body">{children}</div>
       </div>
     </motion.div>
   );

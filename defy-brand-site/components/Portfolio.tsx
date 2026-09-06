@@ -19,7 +19,7 @@ const shot = (host: string, url: string, tier: number) =>
  * A case shows a screen recording when one exists (`public/portfolio/<host>.mp4`, muted, looping,
  * plays while in view) and falls back to a screenshot otherwise.
  */
-function Shot({ host, url }: { host: string; url: string }) {
+export function Shot({ host, url }: { host: string; url: string }) {
   const [tier, setTier] = useState(0);
   const [video, setVideo] = useState(true);
   if (video) {

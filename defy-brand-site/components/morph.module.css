@@ -96,3 +96,8 @@
 .gCard:hover, .sCard:hover, .bCard:hover, .miniCard:hover { border-color: rgba(var(--fluo-rgb), 0.8); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 40px rgba(var(--fluo-rgb), 0.25); filter: brightness(1.15); z-index: 200 !important; }
 .gCard:hover h3, .sCard:hover h3, .bCard:hover h3 { color: var(--fluo); }
 @media (max-width: 760px) { .bloom { height: 62svh; } .bCard { width: 34vw; margin: calc(34vw * -0.625) 0 0 calc(34vw * -0.5); } }
+
+/* mini ring cards with a photo */
+.miniCard { overflow: hidden; }
+.miniCard:has(.cardImg) > *:not(.cardImg) { position: relative; z-index: 1; }
+.miniCard:has(.cardImg)::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, rgba(14, 14, 18, 0.1) 0%, rgba(14, 14, 18, 0.88) 100%); z-index: 0; pointer-events: none; }

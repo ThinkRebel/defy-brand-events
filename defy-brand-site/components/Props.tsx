@@ -131,13 +131,14 @@ export function Blender({ fallback }: { fallback: React.ReactNode }) {
     img.decode().then(() => {
       const b = base.current!; b.width = BW; b.height = BH;
       const ctx = b.getContext("2d")!;
-      ctx.filter = "blur(26px)"; ctx.drawImage(img, 0, 0); ctx.filter = "none";
+      // the render, sharp; only the spots where the cubes and the lid were get a soft fill
+      ctx.drawImage(img, 0, 0);
       ctx.save();
-      ctx.beginPath(); ctx.rect(0, 0, BW, BH);
+      ctx.beginPath();
       for (const [cx, cy, sz, deg] of CUBES) roundedTilt(ctx, cx, cy, sz * 0.9, sz * 0.9, deg, sz * 0.16);
       roundedTilt(ctx, LID[0], LID[1], LID[2] * 0.96, LID[3] * 0.96, LID[4], 60);
-      ctx.clip("evenodd");
-      ctx.drawImage(img, 0, 0);
+      ctx.clip();
+      ctx.filter = "blur(26px)"; ctx.drawImage(img, 0, 0); ctx.filter = "none";
       ctx.restore();
       // sprites: each cube and the lid cut from the render
       const sprites = Array.from(root.current!.querySelectorAll<HTMLCanvasElement>(`.${p.bs}`));

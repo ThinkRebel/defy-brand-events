@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { gsap, ScrollTrigger, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import type { Copy } from "@/content";
 import s from "./home.module.css";
-import { pick } from "@/lib/photos";
+import { photoFor } from "@/lib/photos";
 
 /**
  * From idea to action — a deck of glass cards that slides in from the right while the section
@@ -64,7 +64,7 @@ export default function Deck({ copy, eyebrow, items: given, flow = "chain", numb
         <div ref={trackRef} className={s.dTrack}>
           {items.map((it, i) => (
             <article key={it.h} className={`${s.dCard} ${it.last ? s.dLast : ""}`}>
-              {!it.last && <img className={s.cardImg} src={pick(i + (flow.length % 5))} alt="" loading="lazy" />}
+              {!it.last && <img className={s.cardImg} src={photoFor(it.h + it.p)} alt="" loading="lazy" />}
               {numbered && <span className={s.dNum}>{it.last ? "→" : String(i + 1).padStart(2, "0")}</span>}
               <h3>{it.h}</h3>
               <p>{it.p}</p>
