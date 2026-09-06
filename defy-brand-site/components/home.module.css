@@ -2,17 +2,19 @@
 .hero {
   position: relative;
   min-height: 100svh;
-  overflow: hidden;
+  /* clipped left/right only: the ribbon photo runs on below the hero, into the statement */
+  overflow-x: clip;
+  overflow-y: visible;
   background: #050609;
   color: var(--paper);
   display: grid;
   grid-template-rows: auto 1fr auto;
   padding: clamp(96px, 14vh, 150px) 0 clamp(28px, 5vh, 56px);
 }
-/* the glossy black ribbon photo, full-bleed behind everything, moved in 3D (see Ribbon.tsx) */
+/* the glossy black ribbon photo, full-bleed behind everything, moved in 3D (see Ribbon.tsx); it reaches 58vh below the hero so it runs on into the statement */
 .bg {
   position: absolute;
-  inset: 0;
+  inset: 0 0 -58vh 0;
   overflow: hidden;
   perspective: 1400px;
   transform-style: preserve-3d;
@@ -32,11 +34,11 @@
 @media (max-width: 760px) { .bg img { object-position: 70% 50%; } }
 .veil {
   position: absolute;
-  inset: 0;
+  inset: 0 0 -58vh 0;
   pointer-events: none;
   background:
     linear-gradient(90deg, rgba(5, 6, 9, 0.72) 0%, rgba(5, 6, 9, 0.25) 42%, rgba(5, 6, 9, 0) 70%),
-    linear-gradient(180deg, rgba(5, 6, 9, 0.35), rgba(5, 6, 9, 0) 30%, rgba(5, 6, 9, 0) 65%, rgba(5, 6, 9, 0.7) 100%);
+    linear-gradient(180deg, rgba(5, 6, 9, 0.35), rgba(5, 6, 9, 0) 20%, rgba(5, 6, 9, 0) 50%, rgba(5, 6, 9, 0.62) 72%, rgba(5, 6, 9, 0.92) 88%, var(--ink) 100%);
 }
 .eyebrowRow {
   position: relative;
@@ -191,13 +193,16 @@
 
 /* ============ STATEMENT ============ */
 .statement {
-  padding: clamp(150px, 20vh, 240px) var(--pad) clamp(80px, 12vh, 160px);
+  padding: clamp(110px, 14vh, 170px) var(--pad) clamp(80px, 12vh, 160px);
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   gap: clamp(24px, 4vw, 80px);
   align-items: center;
-  min-height: 90svh;
-  background: var(--ink);
+  min-height: 84svh;
+  /* transparent: the hero photo fades out behind this copy (see .bg / .veil) */
+  background: transparent;
+  position: relative;
+  z-index: 1;
 }
 .statement h2 {
   font-family: var(--font-display), "Arial Black", sans-serif;
