@@ -185,6 +185,13 @@ export function ContactPicker({ copy }: { copy: Copy }) {
           <p className={p.pickP}>{c.pickP}</p>
         </div>
         <MiniRing items={items} slot onPick={pick} active={service} />
+        <div className={p.chips} role="group" aria-label={c.subject}>
+          {items.map((it) => (
+            <button key={it.h} type="button" className={`${p.chip} ${service === it.h ? p.chipOn : ""}`} onClick={() => pick(it)} aria-pressed={service === it.h} data-cursor>
+              <b>#{it.num}</b> {it.h}
+            </button>
+          ))}
+        </div>
       </section>
       <section className={p.contact} id="form">
         <div>

@@ -404,3 +404,12 @@
 @media (max-width: 760px) { .details a, .details span { grid-template-columns: 1fr; gap: 0.1em; } }
 .noiseHero { min-height: 60svh; align-content: end; }
 .noiseHero .ph1 { font-size: clamp(44px, 8vw, 140px); max-width: none; }
+
+/* contact picker: chip list under the ring — every service always reachable, whatever the ring is doing */
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5em; max-width: 900px; margin: clamp(16px, 3vh, 36px) auto 0; padding: 0 clamp(16px, 4vw, 40px); }
+.chip { font: inherit; font-family: var(--font-display), sans-serif; font-weight: 700; font-size: clamp(13px, 1vw, 16px); color: var(--paper); background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px; padding: 0.55em 1.1em; cursor: pointer; transition: border-color 0.25s, background 0.25s, color 0.25s; }
+.chip b { color: var(--fluo); font-weight: 700; margin-right: 0.2em; }
+.chip:hover { border-color: rgba(var(--fluo-rgb), 0.8); background: rgba(255, 255, 255, 0.1); }
+.chip:focus-visible { outline: 2px solid var(--fluo); outline-offset: 2px; }
+.chipOn { background: var(--fluo); border-color: var(--fluo); color: #0e0e12; }
+.chipOn b { color: #0e0e12; }

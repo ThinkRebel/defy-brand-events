@@ -36,21 +36,24 @@ export function MiniRing({ items, size = "m", slot = false, onPick, active }: { 
     const ring = ringRef.current!;
     if (prefersReducedMotion()) { ring.style.transform = "rotateX(-12deg)"; return; }
     const cards = Array.from(ring.children) as HTMLElement[];
-    let drift = 0, tiltX = -12;
+    let drift = 0, tiltX = -12, hold = false;
     const tilt = { x: -12 };
     const tq = gsap.quickTo(tilt, "x", { duration: 1.2, onUpdate: () => (tiltX = tilt.x) });
     const move = (e: PointerEvent) => tq(-12 + (e.clientY / innerHeight - 0.5) * -14);
     window.addEventListener("pointermove", move);
+    // picker mode: slower, no scroll-coupling (so fast scrolling can't spin cards past you), pauses while hovered
+    const onEnter = () => (hold = true), onLeave = () => (hold = false);
+    if (onPick) { ring.addEventListener("pointerenter", onEnter); ring.addEventListener("pointerleave", onLeave); }
     const tick = (_t: number, dt: number) => {
-      drift += dt * 0.006;
+      if (!hold) drift += dt * (onPick ? 0.0025 : 0.006);
       const r = root.current!.getBoundingClientRect();
-      const scroll = (r.top / innerHeight) * -90;
+      const scroll = onPick ? 0 : (r.top / innerHeight) * -90;
       const total = drift + scroll;
       ring.style.transform = `rotateX(${tiltX}deg) rotateY(${total}deg)`;
       cards.forEach((c, i) => c.style.setProperty("--face", String(Math.min(1, Math.max(0, (Math.cos(((i * step + total) * Math.PI) / 180) - 0.05) * 3)))));
     };
     gsap.ticker.add(tick);
-    return () => { gsap.ticker.remove(tick); window.removeEventListener("pointermove", move); };
+    return () => { gsap.ticker.remove(tick); window.removeEventListener("pointermove", move); ring.removeEventListener("pointerenter", onEnter); ring.removeEventListener("pointerleave", onLeave); };
   }, { scope: root });
   return (
     <div ref={root} className={`${m.mini} ${size === "s" ? m.miniS : ""}`}>
@@ -60,7 +63,7 @@ export function MiniRing({ items, size = "m", slot = false, onPick, active }: { 
           const im = imgFor(it) ?? photoFor("mini" + it.h);
           const inner = (
             <>
-              <img className={m.cardImg} src={im} alt="" loading="lazy" />
+              <img className={m.cardImg} src={im} alt="" loading={onPick ? "eager" : "lazy"} />
               {it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}
               <h3>{it.h}</h3>
               {it.p && <p>{it.p}</p>}
