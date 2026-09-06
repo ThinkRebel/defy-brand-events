@@ -145,12 +145,34 @@
 .footer .meta {
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   gap: 0.5em;
   font-size: 0.8em;
-  opacity: 0.6;
   text-align: right;
 }
+.footer .meta > * { opacity: 0.6; }
+.footer .meta .wa, .footer .meta .ceeme { opacity: 1; }
+/* WhatsApp: the one fluo button in the footer */
+.footer .wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  margin: 0.4em 0;
+  padding: 0.7em 1.15em;
+  border-radius: 999px;
+  background: var(--fluo);
+  color: #0e0e12;
+  font-weight: 700;
+  font-size: 1.1em;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s;
+}
+.footer .wa svg { width: 1.25em; height: 1.25em; fill: currentColor; flex: 0 0 auto; }
+.footer .wa:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(var(--fluo-rgb), 0.35); }
+/* ceeme.be — the GEO tool we built */
+.footer .ceeme { color: var(--paper); }
+.footer .ceeme b { color: var(--fluo); font-weight: 700; }
+.footer .ceeme:hover b { text-decoration: underline; }
 @media (max-width: 760px) {
   .footer { grid-template-columns: 1fr; padding-bottom: 100px; }
-  .footer .meta { text-align: left; }
+  .footer .meta { text-align: left; align-items: flex-start; }
 }
