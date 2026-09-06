@@ -62,6 +62,9 @@ export const COMPANY = {
   vat: "BE 0891.225.112",
   phone: "+32 59 70 99 69",
   phoneDisplay: "059 70 99 69",
+  /** mobile, for WhatsApp (footer button + the WhatsApp option on the contact form) */
+  whatsapp: "+32 478 13 13 26",
+  whatsappDisplay: "0478 13 13 26",
   street: "Zeedijk 133 bus 00.02",
   postalCode: "8400",
   city: "Oostende",
