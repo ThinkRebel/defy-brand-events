@@ -290,3 +290,62 @@ export function HelixSprite() {
   }, []);
   return <div className={p.helix} aria-hidden="true"><canvas ref={ref} /></div>;
 }
+
+/* ============================ AGENTS (agentic workflow) ============================ */
+/**
+ * The robot sheet (/assets/agents.png, 2 rows): top row = one agent, from exploded parts to
+ * assembled, then multiplying; bottom row = five agents in action poses.
+ * Scene: the parts fly together into one agent → it lights up and multiplies → five agents
+ * take their places over the pipeline. Falls back to nothing when the sheet is missing.
+ */
+const AGENTS_SRC = "/assets/agents.png";
+const SHEET_AR = 3.0; // sheet width / height
+// cells as fractions of the sheet: [x, y, w, h]
+const BUILD: [number, number, number, number][] = [
+  [0.455, 0, 0.2, 0.55],   // wide apart, energy
+  [0.28, 0, 0.175, 0.55],  // parts near
+  [0.125, 0, 0.155, 0.55], // almost closed
+  [0.01, 0, 0.115, 0.55],  // assembled
+];
+const MULTIPLY: [number, number, number, number][] = [[0.65, 0, 0.15, 0.55], [0.8, 0, 0.2, 0.55]];
+const POSES: [number, number, number, number][] = [[0.14, 0.55, 0.13, 0.45], [0.29, 0.55, 0.12, 0.45], [0.41, 0.55, 0.14, 0.45], [0.55, 0.55, 0.12, 0.45], [0.67, 0.55, 0.13, 0.45]];
+const cellStyle = (c: [number, number, number, number]): React.CSSProperties => ({
+  backgroundImage: `url(${AGENTS_SRC})`, backgroundRepeat: "no-repeat",
+  backgroundSize: `${100 / c[2]}% ${100 / c[3]}%`, backgroundPosition: `${(c[0] / (1 - c[2])) * 100}% ${(c[1] / (1 - c[3])) * 100}%`,
+  aspectRatio: `${c[2] * SHEET_AR} / ${c[3]}`,
+});
+
+export function AgentSwarm() {
+  const ok = useImage(AGENTS_SRC);
+  const root = useRef<HTMLDivElement>(null);
+  useGSAP(() => {
+    if (!ok) return;
+    const q = gsap.utils.selector(root);
+    const build = q(`.${p.aBuild}`), mult = q(`.${p.aMult}`), poses = q(`.${p.aPose}`);
+    if (prefersReducedMotion()) { gsap.set([build, mult], { opacity: 0 }); gsap.set(poses, { opacity: 1 }); return; }
+    gsap.set([build, mult], { opacity: 0 }); gsap.set(build[0], { opacity: 1 }); gsap.set(poses, { opacity: 0, scale: 0.4, x: 0, y: 0 });
+    const tl = gsap.timeline({ scrollTrigger: { trigger: root.current, start: "top 70%" } });
+    // the parts fly together: frame by frame
+    for (let i = 1; i < build.length; i++) tl.set(build[i - 1], { opacity: 0 }, `+=${i === 1 ? 0.6 : 0.45}`).set(build[i], { opacity: 1 });
+    tl.to(build[3], { scale: 1.06, duration: 0.25, yoyo: true, repeat: 1, ease: "power2.inOut" }, "+=0.3")
+      // it multiplies
+      .set(build[3], { opacity: 0 }, "+=0.2").set(mult[0], { opacity: 1 })
+      .set(mult[0], { opacity: 0 }, "+=0.55").set(mult[1], { opacity: 1 })
+      .set(mult[1], { opacity: 0 }, "+=0.55")
+      // five agents take their places
+      .to(poses, { opacity: 1, scale: 1, duration: 0.9, ease: "back.out(1.6)", stagger: 0.09 })
+      .add(() => { poses.forEach((el, i) => gsap.to(el, { y: -10 - i * 2, duration: 2.2 + i * 0.3, yoyo: true, repeat: -1, ease: "sine.inOut" })); });
+  }, { scope: root, dependencies: [ok] });
+  if (!ok) return null;
+  return (
+    <div ref={root} className={p.agents} aria-hidden="true">
+      <div className={p.aStage}>
+        {BUILD.map((c, i) => <div key={i} className={p.aBuild} style={cellStyle(c)} />)}
+        {MULTIPLY.map((c, i) => <div key={i} className={p.aMult} style={cellStyle(c)} />)}
+      </div>
+      <div className={p.aRow}>
+        {POSES.map((c, i) => <div key={i} className={p.aPose} style={cellStyle(c)} />)}
+      </div>
+    </div>
+  );
+}

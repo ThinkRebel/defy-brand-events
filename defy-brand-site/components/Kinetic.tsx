@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import k from "./kinetic.module.css";
 
@@ -75,11 +75,13 @@ export default function Kinetic({ text, as: Tag = "h2", mode = "slide", classNam
       {parts.map((s, si) => {
         const { lead, rest } = shape(s);
         const words = (txt: string) => txt.split(/\s+/).map((w, wi) => (
-          <span key={wi} className={k.wm}>
-            <span className={k.w}>
-              {mode === "type" ? Array.from(w).map((ch, ci) => <span key={ci} className={k.c}>{ch}</span>) : w}
+          <React.Fragment key={wi}>
+            <span className={k.wm}>
+              <span className={k.w}>
+                {mode === "type" ? Array.from(w).map((ch, ci) => <span key={ci} className={k.c}>{ch}</span>) : w}
+              </span>
             </span>{" "}
-          </span>
+          </React.Fragment>
         ));
         return (
           <span key={si} className={`${k.s} ${VOICES[si % VOICES.length]}`}>

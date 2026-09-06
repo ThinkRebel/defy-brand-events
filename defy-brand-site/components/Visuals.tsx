@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Lang } from "@/content";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { CardStack, CardOrbit } from "./Rings";
-import { Compass, Blender } from "./Props";
+import { Compass, Blender, AgentSwarm } from "./Props";
 import Typewriter from "./Typewriter";
 import TiltCard from "./TiltCard";
 import v from "./visuals.module.css";
@@ -111,6 +111,7 @@ export function ServiceFeature({ slug, lang }: { slug: string; lang: Lang }) {
     case "agentic-workflow":
       return (
         <Feature eyebrow={t(lang, { nl: "Een nacht werk, in seconden", fr: "Une nuit de travail, en secondes", en: "A night's work, in seconds" })}>
+          <AgentSwarm />
           <Pipeline lang={lang} />
         </Feature>
       );
