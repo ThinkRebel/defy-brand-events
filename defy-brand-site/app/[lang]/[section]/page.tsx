@@ -131,11 +131,12 @@ export default async function SectionPage({ params }: Props) {
       <section className={p.overview}>
         <ol>
           {c.services.map((s, i) => (
-            <Reveal key={s.slug} as="li" delay={i * 0.04}>
-              <Link className={p.row} href={href(lang, "services", s.slug)}>
+            <Reveal key={s.slug} as="li" delay={(i % 3) * 0.08}>
+              <Link className={p.scard} href={href(lang, "services", s.slug)}>
                 <span className={p.num}><b>#</b>{s.num}</span>
                 <h2>{s.name}</h2>
-                <span className={p.role}>{s.role}</span>
+                <p className={p.head}>{s.headline === s.headline.toUpperCase() ? s.headline.charAt(0) + s.headline.slice(1).toLowerCase().replace(/\b(ai|geo|seo|dna)\b/g, (m) => m.toUpperCase()) : s.headline}</p>
+                <span className={p.role}>{s.role.charAt(0).toUpperCase() + s.role.slice(1)}.</span>
                 <span className={p.arrow} aria-hidden="true">→</span>
               </Link>
             </Reveal>
