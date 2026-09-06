@@ -88,7 +88,7 @@ export const nl: Copy = {
       what: "Waar denk je aan? (Ruw mag. Ruw is meestal het beste.)",
       send: "Stuur het",
     },
-    confirm: "Aangekomen. We lezen het écht, en je hoort binnen twee werkdagen van een mens — niet van een autoresponder.",
+    confirm: "Aangekomen. We lezen het écht, en je hoort binnen twee werkdagen van ons team — niet van een autoresponder.",
     alt: "Liever meteen praten?",
     meta: "Een idee, een probleem, een ambitie? Vertel het aan Defy & Brand Events. Je hoeft het niet klaar te hebben.",
     cine: {
