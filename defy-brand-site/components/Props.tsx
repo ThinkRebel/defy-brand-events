@@ -324,7 +324,10 @@ export function AgentSwarm() {
     const build = q(`.${p.aBuild}`), mult = q(`.${p.aMult}`), poses = q(`.${p.aPose}`);
     if (prefersReducedMotion()) { gsap.set([build, mult], { opacity: 0 }); gsap.set(poses, { opacity: 1 }); return; }
     gsap.set([build, mult], { opacity: 0 }); gsap.set(build[0], { opacity: 1 }); gsap.set(poses, { opacity: 0, scale: 0.4, x: 0, y: 0 });
-    const tl = gsap.timeline({ scrollTrigger: { trigger: root.current, start: "top 70%" } });
+    // play once, as soon as a third of the scene is on screen (observer: independent of scroll maths)
+    const tl = gsap.timeline({ paused: true });
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { tl.play(); io.disconnect(); } }, { threshold: 0.3 });
+    io.observe(root.current!);
     // the parts fly together: frame by frame
     for (let i = 1; i < build.length; i++) tl.set(build[i - 1], { opacity: 0 }, `+=${i === 1 ? 0.6 : 0.45}`).set(build[i], { opacity: 1 });
     tl.to(build[3], { scale: 1.06, duration: 0.25, yoyo: true, repeat: 1, ease: "power2.inOut" }, "+=0.3")
@@ -335,6 +338,7 @@ export function AgentSwarm() {
       // five agents take their places
       .to(poses, { opacity: 1, scale: 1, duration: 0.9, ease: "back.out(1.6)", stagger: 0.09 })
       .add(() => { poses.forEach((el, i) => gsap.to(el, { y: -10 - i * 2, duration: 2.2 + i * 0.3, yoyo: true, repeat: -1, ease: "sine.inOut" })); });
+    return () => io.disconnect();
   }, { scope: root, dependencies: [ok] });
   if (!ok) return null;
   return (
