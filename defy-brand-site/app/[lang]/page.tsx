@@ -5,7 +5,8 @@ import Hero from "@/components/Hero";
 import FlowObject from "@/components/FlowObject";
 import Manifesto from "@/components/Manifesto";
 import Ring from "@/components/Ring";
-import { Statement, Chain, AboutTeaser, Closer } from "@/components/Sections";
+import { Statement, AboutTeaser, Closer } from "@/components/Sections";
+import Deck from "@/components/Deck";
 
 type Props = { params: Promise<{ lang: Lang }> };
 
@@ -25,7 +26,7 @@ export default async function Home({ params }: Props) {
       <Statement copy={copy} />
       <Manifesto copy={copy} />
       <Ring copy={copy} />
-      <Chain copy={copy} />
+      <Deck copy={copy} />
       <AboutTeaser copy={copy} />
       <Closer copy={copy} h={copy.home.closerH} cta={copy.home.closerCta} />
     </>
