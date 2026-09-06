@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getCopy, href, LANGS, SITE_URL, CONTACT_EMAIL, COMPANY, type Lang, type Service } from "@/content";
+import { faqFor } from "@/content/faq";
 
 type PageKey = "home" | "services" | "about" | "contact" | "portfolio";
 
@@ -99,11 +100,10 @@ export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
   };
 }
 
-/** FAQ-style Q&A derived from service copy — the shape AI answer engines quote most readily. */
-export function faqJsonLd(s: Service) {
-  const qa: { q: string; a: string }[] = [];
-  if (s.honest) qa.push({ q: s.honest.h, a: s.honest.p });
-  qa.push({ q: `${s.name}?`, a: s.intro.join(" ") });
+/** FAQPage — the page's own FAQ (content/faq.ts), the shape AI answer engines quote most readily. */
+export function faqJsonLd(lang: Lang, page: string) {
+  const qa = faqFor(page, lang);
+  if (!qa.length) return null;
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
