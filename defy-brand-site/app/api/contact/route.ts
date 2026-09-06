@@ -15,13 +15,13 @@ const isEmail = (s: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
 const TAG = "[Website]";
 
 /** who signs the confirmation */
-const SIGNER = { name: "Njusja Orban", role: "Defy & Brand Events" };
+const SIGNER = { name: "Njusja aka ThinkRebel", role: "Defy & Brand Events" };
 
 const T: Record<Lang, { subject: string; hi: string; body: string; sent: string; subjectLabel: string; talk: string; bye: string }> = {
   nl: {
     subject: "Goed ontvangen — Defy & Brand Events",
     hi: "Dag",
-    body: "Je bericht is aangekomen. We lezen het écht, en je hoort binnen twee werkdagen van een mens — niet van een autoresponder.",
+    body: "Je bericht is aangekomen. We lezen het écht, en je hoort binnen twee werkdagen van ons team — niet van een autoresponder.",
     sent: "Dit stuurde je ons",
     subjectLabel: "Onderwerp",
     talk: "Liever meteen praten? Bel",
@@ -30,7 +30,7 @@ const T: Record<Lang, { subject: string; hi: string; body: string; sent: string;
   fr: {
     subject: "Bien reçu — Defy & Brand Events",
     hi: "Bonjour",
-    body: "Votre message est bien arrivé. Nous le lisons vraiment, et un humain vous répond sous deux jours ouvrables — pas un répondeur automatique.",
+    body: "Votre message est bien arrivé. Nous le lisons vraiment, et notre équipe vous répond sous deux jours ouvrables — pas un répondeur automatique.",
     sent: "Ce que vous nous avez envoyé",
     subjectLabel: "Sujet",
     talk: "Vous préférez parler tout de suite ? Appelez le",
@@ -39,7 +39,7 @@ const T: Record<Lang, { subject: string; hi: string; body: string; sent: string;
   en: {
     subject: "Received — Defy & Brand Events",
     hi: "Hi",
-    body: "Your message has arrived. We actually read it, and you'll hear from a human within two working days — not an autoresponder.",
+    body: "Your message has arrived. We actually read it, and you'll hear from our team within two working days — not an autoresponder.",
     sent: "What you sent us",
     subjectLabel: "Subject",
     talk: "Rather talk right now? Call",
