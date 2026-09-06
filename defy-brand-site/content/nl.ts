@@ -11,7 +11,7 @@ export const nl: Copy = {
       "Defy & Brand Events zet ideeën om in merken, websites, campagnes en AI-klare ervaringen die mensen raken en in beweging brengen. Strategie, creativiteit en technologie in één team.",
   },
   home: {
-    heroLead: "WE TURN IDEAS INTO EXPERIENCES.",
+    heroLead: "We turn ideas into experiences.",
     heroIntro:
       "Een idee is niets tot iemand het voelt. Wij bouwen merken, websites, campagnes en woorden die dat moment maken: het moment waarop iemand stopt, kijkt, begrijpt — en kiest.",
     heroCta: "Laat zien wat je denkt",
@@ -20,7 +20,7 @@ export const nl: Copy = {
       "Eén team dat denkt, maakt, test en verbetert — tot het idee doet wat het moest doen.",
     ],
     manifesto: "Een idee is niets tot iemand het voelt.",
-    manifestoAfter: "WE TURN IDEAS INTO EXPERIENCES.",
+    manifestoAfter: "We turn ideas into experiences.",
     servicesEyebrow: "Negen diensten. Één beweging.",
     servicesHint: "Scroll om te draaien",
     chainEyebrow: "Van idee naar actie",
@@ -64,6 +64,15 @@ export const nl: Copy = {
     meta: "Waarom Defy & Brand Events bestaat: geen one-size-fits-all, geen strategie zonder uitvoering. We denken, maken, testen, verbeteren en brengen ideeën tot leven.",
   },
   contact: {
+    pickEyebrow: "Waarover gaat het?",
+    pickH: "Kies waarover je wil praten.",
+    pickP: "Tik op een dienst en die staat meteen als onderwerp in het formulier. Nog niet zeker? Sla over — gewoon vertellen mag ook.",
+    subject: "Onderwerp",
+    other: "Iets anders / weet ik nog niet",
+    detailsH: "Rechtstreeks",
+    phone: "Bel",
+    mail: "Mail",
+    visit: "Kom langs",
     h: "Je hebt iets in je hoofd. Laten we het eruit halen.",
     lines: [
       "Een idee dat nog geen vorm heeft.",
@@ -100,7 +109,7 @@ export const nl: Copy = {
       num: "01",
       name: "Strategy",
       role: "bepaalt de richting",
-      headline: "STRATEGY MEETS CREATIVITY. THAT'S WHERE THE MAGIC HAPPENS.",
+      headline: "Strategy meets creativity. That's where the magic happens.",
       intro: [
         "Creativiteit zonder strategie wordt ruis. Strategie zonder creativiteit wordt saai.",
         "Wij doen niet aan kiezen tussen die twee. Wij brengen ze samen — en dáár gebeurt het.",
@@ -123,7 +132,7 @@ export const nl: Copy = {
       num: "02",
       name: "Brand & Creative",
       role: "geeft het idee vorm",
-      headline: "YOUR BRAND DESERVES MORE THAN “GOOD ENOUGH”.",
+      headline: "Your brand deserves more than “good enough”.",
       intro: [
         "Er zijn genoeg merken die er goed uitzien. Er zijn er weinig die je herkent met je ogen half dicht.",
         "Een merk moet niet alleen mooi zijn. Het moet herkenbaar zijn. Een gevoel oproepen. Een positie innemen. Iets betekenen.",
@@ -148,7 +157,7 @@ export const nl: Copy = {
       num: "03",
       name: "Copywriting",
       role: "geeft het een stem",
-      headline: "WORDS THAT MOVE PEOPLE.",
+      headline: "Words that move people.",
       intro: [
         "Informatie is gratis. Aandacht niet. Goede copy geeft geen uitleg. Ze zorgt dat iemand wil weten hoe het verder gaat.",
         "Wij schrijven geen teksten. Wij vinden de woorden die een idee laten landen.",
@@ -181,7 +190,7 @@ export const nl: Copy = {
       num: "04",
       name: "Website Design",
       role: "bouwt de digitale ervaring",
-      headline: "DON'T BUILD A WEBSITE. BUILD THE MOMENT THEY DECIDE TO STAY.",
+      headline: "Don't build a website. Build the moment they decide to stay.",
       sub: "We don't design pages. We design the experience between the first click and the next decision.",
       intro: [
         "Iemand komt op je site. Drie seconden later weet die persoon of hij blijft. Niet omdat hij je tekst gelezen heeft. Omdat hij iets gevoeld heeft: dit is goed, dit klopt, hier wil ik verder.",
@@ -216,7 +225,7 @@ export const nl: Copy = {
       num: "05",
       name: "Marketing",
       role: "brengt de juiste mensen ernaartoe",
-      headline: "MARKETING IS OUR DNA.",
+      headline: "Marketing is our DNA.",
       sub: "People don't remember ads. They remember how you made them feel.",
       intro: [
         "Niemand onthoudt je campagne. Mensen onthouden wat ze erbij voelden — en dat gevoel beslist later, in de winkel, op je site, in een gesprek.",
@@ -263,7 +272,7 @@ export const nl: Copy = {
       num: "07",
       name: "GEO",
       role: "maakt je begrijpelijk voor AI",
-      headline: "IF AI DOESN'T UNDERSTAND YOU, IT CAN'T RECOMMEND YOU.",
+      headline: "If AI doesn't understand you, it can't recommend you.",
       intro: [
         "Steeds meer mensen zoeken niet meer. Ze vragen. Aan ChatGPT, Gemini, Copilot, Perplexity. “Welke agency past bij mijn project?” “Welk product doet dit het best?” “Wie kan mij hiermee helpen?”",
         "En het antwoord komt niet van een lijst met tien blauwe links. Het komt van een AI die beslist welke bedrijven, producten en oplossingen relevant lijken — en die noemt.",

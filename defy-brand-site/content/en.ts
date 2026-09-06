@@ -11,7 +11,7 @@ export const en: Copy = {
       "Defy & Brand Events turns ideas into brands, websites, campaigns and AI-ready experiences that move people. Strategy, creativity and technology in one team.",
   },
   home: {
-    heroLead: "WE TURN IDEAS INTO EXPERIENCES.",
+    heroLead: "We turn ideas into experiences.",
     heroIntro:
       "An idea is nothing until someone feels it. We build brands, websites, campaigns and words that create that moment: the one where a person stops, looks, gets it — and chooses.",
     heroCta: "Show us what you're thinking",
@@ -20,7 +20,7 @@ export const en: Copy = {
       "One team that thinks, makes, tests and improves — until the idea does what it was meant to do.",
     ],
     manifesto: "An idea is nothing until someone feels it.",
-    manifestoAfter: "WE TURN IDEAS INTO EXPERIENCES.",
+    manifestoAfter: "We turn ideas into experiences.",
     servicesEyebrow: "Nine services. One movement.",
     servicesHint: "Scroll to rotate",
     chainEyebrow: "From idea to action",
@@ -62,6 +62,15 @@ export const en: Copy = {
     meta: "Why Defy & Brand Events exists: no one-size-fits-all, no strategy without execution. We think, make, test, improve and bring ideas to life.",
   },
   contact: {
+    pickEyebrow: "What is it about?",
+    pickH: "Pick what you want to talk about.",
+    pickP: "Tap a service and it lands in the form as the subject. Not sure yet? Skip it — just telling us works too.",
+    subject: "Subject",
+    other: "Something else / not sure yet",
+    detailsH: "Direct",
+    phone: "Call",
+    mail: "Mail",
+    visit: "Drop by",
     h: "There's something in your head. Let's get it out.",
     lines: [
       "An idea that doesn't have a shape yet.",
@@ -98,7 +107,7 @@ export const en: Copy = {
       num: "01",
       name: "Strategy",
       role: "sets the direction",
-      headline: "STRATEGY MEETS CREATIVITY. THAT'S WHERE THE MAGIC HAPPENS.",
+      headline: "Strategy meets creativity. That's where the magic happens.",
       intro: [
         "Creativity without strategy becomes noise. Strategy without creativity becomes boring.",
         "We don't choose between the two. We bring them together — and that's where it happens.",
@@ -121,7 +130,7 @@ export const en: Copy = {
       num: "02",
       name: "Brand & Creative",
       role: "gives the idea its shape",
-      headline: "YOUR BRAND DESERVES MORE THAN “GOOD ENOUGH”.",
+      headline: "Your brand deserves more than “good enough”.",
       intro: [
         "There are plenty of brands that look good. There are few you'd recognise with your eyes half closed.",
         "A brand shouldn't just be beautiful. It should be recognisable. Evoke a feeling. Take a position. Mean something.",
@@ -146,7 +155,7 @@ export const en: Copy = {
       num: "03",
       name: "Copywriting",
       role: "gives it a voice",
-      headline: "WORDS THAT MOVE PEOPLE.",
+      headline: "Words that move people.",
       intro: [
         "Information is free. Attention isn't. Good copy doesn't explain. It makes someone want to know what happens next.",
         "We don't write texts. We find the words that make an idea land.",
@@ -179,7 +188,7 @@ export const en: Copy = {
       num: "04",
       name: "Website Design",
       role: "builds the digital experience",
-      headline: "DON'T BUILD A WEBSITE. BUILD THE MOMENT THEY DECIDE TO STAY.",
+      headline: "Don't build a website. Build the moment they decide to stay.",
       sub: "We don't design pages. We design the experience between the first click and the next decision.",
       intro: [
         "Someone lands on your site. Three seconds later they know whether they're staying. Not because they read your copy. Because they felt something: this is good, this fits, I want to see more.",
@@ -214,7 +223,7 @@ export const en: Copy = {
       num: "05",
       name: "Marketing",
       role: "brings the right people to it",
-      headline: "MARKETING IS OUR DNA.",
+      headline: "Marketing is our DNA.",
       sub: "People don't remember ads. They remember how you made them feel.",
       intro: [
         "Nobody remembers your campaign. People remember what they felt during it — and that feeling decides later, in the store, on your site, in a conversation.",
@@ -261,7 +270,7 @@ export const en: Copy = {
       num: "07",
       name: "GEO",
       role: "makes you understandable to AI",
-      headline: "IF AI DOESN'T UNDERSTAND YOU, IT CAN'T RECOMMEND YOU.",
+      headline: "If AI doesn't understand you, it can't recommend you.",
       intro: [
         "More and more people don't search anymore. They ask. ChatGPT, Gemini, Copilot, Perplexity. “Which agency fits my project?” “Which product does this best?” “Who can help me with this?”",
         "And the answer doesn't come from a list of ten blue links. It comes from an AI that decides which companies, products and solutions seem relevant — and names them.",

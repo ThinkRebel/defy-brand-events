@@ -58,6 +58,8 @@ export type Copy = {
     meta: string;
   };
   contact: {
+    pickEyebrow: string; pickH: string; pickP: string; subject: string; other: string;
+    detailsH: string; phone: string; mail: string; visit: string;
     h: string;
     lines: string[];
     invite: string;

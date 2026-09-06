@@ -56,3 +56,14 @@ export const PORTFOLIO: Work[] = [
 
 export const SITE_URL = "https://defyandbrandevents.be";
 export const CONTACT_EMAIL = "marketing@defyandbrandevents.be";
+/** legal + contact facts (footer, JSON-LD, llms.txt) */
+export const COMPANY = {
+  legalName: "DB Events BV",
+  vat: "BE 0891.225.112",
+  phone: "+32 59 70 99 69",
+  phoneDisplay: "059 70 99 69",
+  street: "Zeedijk 133, bus 3",
+  postalCode: "8400",
+  city: "Oostende",
+  country: "BE",
+};
