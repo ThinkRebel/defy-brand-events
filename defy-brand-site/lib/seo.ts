@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getCopy, href, LANGS, SITE_URL, CONTACT_EMAIL, type Lang, type Service } from "@/content";
 
-type PageKey = "home" | "services" | "about" | "contact";
+type PageKey = "home" | "services" | "about" | "contact" | "portfolio";
 
 /** Alternate URLs for the same page in every language (used by hreflang + the language switch). */
 export function alternatesFor(key: PageKey, slug?: string): Record<Lang, string> {
