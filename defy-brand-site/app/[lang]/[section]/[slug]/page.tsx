@@ -5,6 +5,7 @@ import { buildMetadata, breadcrumbJsonLd, serviceJsonLd, faqJsonLd } from "@/lib
 import JsonLd from "@/components/JsonLd";
 import { PageHero, ServiceBody } from "@/components/Page";
 import { Closer } from "@/components/Sections";
+import Faq from "@/components/Faq";
 
 type Props = { params: Promise<{ lang: Lang; section: string; slug: string }> };
 
@@ -38,7 +39,7 @@ export default async function ServicePage({ params }: Props) {
       <JsonLd
         data={[
           serviceJsonLd(lang, s),
-          faqJsonLd(s),
+          faqJsonLd(lang, s.slug),
           breadcrumbJsonLd([
             { name: "Defy & Brand Events", url: href(lang, "home") },
             { name: c.nav.services, url: href(lang, "services") },
@@ -48,6 +49,7 @@ export default async function ServicePage({ params }: Props) {
       />
       <PageHero num={s.num} label={s.role} title={s.headline} sub={s.sub} scene={s.slug} lang={lang} variant={i % 3} />
       <ServiceBody service={s} copy={c} next={next} index={i} />
+      <Faq page={s.slug} lang={lang} />
       <Closer copy={c} h={s.closer.join(" ")} cta={s.cta} />
     </>
   );
