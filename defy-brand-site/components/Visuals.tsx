@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Lang } from "@/content";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { ObjectHelix } from "./Morph";
-import { MiniRing, CardOrbit } from "./Rings";
+import { CardStack, CardOrbit } from "./Rings";
 import { Compass, Blender } from "./Props";
 import Typewriter from "./Typewriter";
 import TiltCard from "./TiltCard";
@@ -79,7 +79,7 @@ export function ServiceFeature({ slug, lang }: { slug: string; lang: Lang }) {
     case "website-design":
       return (
         <Feature eyebrow={t(lang, { nl: "Wat een site bij ons altijd is", fr: "Ce qu'un site est toujours, chez nous", en: "What a site always is, with us" })}>
-          <MiniRing items={[
+          <CardStack items={[
             { h: t(lang, { nl: "Snel", fr: "Rapide", en: "Fast" }), p: t(lang, { nl: "Traagheid voel je eerst.", fr: "La lenteur se sent en premier.", en: "Slowness is felt first." }) },
             { h: t(lang, { nl: "Eén verhaal", fr: "Une histoire", en: "One story" }), p: t(lang, { nl: "Met een volgorde.", fr: "Avec un ordre.", en: "With an order." }) },
             { h: "Motion", p: t(lang, { nl: "Waar het richting geeft.", fr: "Là où ça guide.", en: "Where it gives direction." }) },

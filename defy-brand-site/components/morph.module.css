@@ -43,3 +43,40 @@
 .sBar { height: 10%; } .sHero { height: 38%; background: linear-gradient(150deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.1)) !important; } .sLine { height: 7%; } .sLineShort { height: 7%; width: 60%; }
 .screenHot .sHero { background: linear-gradient(150deg, rgba(228, 255, 46, 0.85), rgba(228, 255, 46, 0.3)) !important; }
 .screenHot { border-color: rgba(228, 255, 46, 0.6); }
+
+/* ---- card globe ---- */
+.globe { position: relative; height: min(78svh, 720px); perspective: 1400px; transform-style: preserve-3d; cursor: grab; touch-action: pan-y; }
+.globe:active { cursor: grabbing; }
+.gCard, .sCard {
+  position: absolute; left: 50%; top: 50%; width: clamp(150px, 15vw, 230px); aspect-ratio: 4 / 5; border-radius: 18px; padding: clamp(12px, 1.1vw, 18px);
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 0.3em; color: var(--paper); text-decoration: none; will-change: transform;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06) 45%, rgba(255, 255, 255, 0.12));
+  border: 1px solid rgba(255, 255, 255, 0.28); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 30px 80px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px) saturate(1.4); -webkit-backdrop-filter: blur(12px) saturate(1.4);
+}
+.gCard h3, .sCard h3 { font-family: var(--font-display), sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(13px, 1.05vw, 19px); line-height: 1; letter-spacing: -0.01em; }
+.gCard p, .sCard p { opacity: 0.75; font-size: clamp(10px, 0.72vw, 12px); line-height: 1.3; }
+.gCard:hover, .sCard:hover { border-color: rgba(var(--fluo-rgb), 0.7); }
+/* ---- card stack ---- */
+.stack { position: relative; height: min(52svh, 460px); }
+.stack .sCard { left: auto; top: auto; position: absolute; inset: 0; margin: auto; transform-origin: 50% 120%; }
+@media (max-width: 760px) { .gCard, .sCard { width: 34vw; } .globe { height: 60svh; } }
+
+/* ---- card bloom ---- */
+.bloom { position: relative; height: min(80svh, 760px); perspective: 1600px; display: grid; place-items: center; overflow: hidden; }
+.bloomStage { position: relative; width: 1px; height: 1px; transform-style: preserve-3d; will-change: transform; }
+.bCard {
+  position: absolute; left: 50%; top: 50%; margin: calc(clamp(150px, 15vw, 230px) * -0.625) 0 0 calc(clamp(150px, 15vw, 230px) * -0.5);
+  width: clamp(150px, 15vw, 230px); aspect-ratio: 4 / 5; border-radius: 18px; padding: clamp(12px, 1.1vw, 18px);
+  display: flex; flex-direction: column; justify-content: flex-end; gap: 0.3em; color: var(--paper); text-decoration: none; transform-origin: 50% 50%; will-change: transform; backface-visibility: visible;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.07) 45%, rgba(255, 255, 255, 0.13));
+  border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 30px 80px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px) saturate(1.4); -webkit-backdrop-filter: blur(10px) saturate(1.4);
+}
+.bCard h3 { font-family: var(--font-display), sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(13px, 1.05vw, 19px); line-height: 1; letter-spacing: -0.01em; }
+.bCard p { opacity: 0.75; font-size: clamp(10px, 0.72vw, 12px); line-height: 1.3; }
+/* ---- hover, everywhere ---- */
+.gCard, .sCard, .bCard, .miniCard { transition: border-color 0.35s, box-shadow 0.35s, filter 0.35s; }
+.gCard:hover, .sCard:hover, .bCard:hover, .miniCard:hover { border-color: rgba(var(--fluo-rgb), 0.8); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 40px rgba(var(--fluo-rgb), 0.25); filter: brightness(1.15); z-index: 200 !important; }
+.gCard:hover h3, .sCard:hover h3, .bCard:hover h3 { color: var(--fluo); }
+@media (max-width: 760px) { .bloom { height: 62svh; } .bCard { width: 34vw; margin: calc(34vw * -0.625) 0 0 calc(34vw * -0.5); } }

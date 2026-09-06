@@ -102,3 +102,115 @@ export function CardOrbit() {
     </div>
   );
 }
+
+/**
+ * CardGlobe — cards on a sphere (the "card globe"). The globe turns with time and drags with
+ * the pointer; every card keeps facing you; the ones at the back fade into the glass.
+ */
+export function CardGlobe({ items }: { items: Item[] }) {
+  const root = useRef<HTMLDivElement>(null);
+  const n = items.length;
+  useGSAP(() => {
+    const cards = Array.from(root.current!.querySelectorAll<HTMLElement>(`.${m.gCard}`));
+    if (prefersReducedMotion()) return;
+    let rotY = 0, rotX = -10, vel = 0.25, dragging = false, lastX = 0;
+    const R = () => Math.min(root.current!.clientWidth, root.current!.clientHeight) * 0.42;
+    const pts = cards.map((_, i) => { const y = 1 - (i / (n - 1)) * 2; const r = Math.sqrt(1 - y * y); const a = i * 2.399963; return [Math.cos(a) * r, y, Math.sin(a) * r]; });
+    const down = (e: PointerEvent) => { dragging = true; lastX = e.clientX; };
+    const move = (e: PointerEvent) => { if (!dragging) return; vel = (e.clientX - lastX) * 0.4; rotY += vel; lastX = e.clientX; };
+    const up = () => { dragging = false; };
+    root.current!.addEventListener("pointerdown", down); window.addEventListener("pointermove", move); window.addEventListener("pointerup", up);
+    const tick = (_t: number, dt: number) => {
+      if (!dragging) { vel += (0.25 - vel) * 0.02; rotY += vel * dt * 0.06; }
+      const ry = (rotY * Math.PI) / 180, rx = (rotX * Math.PI) / 180, rad = R();
+      cards.forEach((c, i) => {
+        const [x0, y0, z0] = pts[i];
+        const x1 = x0 * Math.cos(ry) - z0 * Math.sin(ry), z1 = x0 * Math.sin(ry) + z0 * Math.cos(ry);
+        const y2 = y0 * Math.cos(rx) - z1 * Math.sin(rx), z2 = y0 * Math.sin(rx) + z1 * Math.cos(rx);
+        const depth = (z2 + 1) / 2; // 0 back, 1 front
+        c.style.transform = `translate(-50%,-50%) translate3d(${x1 * rad}px, ${y2 * rad * 0.8}px, ${z2 * rad}px) scale(${0.55 + depth * 0.55})`;
+        c.style.opacity = String(0.15 + depth * 0.85);
+        c.style.zIndex = String(Math.round(depth * 100));
+        c.style.pointerEvents = depth > 0.45 ? "auto" : "none";
+      });
+    };
+    gsap.ticker.add(tick);
+    gsap.from(cards, { scale: 0, opacity: 0, duration: 1.4, ease: "expo.out", stagger: 0.05, scrollTrigger: { trigger: root.current, start: "top 80%" } });
+    return () => { gsap.ticker.remove(tick); window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up); };
+  }, { scope: root });
+  return (
+    <div ref={root} className={m.globe}>
+      {items.map((it, i) => {
+        const inner = <>{it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}<h3>{it.h}</h3>{it.p && <p>{it.p}</p>}</>;
+        return it.href ? <Link key={i} href={it.href} className={m.gCard} data-cursor>{inner}</Link> : <div key={i} className={m.gCard}>{inner}</div>;
+      })}
+    </div>
+  );
+}
+
+/** CardStack — one pile of glass cards that deals itself out into a fan as you scroll. */
+export function CardStack({ items }: { items: Item[] }) {
+  const root = useRef<HTMLDivElement>(null);
+  const n = items.length;
+  useGSAP(() => {
+    const cards = Array.from(root.current!.querySelectorAll<HTMLElement>(`.${m.sCard}`));
+    if (prefersReducedMotion()) { cards.forEach((c, i) => (c.style.transform = `translateX(${(i - (n - 1) / 2) * 105}%)`)); return; }
+    gsap.set(cards, { x: 0, rotate: (i) => (i - (n - 1) / 2) * 1.5, y: (i) => i * -3, zIndex: (i) => i });
+    gsap.to(cards, {
+      x: (i) => `${(i - (n - 1) / 2) * Math.min(104, (88 * 6) / n)}%`, y: (i) => Math.abs(i - (n - 1) / 2) * 14, rotate: (i) => (i - (n - 1) / 2) * Math.min(5, 30 / n),
+      ease: "power2.out", stagger: { each: 0.03, from: "center" },
+      scrollTrigger: { trigger: root.current, start: "top 75%", end: "top 20%", scrub: 0.6 },
+    });
+  }, { scope: root });
+  return (
+    <div ref={root} className={m.stack} style={{ ["--n" as string]: n }}>
+      {items.map((it, i) => {
+        const inner = <>{it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}<h3>{it.h}</h3>{it.p && <p>{it.p}</p>}</>;
+        return it.href ? <Link key={i} href={it.href} className={m.sCard} data-cursor>{inner}</Link> : <div key={i} className={m.sCard}>{inner}</div>;
+      })}
+    </div>
+  );
+}
+
+/**
+ * CardBloom — the "orbit bloom": one pile in the centre opens like a flower, petals fanning
+ * out around a tilted axis while the whole bloom slowly turns. Hover a petal to pull it forward.
+ */
+export function CardBloom({ items }: { items: Item[] }) {
+  const root = useRef<HTMLDivElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
+  const n = items.length;
+  useGSAP(() => {
+    const cards = Array.from(root.current!.querySelectorAll<HTMLElement>(`.${m.bCard}`));
+    if (prefersReducedMotion()) { cards.forEach((c, i) => (c.style.transform = `rotate(${(i * 360) / n}deg) translateY(-45%)`)); return; }
+    const open = { v: 0 };
+    let spin = 0, tx = 55;
+    const t = { x: 55 };
+    const qx = gsap.quickTo(t, "x", { duration: 1.4, onUpdate: () => (tx = t.x) });
+    const move = (e: PointerEvent) => qx(55 + (e.clientY / innerHeight - 0.5) * -25);
+    window.addEventListener("pointermove", move);
+    gsap.to(open, { v: 1, ease: "power2.out", scrollTrigger: { trigger: root.current, start: "top 80%", end: "top 25%", scrub: 0.6 } });
+    const tick = (_t: number, dt: number) => {
+      spin += dt * 0.012 * open.v;
+      stage.current!.style.transform = `rotateX(${tx}deg) rotateZ(${spin}deg)`;
+      const rad = Math.min(root.current!.clientWidth, root.current!.clientHeight) * 0.36;
+      cards.forEach((c, i) => {
+        const a = (i * 360) / n + (1 - open.v) * 40;
+        c.style.transform = `rotate(${a}deg) translateY(${-rad * open.v}px) rotate(${-a - spin}deg) rotateX(${-tx * open.v}deg) translateZ(${open.v * 24}px)`;
+        c.style.opacity = String(0.3 + open.v * 0.7);
+      });
+    };
+    gsap.ticker.add(tick);
+    return () => { gsap.ticker.remove(tick); window.removeEventListener("pointermove", move); };
+  }, { scope: root });
+  return (
+    <div ref={root} className={m.bloom}>
+      <div ref={stage} className={m.bloomStage}>
+        {items.map((it, i) => {
+          const inner = <>{it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}<h3>{it.h}</h3>{it.p && <p>{it.p}</p>}</>;
+          return it.href ? <Link key={i} href={it.href} className={m.bCard} data-cursor>{inner}</Link> : <div key={i} className={m.bCard}>{inner}</div>;
+        })}
+      </div>
+    </div>
+  );
+}
