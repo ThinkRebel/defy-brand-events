@@ -4,6 +4,7 @@ import type { Lang } from "@/content";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 import { ObjectHelix } from "./Morph";
 import { MiniRing, CardOrbit } from "./Rings";
+import { Compass, Blender } from "./Props";
 import Typewriter from "./Typewriter";
 import TiltCard from "./TiltCard";
 import v from "./visuals.module.css";
@@ -30,9 +31,9 @@ export function ServiceScene({ slug, lang, slotRef }: { slug: string; lang: Lang
     case "marketing":
       return <ObjectHelix slotRef={slotRef} />;
     case "seo":
-      return <RankClimb lang={lang} />;
+      return <Compass fallback={<RankClimb lang={lang} />} />;
     case "geo":
-      return <AiAnswer lang={lang} />;
+      return <Blender fallback={<AiAnswer lang={lang} />} />;
     case "agent-ready":
       return <SchemaCheck />;
     case "agentic-workflow":

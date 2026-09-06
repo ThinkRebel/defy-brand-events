@@ -49,7 +49,7 @@ export function Nav({ copy }: { copy: Copy }) {
           >
             <ul>
               {[
-                [copy.nav.work, href(lang, "home") + "#work"],
+                [copy.nav.work, href(lang, "portfolio")],
                 [copy.nav.services, href(lang, "services")],
                 [copy.nav.about, href(lang, "about")],
                 [copy.nav.contact, href(lang, "contact")],

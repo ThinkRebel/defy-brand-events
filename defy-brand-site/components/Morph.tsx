@@ -226,6 +226,7 @@ export function Tornado({ children }: { children?: React.ReactNode }) {
         for (let y = 0; y < ih; y += 2) for (let x = 0; x < iw; x += 2) {
           const i = (y * iw + x) * 4, br = (d[i] + d[i + 1] + d[i + 2]) / 3;
           if (d[i + 3] < 120 || br < 70) continue;
+          if (d[i] > 232 && d[i + 1] > 232 && d[i + 2] > 232) continue; // white background in the render
           const u = y / ih, rad = (x / iw - 0.5) * 2;
           parts.push({ u, row: y, ang: Math.asin(clamp(rad, -1, 1)) + (Math.random() < 0.5 ? 0 : Math.PI), rad: Math.abs(rad), c: [d[i], d[i + 1], d[i + 2]], r: 1.2 + Math.random() * 1.6, bx: 0, by: 0, bvx: 0, bvy: 0, spin: 0 });
         }

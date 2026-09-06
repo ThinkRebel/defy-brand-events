@@ -1,0 +1,15 @@
+/* compass */
+.compass { position: relative; width: 100%; height: 100%; }
+.exploded { position: absolute; inset: 0; display: flex; }
+.slice { flex: 1 0 0; background-image: url("/assets/compass-exploded.png"); background-size: auto 100%; background-repeat: no-repeat; will-change: transform; }
+.poseWrap { position: absolute; inset: 0; opacity: 0; transition: opacity 0.4s; }
+.built { opacity: 1; }
+.pose { position: absolute; inset: 0; background-image: url("/assets/compass-sheet.png"); background-repeat: no-repeat; opacity: 0; transition: opacity 0.28s ease; filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.55)); }
+.poseOn { opacity: 1; }
+/* blender */
+.blender { position: relative; width: 100%; height: 100%; display: grid; place-items: end center; }
+.blender img { width: auto; height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.5)); }
+.drops { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+/* cubes */
+.cubes { display: grid; place-items: center; perspective: 900px; margin: clamp(10px, 2vh, 30px) 0 clamp(20px, 4vh, 50px); }
+.cubes img { width: min(70vw, 560px); height: auto; filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.55)); will-change: transform; }
