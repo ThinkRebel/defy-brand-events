@@ -33,7 +33,8 @@ export default function Hero({ copy }: { copy: Copy }) {
       // scroll-out: the name lifts, the ribbon sinks (parallax), the object slot grows for the flow object
       const st = { trigger: root.current, start: "top top", end: "bottom top", scrub: 1 };
       gsap.to(q(`.${s.wall}`), { yPercent: -18, opacity: 0.25, scrollTrigger: st });
-      gsap.to(q(`.${s.bg}`), { yPercent: 22, scale: 1.08, scrollTrigger: st });
+      // photo and veil move as one, so the fade-out stays on the photo while it runs on below the hero
+      gsap.to(q(`.${s.bg}, .${s.veil}`), { yPercent: 22, scale: 1.08, scrollTrigger: st });
       gsap.to(q(`.${s.obj}`), { yPercent: 40, scale: 1.9, scrollTrigger: { ...st, scrub: 1.2 } });
     },
     { scope: root }
