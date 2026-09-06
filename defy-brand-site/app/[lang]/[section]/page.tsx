@@ -9,7 +9,8 @@ import { Closer, Reveal } from "@/components/Sections";
 import Cinema from "@/components/Cinema";
 import FlowObject from "@/components/FlowObject";
 import { DustMorph, Tornado } from "@/components/Morph";
-import { MiniRing } from "@/components/Rings";
+import { CardGlobe, CardBloom } from "@/components/Rings";
+import Portfolio from "@/components/Portfolio";
 import p from "@/components/page.module.css";
 
 type Props = { params: Promise<{ lang: Lang; section: string }> };
@@ -18,15 +19,16 @@ export const dynamicParams = false;
 export function generateStaticParams() {
   return LANGS.flatMap((lang) => {
     const r = getCopy(lang).routes;
-    return [r.services, r.about, r.contact].map((section) => ({ lang, section }));
+    return [r.services, r.about, r.contact, r.portfolio].map((section) => ({ lang, section }));
   });
 }
 
-function resolve(lang: Lang, section: string): "services" | "about" | "contact" | null {
+function resolve(lang: Lang, section: string): "services" | "about" | "contact" | "portfolio" | null {
   const r = getCopy(lang).routes;
   if (section === r.services) return "services";
   if (section === r.about) return "about";
   if (section === r.contact) return "contact";
+  if (section === r.portfolio) return "portfolio";
   return null;
 }
 
@@ -36,6 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = getCopy(lang);
   if (key === "about") return buildMetadata(lang, "about", { title: c.nav.about, description: c.about.meta });
   if (key === "contact") return buildMetadata(lang, "contact", { title: c.nav.contact, description: c.contact.meta });
+  if (key === "portfolio") return buildMetadata(lang, "portfolio", { title: c.nav.work, description: c.portfolio.meta });
   return buildMetadata(lang, "services", { title: c.nav.services, description: c.meta.description });
 }
 
@@ -44,7 +47,18 @@ export default async function SectionPage({ params }: Props) {
   const key = resolve(lang, section);
   if (!key) notFound();
   const c = getCopy(lang);
-  const crumbs = [{ name: "Defy & Brand Events", url: href(lang, "home") }, { name: c.nav[key], url: href(lang, key) }];
+  const navName = key === "portfolio" ? c.nav.work : c.nav[key];
+  const crumbs = [{ name: "Defy & Brand Events", url: href(lang, "home") }, { name: navName, url: href(lang, key) }];
+
+  if (key === "portfolio") {
+    return (
+      <>
+        <JsonLd data={breadcrumbJsonLd(crumbs)} />
+        <Portfolio copy={c} />
+        <Closer copy={c} h={c.home.closerH} cta={c.home.closerCta} />
+      </>
+    );
+  }
 
   if (key === "about") {
     const a = c.about;
@@ -92,7 +106,7 @@ export default async function SectionPage({ params }: Props) {
         </section>
         <section className={p.ringBlock}>
           <span className="eyebrow">{c.home.servicesEyebrow}</span>
-          <MiniRing slot items={c.services.map((s) => ({ h: s.name, p: s.role.charAt(0).toUpperCase() + s.role.slice(1) + ".", num: s.num, href: href(lang, "services", s.slug) }))} />
+          <CardBloom items={c.services.map((s) => ({ h: s.name, p: s.role.charAt(0).toUpperCase() + s.role.slice(1) + ".", num: s.num, href: href(lang, "services", s.slug) }))} />
         </section>
         <section className={p.name}>
           <Reveal as="h2">{a.nameTitle}</Reveal>
@@ -149,7 +163,7 @@ export default async function SectionPage({ params }: Props) {
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
       <PageHero label={c.nav.services} title={c.home.servicesEyebrow} sub={c.home.heroLead} obj={false} />
       <section className={p.ringBlock}>
-        <MiniRing items={c.services.map((s) => ({ h: s.name, p: s.role.charAt(0).toUpperCase() + s.role.slice(1) + ".", num: s.num, href: href(lang, "services", s.slug) }))} />
+        <CardGlobe items={c.services.map((s) => ({ h: s.name, p: s.role.charAt(0).toUpperCase() + s.role.slice(1) + ".", num: s.num, href: href(lang, "services", s.slug) }))} />
       </section>
       <section className={p.overview}>
         <ol>
