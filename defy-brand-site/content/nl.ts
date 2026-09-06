@@ -2,7 +2,7 @@ import type { Copy } from "./types";
 
 export const nl: Copy = {
   lang: "nl",
-  nav: { work: "Werk", services: "Diensten", about: "Over", contact: "Contact" },
+  nav: { work: "Werk", services: "Diensten", about: "Wie & waarom", contact: "Contact" },
   routes: { services: "diensten", about: "over", contact: "contact" },
   meta: {
     title: "Defy & Brand Events — We turn ideas into experiences",
@@ -35,7 +35,7 @@ export const nl: Copy = {
     closerCta: "Let's make it happen",
   },
   about: {
-    eyebrow: "Waarom wij bestaan",
+    eyebrow: "Wie we zijn, en waarom",
     h: "We don't build brands. We build the moment someone cares.",
     why: [
       "Wij hebben te veel goede ideeën zien sterven.",

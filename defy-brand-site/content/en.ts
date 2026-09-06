@@ -2,7 +2,7 @@ import type { Copy } from "./types";
 
 export const en: Copy = {
   lang: "en",
-  nav: { work: "Work", services: "Services", about: "About", contact: "Contact" },
+  nav: { work: "Work", services: "Services", about: "Who & why", contact: "Contact" },
   routes: { services: "services", about: "about", contact: "contact" },
   meta: {
     title: "Defy & Brand Events — We turn ideas into experiences",

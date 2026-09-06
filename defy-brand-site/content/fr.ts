@@ -2,7 +2,7 @@ import type { Copy } from "./types";
 
 export const fr: Copy = {
   lang: "fr",
-  nav: { work: "Travaux", services: "Services", about: "À propos", contact: "Contact" },
+  nav: { work: "Créations", services: "Services", about: "Qui & pourquoi", contact: "Contact" },
   routes: { services: "services", about: "a-propos", contact: "contact" },
   meta: {
     title: "Defy & Brand Events — We turn ideas into experiences",
@@ -34,7 +34,7 @@ export const fr: Copy = {
     closerCta: "Let's make it happen",
   },
   about: {
-    eyebrow: "Pourquoi nous existons",
+    eyebrow: "Qui nous sommes, et pourquoi",
     h: "We don't build brands. We build the moment someone cares.",
     why: [
       "Nous avons vu trop de bonnes idées mourir.",
@@ -51,7 +51,7 @@ export const fr: Copy = {
     howTitle: "Notre façon de travailler",
     verbs: ["Nous pensons.", "Nous créons.", "Nous testons.", "Nous améliorons.", "Nous donnons vie aux idées."],
     howNote: "Dans cet ordre, puis on recommence. Petite équipe, circuits courts, pas d'intermédiaires. Vous parlez aux gens qui font le travail.",
-    nameTitle: "Defy & Brand — le nom",
+    nameTitle: "Ce que dit notre nom",
     name: [
       { k: "Defy", p: "c'est refuser de faire ce que tout votre secteur fait, simplement parce que tout le monde le fait." },
       { k: "Brand", p: "c'est la discipline qui donne une direction à cette audace." },
@@ -61,7 +61,7 @@ export const fr: Copy = {
     meta: "Pourquoi Defy & Brand Events existe : pas de one-size-fits-all, pas de stratégie sans exécution. Nous pensons, créons, testons, améliorons et donnons vie aux idées.",
   },
   contact: {
-    h: "Vous avez quelque chose en tête. Sortons-le.",
+    h: "Vous avez quelque chose en tête. On en fait quoi ?",
     lines: [
       "Une idée qui n'a pas encore de forme.",
       "Un problème que vous regardez depuis trop longtemps.",
@@ -73,8 +73,8 @@ export const fr: Copy = {
     labels: {
       who: "Qui êtes-vous ?",
       reach: "Comment vous joindre ?",
-      what: "À quoi pensez-vous ? (Brut, c'est très bien. Brut, c'est souvent le mieux.)",
-      send: "Envoyez",
+      what: "Racontez. (En vrac, c'est parfait. En vrac, c'est souvent mieux.)",
+      send: "Envoyer",
     },
     confirm: "Bien reçu. Nous le lisons vraiment, et un humain vous répond sous deux jours ouvrables — pas un répondeur automatique.",
     alt: "Vous préférez parler tout de suite ?",
@@ -230,7 +230,7 @@ export const fr: Copy = {
         { h: "Une croissance qui tient", p: "Croître vite, tout le monde y arrive avec assez de budget. Nous construisons une croissance qui tient encore debout quand la campagne s'arrête." },
       ],
       closer: ["Le bon marketing ne change pas ce que les gens voient.", "Il change ce qu'ils pensent en le voyant."],
-      cta: "Faites votre mouvement",
+      cta: "Passez à l'action",
       meta: "Le marketing comme combinaison de stratégie, créativité, contenu, performance et données. Defy & Brand Events façonne la perception et le comportement — pas seulement la visibilité.",
     },
     {
@@ -252,7 +252,7 @@ export const fr: Copy = {
         { h: "Une visibilité qui convertit", p: "Le trafic n'est pas un objectif. Nous mesurons ce que ces visiteurs font — et nous optimisons pour ça." },
       ],
       closer: ["La meilleure position sur Google, c'est celle où le visiteur pense : c'est exactement ce que je cherchais."],
-      cta: "Soyez trouvé par les bonnes personnes",
+      cta: "Faites-vous trouver par les bonnes personnes",
       meta: "SEO par Defy & Brand Events : intention de recherche, pertinence, contenu, base technique, autorité et conversion. Être trouvé par la bonne personne au bon moment.",
     },
     {
@@ -287,7 +287,7 @@ export const fr: Copy = {
         url: "https://www.ceeme.be",
       },
       honest: {
-        h: "Honnêtement, ce qu'est le GEO",
+        h: "Le GEO, en toute honnêteté",
         p: "Le GEO ne garantit pas qu'une IA vous recommandera. Personne ne peut le promettre — ces systèmes décident seuls. Ce que le GEO fait : s'assurer que vous êtes compris. Et ce qui est compris peut être choisi.",
       },
       closer: ["Ce qui est compris peut être choisi."],
