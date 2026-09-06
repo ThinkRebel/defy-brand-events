@@ -80,7 +80,7 @@ ol {
 
 .display {
   font-family: var(--font-display), Georgia, "Times New Roman", serif;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .eyebrow {
@@ -127,7 +127,7 @@ ol {
 
 /* Shared CTA button */
 .btn {
-  font-weight: 800;
+  font-weight: 700;
   position: relative;
   display: inline-grid;
   place-items: center;
@@ -162,7 +162,7 @@ ol {
 
 /* Inline arrow link */
 .arrow-link {
-  font-weight: 800;
+  font-weight: 700;
   display: inline-flex;
   align-items: center;
   gap: 0.6em;

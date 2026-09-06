@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, Figtree } from "next/font/google";
+import { Bricolage_Grotesque, Figtree } from "next/font/google";
 import "./globals.css";
 
-const display = Syne({ subsets: ["latin"], weight: ["700", "800"], variable: "--font-display", display: "swap" });
+const display = Bricolage_Grotesque({ subsets: ["latin"], weight: ["500", "600", "700", "800"], variable: "--font-display", display: "swap" });
 const body = Figtree({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-body", display: "swap" });
 
 export const metadata: Metadata = {
