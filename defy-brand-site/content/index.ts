@@ -50,7 +50,7 @@ export const PORTFOLIO: Work[] = [
   { name: "EcoClean Luxembourg", url: "https://eco-clean.lu/", host: "eco-clean.lu", kind: { nl: "Website", fr: "Site web", en: "Website" }, live: true },
   { name: "Karweiservice Vanden Berghe", url: "https://karweiservicevb.be/", host: "karweiservicevb.be", kind: { nl: "Website", fr: "Site web", en: "Website" }, live: true },
   { name: "Oostende.ai", url: "https://oostende.ai/", host: "oostende.ai", kind: { nl: "Event-landingspagina", fr: "Landing page événement", en: "Event landing page" }, live: true },
-  { name: "Customm", url: "https://thinkrebeltest.com/", host: "thinkrebeltest.com", kind: { nl: "Website", fr: "Site web", en: "Website" }, live: true },
+  { name: "Customm", url: "https://custom.be/", host: "custom.be", kind: { nl: "Website", fr: "Site web", en: "Website" }, live: true },
   { name: "Tribar Law", url: "https://thinkrebeltest2.eu/", host: "thinkrebeltest2.eu", kind: { nl: "Website", fr: "Site web", en: "Website" }, live: false },
 ];
 

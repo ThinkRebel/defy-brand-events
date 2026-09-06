@@ -4,7 +4,7 @@ export const en: Copy = {
   lang: "en",
   nav: { work: "Portfolio", services: "Services", about: "Who & why", contact: "Contact" },
   routes: { services: "services", about: "about", contact: "contact", portfolio: "portfolio" },
-  portfolio: { eyebrow: "What we've made", h: "Every project here was built with one thought: this has to stick.", hint: "Hover a name. Click to open the site.", live: "Live", wip: "In the works", visit: "Open the site", meta: "Websites and campaigns by Defy & Brand Events: Rhumerie Louis, AI in de klas, DPODR, EcoClean Luxembourg, Karweiservice Vanden Berghe, Oostende.ai, Customm." },
+  portfolio: { eyebrow: "What we've made", h: "Every project here was built with one thought: this has to stick.", hint: "Click a project to open the site.", live: "Live", wip: "In the works", visit: "Open the site", meta: "Websites and campaigns by Defy & Brand Events: Rhumerie Louis, AI in de klas, DPODR, EcoClean Luxembourg, Karweiservice Vanden Berghe, Oostende.ai, Customm." },
   meta: {
     title: "Defy & Brand Events — We turn ideas into experiences",
     description:

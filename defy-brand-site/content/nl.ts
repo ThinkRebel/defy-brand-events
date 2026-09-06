@@ -4,7 +4,7 @@ export const nl: Copy = {
   lang: "nl",
   nav: { work: "Portfolio", services: "Diensten", about: "Wie & waarom", contact: "Contact" },
   routes: { services: "diensten", about: "over", contact: "contact", portfolio: "portfolio" },
-  portfolio: { eyebrow: "Wat we al maakten", h: "Elk project hier is gemaakt met één gedachte: dit moet blijven hangen.", hint: "Beweeg over een naam. Klik om de site te openen.", live: "Live", wip: "In de maak", visit: "Open de site", meta: "Websites en campagnes van Defy & Brand Events: Rhumerie Louis, AI in de klas, DPODR, EcoClean Luxembourg, Karweiservice Vanden Berghe, Oostende.ai, Customm." },
+  portfolio: { eyebrow: "Wat we al maakten", h: "Elk project hier is gemaakt met één gedachte: dit moet blijven hangen.", hint: "Klik op een project om de site te openen.", live: "Live", wip: "In de maak", visit: "Open de site", meta: "Websites en campagnes van Defy & Brand Events: Rhumerie Louis, AI in de klas, DPODR, EcoClean Luxembourg, Karweiservice Vanden Berghe, Oostende.ai, Customm." },
   meta: {
     title: "Defy & Brand Events — We turn ideas into experiences",
     description:
