@@ -270,6 +270,7 @@
   transform: translate(-50%, -50%);
   background: radial-gradient(circle, rgba(var(--fluo-rgb), 0.55), rgba(var(--fluo-rgb), 0.12) 40%, transparent 70%);
   filter: blur(36px);
+  opacity: 0.6;
   pointer-events: none;
 }
 .coreobj {
@@ -283,7 +284,9 @@
   pointer-events: none;
 }
 .ring {
-  --cw: min(16vw, 27svh, 260px);
+  --cw: min(15vw, 24svh, 240px);
+  margin-top: -6svh;
+  z-index: 1;
   --r: calc(var(--cw) * 1.75);
   position: relative;
   width: var(--cw);
@@ -319,7 +322,7 @@
   transition: transform 1.4s var(--ease);
 }
 .card:hover::before { transform: translateX(60%); }
-.card > * { position: relative; }
+.card > * { position: relative; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .card .n {
   position: absolute;
   left: clamp(14px, 1.3vw, 22px);
@@ -375,7 +378,7 @@
 .dHead { position: absolute; top: clamp(100px, 14vh, 150px); left: var(--pad); z-index: 2; }
 .dSlot img { width: 100%; height: auto; display: block; filter: drop-shadow(0 20px 30px rgba(0,0,0,.5)); animation: dspin 40s linear infinite; }
 @keyframes dspin { to { transform: rotate(360deg); } }
-.dSlot { position: absolute; left: 0; top: clamp(150px, 19vh, 220px); width: min(14vmin, 130px); aspect-ratio: 624 / 670; z-index: 3; pointer-events: none; }
+.dSlot { position: absolute; left: 0; top: 0; width: min(14vmin, 130px); aspect-ratio: 624 / 670; z-index: 3; pointer-events: none; }
 .dTrack { position: absolute; left: 0; top: 50%; transform: translateY(-44%); display: flex; align-items: stretch; gap: clamp(20px, 2.2vw, 40px); padding: 0 var(--pad); will-change: transform; }
 .dEnd { flex: 0 0 calc(var(--pad) * 2); }
 .dCard {
@@ -391,7 +394,7 @@
 .dActive { border-color: rgba(var(--fluo-rgb), 0.6); }
 .dLast { background: linear-gradient(150deg, rgba(var(--fluo-rgb), 0.3), rgba(var(--fluo-rgb), 0.08) 50%, rgba(255, 255, 255, 0.08)); }
 .dNum { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; color: var(--fluo); font-size: clamp(18px, 1.5vw, 26px); letter-spacing: 0.02em; }
-.dCard h3 { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(30px, 3vw, 56px); line-height: 0.96; letter-spacing: -0.02em; margin-top: 0.5em; text-wrap: balance; }
+.dCard h3 { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(24px, 2.3vw, 44px); overflow-wrap: anywhere; line-height: 0.96; letter-spacing: -0.02em; margin-top: 0.5em; text-wrap: balance; }
 .dCard p { opacity: 0.85; line-height: 1.4; margin-top: auto; padding-top: 1.4em; font-size: 1.05em; }
 .dLast h3 { color: var(--fluo); }
 @media (max-width: 760px) { .dCard { flex-basis: 80vw; } .dSlot { width: 22vw; top: 120px; } }

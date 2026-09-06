@@ -42,7 +42,7 @@ export default function Deck({ copy, eyebrow, items: given, flow = "chain", numb
           const r = cards[active].getBoundingClientRect();
           const local = Math.min(1, Math.max(0, (cx - r.left) / Math.max(1, r.width)));
           const hop = Math.sin(local * Math.PI) * -34;
-          gsap.to(slot, { x: r.left + r.width * 0.5 - slot.offsetWidth * 0.5, y: hop, duration: 0.35, ease: "power2.out", overwrite: "auto" });
+          gsap.to(slot, { x: r.left + r.width * 0.5 - slot.offsetWidth * 0.5, y: r.top - slot.offsetHeight * 0.9 + hop, duration: 0.35, ease: "power2.out", overwrite: "auto" });
           cards.forEach((c, i) => {
             c.classList.toggle(s.dActive, i === active);
             const rc = c.getBoundingClientRect();
