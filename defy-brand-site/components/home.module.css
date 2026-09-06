@@ -20,14 +20,14 @@
 }
 .bg img {
   position: absolute;
-  inset: -8%;
-  width: 116%;
-  height: 116%;
+  inset: -4%;
+  width: 108%;
+  height: 108%;
   object-fit: cover;
-  object-position: 62% 50%;
-  transform-origin: 60% 50%;
+  object-position: 58% 50%;
+  transform-origin: 58% 50%;
   will-change: transform;
-  filter: contrast(1.08) brightness(1.05);
+  filter: contrast(1.08) brightness(1.08);
 }
 @media (max-width: 760px) { .bg img { object-position: 70% 50%; } }
 .veil {
