@@ -413,3 +413,16 @@
 .chip:focus-visible { outline: 2px solid var(--fluo); outline-offset: 2px; }
 .chipOn { background: var(--fluo); border-color: var(--fluo); color: #0e0e12; }
 .chipOn b { color: #0e0e12; }
+/* after sending: the form makes way for a confirmation card in the same spot — never an empty column */
+.done { align-self: end; position: relative; display: grid; gap: 1em; padding: clamp(24px, 2.4vw, 40px); border-radius: 26px; background: linear-gradient(150deg, rgba(var(--fluo-rgb), 0.22), rgba(255, 255, 255, 0.06) 55%, rgba(255, 255, 255, 0.1)); border: 1px solid rgba(var(--fluo-rgb), 0.55); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 60px rgba(var(--fluo-rgb), 0.15); outline: none; animation: donein 0.9s var(--ease) both; }
+@keyframes donein { from { opacity: 0; transform: translateY(24px) scale(0.98); } to { opacity: 1; transform: none; } }
+.doneMark { width: 56px; height: 56px; border-radius: 50%; background: var(--fluo); color: #0e0e12; display: grid; place-items: center; font-weight: 700; font-size: 26px; }
+.done h3 { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; text-transform: none; font-size: clamp(32px, 3.6vw, 64px); line-height: 1; color: var(--fluo); }
+.done .confirm { font-size: clamp(17px, 1.3vw, 22px); color: var(--paper); max-width: 40ch; }
+.doneSum { display: grid; gap: 0.4em; padding-top: 1em; border-top: 1px solid rgba(255, 255, 255, 0.15); font-size: 0.9em; }
+.doneSum div { display: grid; grid-template-columns: minmax(9ch, 14ch) 1fr; gap: 1em; align-items: baseline; }
+.doneSum dt { opacity: 0.55; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.8em; }
+.doneSum dd { overflow-wrap: anywhere; }
+.doneNote { opacity: 0.8; line-height: 1.45; }
+.doneRow { display: flex; align-items: center; gap: 1.6em; flex-wrap: wrap; margin-top: 0.4em; }
+.doneRow .btn { width: clamp(120px, 10vw, 160px); }
