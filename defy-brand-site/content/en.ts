@@ -86,7 +86,7 @@ export const en: Copy = {
       what: "What's on your mind? (Rough is fine. Rough is usually best.)",
       send: "Send it",
     },
-    confirm: "Received. We actually read it, and you'll hear from a human within two working days — not an autoresponder.",
+    confirm: "Received. We actually read it, and you'll hear from our team within two working days — not an autoresponder.",
     alt: "Rather talk right now?",
     meta: "An idea, a problem, an ambition? Tell Defy & Brand Events. You don't have to have it figured out.",
     cine: {
