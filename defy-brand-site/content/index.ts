@@ -50,8 +50,8 @@ export const PORTFOLIO: Work[] = [
   { name: "EcoClean Luxembourg", url: "https://eco-clean.lu/", host: "eco-clean.lu", kind: { nl: "Website", fr: "Site web", en: "Website" }, live: true },
   { name: "Karweiservice Vanden Berghe", url: "https://karweiservicevb.be/", host: "karweiservicevb.be", kind: { nl: "Website", fr: "Site web", en: "Website" }, live: true },
   { name: "Oostende.ai", url: "https://oostende.ai/", host: "oostende.ai", kind: { nl: "Event-landingspagina", fr: "Landing page événement", en: "Event landing page" }, live: true },
-  { name: "Customm", url: "https://custom.be/", host: "custom.be", kind: { nl: "Website", fr: "Site web", en: "Website" }, live: true },
-  { name: "Tribar Law", url: "https://thinkrebeltest2.eu/", host: "thinkrebeltest2.eu", kind: { nl: "Website", fr: "Site web", en: "Website" }, live: false },
+  { name: "Customm", url: "https://customm.be/", host: "customm.be", kind: { nl: "Website", fr: "Site web", en: "Website" }, live: true },
+  { name: "Tribar Legal", url: "https://tribarlegal.eu/nl", host: "tribarlegal.eu", kind: { nl: "Website", fr: "Site web", en: "Website" }, live: true },
 ];
 
 export const SITE_URL = "https://defyandbrandevents.be";
