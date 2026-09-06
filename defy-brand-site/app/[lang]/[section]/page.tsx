@@ -7,6 +7,9 @@ import JsonLd from "@/components/JsonLd";
 import { PageHero, ContactForm } from "@/components/Page";
 import { Closer, Reveal } from "@/components/Sections";
 import Cinema from "@/components/Cinema";
+import FlowObject from "@/components/FlowObject";
+import { DustMorph, Tornado } from "@/components/Morph";
+import { MiniRing } from "@/components/Rings";
 import p from "@/components/page.module.css";
 
 type Props = { params: Promise<{ lang: Lang; section: string }> };
@@ -48,7 +51,12 @@ export default async function SectionPage({ params }: Props) {
     return (
       <>
         <JsonLd data={breadcrumbJsonLd(crumbs)} />
-        <PageHero label={a.eyebrow} title={a.h} />
+        <FlowObject />
+        <DustMorph text="DB EVENTS" />
+        <section className={p.aboutHead}>
+          <span className="eyebrow">{a.eyebrow}</span>
+          <h1 className={p.ph1}>{a.h}</h1>
+        </section>
         <section className={p.aboutWhy}>
           <span className="eyebrow">{a.eyebrow}</span>
           <div>
@@ -70,6 +78,7 @@ export default async function SectionPage({ params }: Props) {
             })}
           </ul>
         </section>
+        <Cinema copy={c} />
         <section className={p.how}>
           <div>
             <Reveal as="h2">{a.howTitle}</Reveal>
@@ -80,6 +89,10 @@ export default async function SectionPage({ params }: Props) {
             </ol>
           </div>
           <Reveal as="p" delay={0.3}>{a.howNote}</Reveal>
+        </section>
+        <section className={p.ringBlock}>
+          <span className="eyebrow">{c.home.servicesEyebrow}</span>
+          <MiniRing slot items={c.services.map((s) => ({ h: s.name, p: s.role.charAt(0).toUpperCase() + s.role.slice(1) + ".", num: s.num, href: href(lang, "services", s.slug) }))} />
         </section>
         <section className={p.name}>
           <Reveal as="h2">{a.nameTitle}</Reveal>
@@ -102,7 +115,14 @@ export default async function SectionPage({ params }: Props) {
     return (
       <>
         <JsonLd data={breadcrumbJsonLd(crumbs)} />
-        <Cinema copy={c} />
+        <Tornado>
+          <div>
+            <span className="eyebrow">{c.nav.contact}</span>
+            <h1 className={p.noise}>Let&apos;s make<br />some noise.</h1>
+            <p className={p.noiseSub}>{ct.h}</p>
+            <a className="btn" href="#form"><i /><span>{ct.labels.send}</span></a>
+          </div>
+        </Tornado>
         <section className={p.contact} id="form">
           <div>
             <span className="eyebrow">{c.nav.contact}</span>
@@ -128,6 +148,9 @@ export default async function SectionPage({ params }: Props) {
     <>
       <JsonLd data={breadcrumbJsonLd(crumbs)} />
       <PageHero label={c.nav.services} title={c.home.servicesEyebrow} sub={c.home.heroLead} obj={false} />
+      <section className={p.ringBlock}>
+        <MiniRing items={c.services.map((s) => ({ h: s.name, p: s.role.charAt(0).toUpperCase() + s.role.slice(1) + ".", num: s.num, href: href(lang, "services", s.slug) }))} />
+      </section>
       <section className={p.overview}>
         <ol>
           {c.services.map((s, i) => (
