@@ -8,8 +8,8 @@ import { PageHero, ContactForm } from "@/components/Page";
 import { Closer, Reveal } from "@/components/Sections";
 import Cinema from "@/components/Cinema";
 import FlowObject from "@/components/FlowObject";
-import { DustMorph, Tornado } from "@/components/Morph";
-import { CardGlobe, CardBloom } from "@/components/Rings";
+import { Tornado } from "@/components/Morph";
+import { CardGlobe, CardBloom, SERVICE_IMG } from "@/components/Rings";
 import Portfolio from "@/components/Portfolio";
 import Kinetic from "@/components/Kinetic";
 import p from "@/components/page.module.css";
@@ -68,7 +68,6 @@ export default async function SectionPage({ params }: Props) {
         <JsonLd data={breadcrumbJsonLd(crumbs)} />
         <Cinema copy={c} />
         <FlowObject />
-        <DustMorph text="DB EVENTS" />
         <section className={p.aboutHead}>
           <span className="eyebrow">{a.eyebrow}</span>
           <Kinetic as="h1" text={a.h} mode="flip" className={p.ph1} />
@@ -176,6 +175,7 @@ export default async function SectionPage({ params }: Props) {
           {c.services.map((s, i) => (
             <Reveal key={s.slug} as="li" delay={(i % 3) * 0.08}>
               <Link className={p.scard} href={href(lang, "services", s.slug)}>
+                <img className={p.scardImg} src={SERVICE_IMG[s.num]} alt="" loading="lazy" />
                 <span className={p.num}><b>#</b>{s.num}</span>
                 <h2>{s.name}</h2>
                 <p className={p.head}>{s.headline === s.headline.toUpperCase() ? s.headline.charAt(0) + s.headline.slice(1).toLowerCase().replace(/\b(ai|geo|seo|dna)\b/g, (m) => m.toUpperCase()) : s.headline}</p>
