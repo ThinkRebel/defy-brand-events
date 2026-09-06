@@ -211,7 +211,6 @@ export function DustMorph({ text = "DB EVENTS", slotRef: given }: { text?: strin
 
 /* ============================== TORNADO ============================== */
 const TORNADO_SRC = "/assets/77332CB1-433B-4473-82F6-02E39851E243%202.PNG";
-type Tile = { c: number; r: number; x: number; y: number; vx: number; vy: number; rot: number; vr: number };
 
 /**
  * The real tornado render, alive: it sways row by row like a real vortex. As you scroll it
@@ -220,24 +219,18 @@ type Tile = { c: number; r: number; x: number; y: number; vx: number; vy: number
 export function Tornado({ children }: { children?: React.ReactNode }) {
   const root = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLCanvasElement>(null);
+  const slotRef = useRef<HTMLDivElement>(null);
   const prog = useRef(0);
   useGSAP(() => {
     if (prefersReducedMotion()) return;
     ScrollTrigger.create({ trigger: root.current, start: "top top", end: "+=220%", pin: true, scrub: 0.6, onUpdate: (st) => (prog.current = st.progress) });
-    gsap.to(root.current!.querySelector(`.${m.tornadoCopy}`), { opacity: 1, y: 0, ease: "none", scrollTrigger: { trigger: root.current, start: "35% top", end: "+=90%", scrub: true } });
+    gsap.to(root.current!.querySelector(`.${m.tornadoCopy}`), { opacity: 1, y: 0, ease: "none", scrollTrigger: { trigger: root.current, start: "70% top", end: "+=80%", scrub: true } });
   }, { scope: root });
   useEffect(() => {
     const c = ref.current!;
-    let raf = 0, img: HTMLImageElement | null = null, tiles: Tile[] = [], W = 0, H = 0, seeded = false;
+    let raf = 0, img: HTMLImageElement | null = null, W = 0, H = 0;
     const COLS = 14, ROWS = 24;
     loadImg(TORNADO_SRC).then((i) => (img = i));
-    const seed = () => {
-      tiles = [];
-      for (let r = 0; r < ROWS; r++) for (let cc = 0; cc < COLS; cc++) {
-        const a = Math.random() * Math.PI * 2, sp = 6 + Math.random() * 16;
-        tiles.push({ c: cc, r, x: 0, y: 0, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 6, rot: 0, vr: (Math.random() - 0.5) * 0.25 });
-      }
-    };
     const draw = (tm: number) => {
       const { ctx, w, h } = fitCanvas(c); W = w; H = h;
       const t = tm / 1000, p = prog.current;
@@ -245,26 +238,27 @@ export function Tornado({ children }: { children?: React.ReactNode }) {
       if (img) {
         // the picture sits centred, 92% of the height
         const ih = H * 0.92, iw = ih * (img.width / img.height), ox = (W - iw) / 2, oy = H * 0.04;
-        const burst = smooth(clamp((p - 0.22) / 0.5));
-        if (burst > 0 && !seeded) { seed(); seeded = true; }
-        if (burst === 0) seeded = false;
+        // .25 → .75: the vortex keeps turning while every piece spirals inward and shrinks into the
+        // heart of the funnel — where the chrome object appears and takes over (FlowObject)
+        const draw_ = smooth(clamp((p - 0.25) / 0.5));
+        const reveal = clamp((p - 0.62) / 0.2);
+        if (slotRef.current) slotRef.current.style.setProperty("--reveal", String(reveal));
         const tw = iw / COLS, th = ih / ROWS, sw = img.width / COLS, sh = img.height / ROWS;
+        const cx = W / 2, cy = H / 2;
         for (let r = 0; r < ROWS; r++) {
           const u = r / ROWS;
-          // sway: the funnel bends, more at the top, like a slow vortex
-          const sway = Math.sin(t * 1.1 + u * 5) * (1 - u) * iw * 0.06;
+          // sway: the funnel bends, more at the top, like a slow vortex — and spins faster as it draws in
+          const sway = Math.sin(t * (1.1 + draw_ * 3) + u * 5) * (1 - u) * iw * 0.06;
           for (let cc = 0; cc < COLS; cc++) {
-            const k = r * COLS + cc;
-            let x = ox + cc * tw + sway, y = oy + r * th, rot = 0, alpha = 1, scale = 1;
-            if (burst > 0 && tiles.length) {
-              const tl = tiles[k];
-              tl.x += tl.vx * 0.12; tl.y += tl.vy * 0.12; tl.vy += 0.16; tl.rot += tl.vr * 0.12;
-              x += tl.x * burst * 4; y += tl.y * burst * 4; rot = tl.rot * burst * 4;
-              alpha = 1 - burst * 0.95; scale = 1 + burst * 0.6;
-            }
-            if (alpha < 0.02) continue;
+            const x0 = ox + cc * tw + sway + tw / 2, y0 = oy + r * th + th / 2;
+            // spiral target: towards the centre, turning as it goes
+            const ang = Math.atan2(y0 - cy, x0 - cx) + draw_ * Math.PI * 2.5;
+            const dist = Math.hypot(x0 - cx, y0 - cy) * (1 - draw_);
+            const x = lerp(x0, cx + Math.cos(ang) * dist, draw_), y = lerp(y0, cy + Math.sin(ang) * dist, draw_);
+            const scale = 1 - draw_ * 0.85, alpha = (1 - reveal) * (1 - draw_ * 0.4);
+            if (alpha < 0.02 || scale < 0.05) continue;
             ctx.save(); ctx.globalAlpha = alpha;
-            ctx.translate(x + tw / 2, y + th / 2); ctx.rotate(rot); ctx.scale(scale, scale);
+            ctx.translate(x, y); ctx.rotate(draw_ * 6 + (cc % 3) * draw_); ctx.scale(scale, scale);
             ctx.drawImage(img, cc * sw, r * sh, sw, sh, -tw / 2, -th / 2, tw + 0.6, th + 0.6);
             ctx.restore();
           }
@@ -278,6 +272,7 @@ export function Tornado({ children }: { children?: React.ReactNode }) {
   return (
     <div ref={root} className={m.tornado}>
       <canvas ref={ref} className={m.fill} aria-hidden="true" />
+      <div ref={slotRef} className={m.dustSlot} data-flow="tornado" aria-hidden="true" style={{ ["--reveal" as string]: 0 }} />
       <div className={m.tornadoCopy}>{children}</div>
     </div>
   );

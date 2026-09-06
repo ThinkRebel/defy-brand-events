@@ -13,10 +13,21 @@ import s from "./portfolio.module.css";
  * otherwise a live capture service, so a card never goes empty.
  */
 const shot = (host: string, url: string, tier: number) =>
-  tier === 0 ? `/portfolio/${host}.jpg` : tier === 1 ? `https://image.thum.io/get/width/1600/crop/1000/noanimate/${url}` : `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url`;
+  tier === 0 ? `/portfolio/${host}.jpg` : tier === 1 ? `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url&waitForTimeout=4000&viewport.width=1600&viewport.height=1000` : `https://image.thum.io/get/width/1600/crop/1000/wait/5/noanimate/${url}`;
 
+/**
+ * A case shows a screen recording when one exists (`public/portfolio/<host>.mp4`, muted, looping,
+ * plays while in view) and falls back to a screenshot otherwise.
+ */
 function Shot({ host, url }: { host: string; url: string }) {
   const [tier, setTier] = useState(0);
+  const [video, setVideo] = useState(true);
+  if (video) {
+    return (
+      <video className={s.shot} src={`/portfolio/${host}.mp4`} muted loop playsInline autoPlay preload="metadata" onError={() => setVideo(false)}
+        onLoadedMetadata={(e) => { const v = e.currentTarget; const io = new IntersectionObserver(([en]) => (en.isIntersecting ? v.play().catch(() => {}) : v.pause()), { threshold: 0.2 }); io.observe(v); }} />
+    );
+  }
   return <img className={s.shot} src={shot(host, url, tier)} alt="" loading="lazy" onError={() => setTier((t) => Math.min(2, t + 1))} />;
 }
 

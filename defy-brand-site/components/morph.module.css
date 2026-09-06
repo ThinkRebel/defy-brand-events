@@ -67,9 +67,9 @@
 .gCard:hover, .sCard:hover { border-color: rgba(var(--fluo-rgb), 0.7); }
 /* photo on a card: fills it, sits under the copy, dims towards the bottom so the words stay readable */
 .cardImg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; border-radius: inherit; filter: saturate(0.9) contrast(1.05); transition: transform 0.9s var(--ease), filter 0.6s; }
-.sCard:hover .cardImg { transform: scale(1.06); filter: saturate(1.1) contrast(1.05); }
-.sCard:has(.cardImg)::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.78) 100%); z-index: -1; }
-.sCard:has(.cardImg) { overflow: hidden; isolation: isolate; }
+.sCard:hover .cardImg, .gCard:hover .cardImg, .bCard:hover .cardImg { transform: scale(1.06); filter: saturate(1.1) contrast(1.05); }
+.sCard:has(.cardImg)::after, .gCard:has(.cardImg)::after, .bCard:has(.cardImg)::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.78) 100%); z-index: -1; }
+.sCard:has(.cardImg), .gCard:has(.cardImg), .bCard:has(.cardImg) { overflow: hidden; isolation: isolate; }
 /* ---- card stack ---- */
 .stack { position: relative; height: min(52svh, 460px); }
 .stack .sCard { left: auto; top: auto; position: absolute; inset: 0; margin: auto; transform-origin: 50% 120%; }

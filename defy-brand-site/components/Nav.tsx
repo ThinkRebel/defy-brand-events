@@ -49,10 +49,10 @@ export function Nav({ copy }: { copy: Copy }) {
           >
             <ul>
               {[
-                [copy.nav.work, href(lang, "portfolio")],
                 [copy.nav.services, href(lang, "services")],
                 [copy.nav.about, href(lang, "about")],
                 [copy.nav.contact, href(lang, "contact")],
+                [copy.nav.work, href(lang, "portfolio")],
               ].map(([label, to], i) => (
                 <motion.li
                   key={to}
@@ -60,7 +60,7 @@ export function Nav({ copy }: { copy: Copy }) {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.25 + i * 0.07, duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
                 >
-                  <Link href={to}>{label}</Link>
+                  <Link href={to} className={i === 3 ? styles.minor : undefined}>{label}</Link>
                 </motion.li>
               ))}
             </ul>

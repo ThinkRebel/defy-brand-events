@@ -6,6 +6,21 @@ import m from "./morph.module.css";
 
 type Item = { h: string; p?: string; href?: string; num?: string; img?: string };
 
+/** one photo per service (Unsplash), keyed by service number — used on the globe and the bloom */
+const U = (id: string) => `https://images.unsplash.com/${id}?w=700&q=70&auto=format&fit=crop`;
+export const SERVICE_IMG: Record<string, string> = {
+  "01": U("photo-1560174038-da43ac74f01b"), // strategy — chess
+  "02": U("photo-1525909002-1b05e0c869d8"), // brand & creative — paint
+  "03": U("photo-1729536700035-9d37bc0fcb84"), // copywriting — typewriter
+  "04": U("photo-1531297484001-80022131f5a1"), // website design — laptop
+  "05": U("photo-1459749411175-04bf5292ceea"), // marketing — crowd
+  "06": U("photo-1598944999410-e93772fc48a5"), // seo — compass
+  "07": U("photo-1674027444485-cec3da58eef4"), // geo — ai abstract
+  "08": U("photo-1581090464777-f3220bbe1b8b"), // agent ready — robot hand
+  "09": U("photo-1583198432859-635beb4e8600"), // agentic workflow — gears
+};
+const imgFor = (it: Item) => it.img ?? (it.num ? SERVICE_IMG[it.num] : undefined);
+
 /**
  * MiniRing — the glass ring from the homepage, in a lighter form for sub-pages:
  * no pin, turns with time and with scroll, tilts with the pointer, copy fades on the back side.
@@ -141,7 +156,8 @@ export function CardGlobe({ items }: { items: Item[] }) {
   return (
     <div ref={root} className={m.globe}>
       {items.map((it, i) => {
-        const inner = <>{it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}<h3>{it.h}</h3>{it.p && <p>{it.p}</p>}</>;
+        const im = imgFor(it);
+        const inner = <>{im && <img className={m.cardImg} src={im} alt="" loading="lazy" />}{it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}<h3>{it.h}</h3>{it.p && <p>{it.p}</p>}</>;
         return it.href ? <Link key={i} href={it.href} className={m.gCard} data-cursor>{inner}</Link> : <div key={i} className={m.gCard}>{inner}</div>;
       })}
     </div>
@@ -207,7 +223,8 @@ export function CardBloom({ items }: { items: Item[] }) {
     <div ref={root} className={m.bloom}>
       <div ref={stage} className={m.bloomStage}>
         {items.map((it, i) => {
-          const inner = <>{it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}<h3>{it.h}</h3>{it.p && <p>{it.p}</p>}</>;
+          const im = imgFor(it);
+          const inner = <>{im && <img className={m.cardImg} src={im} alt="" loading="lazy" />}{it.num && <span className={m.miniNum}><b>#</b>{it.num}</span>}<h3>{it.h}</h3>{it.p && <p>{it.p}</p>}</>;
           return it.href ? <Link key={i} href={it.href} className={m.bCard} data-cursor>{inner}</Link> : <div key={i} className={m.bCard}>{inner}</div>;
         })}
       </div>

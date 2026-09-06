@@ -58,7 +58,7 @@
 .menu ul { display: flex; flex-direction: column; gap: 0.15em; }
 .menu li a {
   font-family: var(--font-display), "Arial Black", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
   font-size: clamp(38px, 6vw, 110px);
   line-height: 1;
@@ -66,10 +66,11 @@
   transition: color 0.4s, transform 0.6s var(--ease);
 }
 .menu li a:hover { color: var(--fluo); transform: translateX(0.15em); }
+.menu li a.minor { font-size: 0.42em; margin-top: 0.9em; opacity: 0.7; letter-spacing: 0.04em; }
 .services { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6em 2em; font-size: 0.9em; }
 .services a { opacity: 0.6; transition: opacity 0.3s; display: flex; gap: 0.8em; }
 .services a:hover { opacity: 1; }
-.services b { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; color: var(--fluo); }
+.services b { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 700; color: var(--fluo); }
 .services .role { display: block; font-size: 0.8em; opacity: 0.6; }
 @media (max-width: 760px) {
   .menu { grid-template-columns: 1fr; align-items: start; overflow-y: auto; }
@@ -130,7 +131,7 @@
 }
 .footer .big {
   font-family: var(--font-display), "Arial Black", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(26px, 3vw, 56px);
   line-height: 1;
   text-transform: uppercase;
