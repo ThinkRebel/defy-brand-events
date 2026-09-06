@@ -7,12 +7,17 @@ import { Reveal } from "./Sections";
 import TiltCard from "./TiltCard";
 import { ServiceScene, ServiceFeature } from "./Visuals";
 import Deck from "./Deck";
+import FlowObject from "./FlowObject";
 import SocialWall from "./SocialWall";
 import p from "./page.module.css";
 
 /** Sub-page hero with masked line reveal + drifting chrome object. */
+const BAND = new Set(["copywriting"]);
+const HANDOVER = new Set(["marketing"]);
+
 export function PageHero({ num, label, title, sub, obj = true, scene, lang = "nl", variant = 0 }: { num?: string; label?: string; title: string; sub?: string; obj?: boolean; scene?: string; lang?: Lang; variant?: number }) {
   const root = useRef<HTMLElement>(null);
+  const slotRef = useRef<HTMLDivElement>(null);
   const lines = splitLines(title);
   useGSAP(
     () => {
@@ -36,8 +41,14 @@ export function PageHero({ num, label, title, sub, obj = true, scene, lang = "nl
           <Image src="/assets/object.webp" alt="" width={624} height={670} priority />
         </div>
       )}
-      {obj && scene && (
-        <div className={`${p.pobj} ${p.pscene}`} aria-hidden="true">
+      {obj && scene && !BAND.has(scene) && (
+        <div className={`${p.pobj} ${p.pscene} ${HANDOVER.has(scene) ? p.pwide : ""}`} aria-hidden="true">
+          <ServiceScene slug={scene} lang={lang} slotRef={slotRef} />
+          {HANDOVER.has(scene) && <div ref={slotRef} className={p.pslot} data-flow="hero" style={{ ["--reveal" as string]: 0 }} />}
+        </div>
+      )}
+      {obj && scene && BAND.has(scene) && (
+        <div className={p.pband} aria-hidden="true">
           <ServiceScene slug={scene} lang={lang} />
         </div>
       )}
@@ -73,9 +84,7 @@ export function ServiceBody({ service, copy, next, index = 0 }: { service: Servi
       <section className={`${p.intro} ${index % 2 ? p.introFlip : ""}`}>
         <div className={p.introSide}>
           <span className="eyebrow">{sv.name}</span>
-          <div className={p.introObj} aria-hidden="true">
-            <Image src="/assets/object.webp" alt="" width={624} height={670} />
-          </div>
+          <div className={p.introObj} data-flow="intro" aria-hidden="true" />
         </div>
         <div>
           {sv.intro.map((t, i) => (
@@ -87,6 +96,7 @@ export function ServiceBody({ service, copy, next, index = 0 }: { service: Servi
       </section>
 
       <ServiceFeature slug={sv.slug} lang={copy.lang} />
+      <FlowObject />
 
       {sv.list && (
         <section className={p.list} aria-label={sv.listTitle}>

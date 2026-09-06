@@ -1,0 +1,45 @@
+.fill { width: 100%; height: 100%; display: block; }
+
+/* ---- dust morph (about hero) ---- */
+.dust { position: relative; height: 100svh; background: var(--ink); overflow: hidden; }
+.dustSlot { position: absolute; left: 50%; top: 50%; width: min(56vmin, 520px); aspect-ratio: 624 / 670; transform: translate(-50%, -50%); pointer-events: none; }
+
+/* ---- tornado (contact hero) ---- */
+.tornado { position: relative; height: 100svh; background: var(--ink); overflow: hidden; }
+.tornadoCopy { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 0 var(--pad); opacity: 0; transform: translateY(30px); pointer-events: none; }
+.tornadoCopy > * { pointer-events: auto; }
+
+/* ---- mini ring ---- */
+.mini { position: relative; height: min(64svh, 560px); display: grid; place-items: center; perspective: 2000px; perspective-origin: 50% 40%; overflow: hidden; }
+.miniS { height: min(46svh, 400px); }
+.miniSlot { position: absolute; left: 50%; top: 50%; width: min(22vmin, 220px); aspect-ratio: 624 / 670; transform: translate(-50%, -50%); pointer-events: none; }
+.miniRing { --cw: min(15vw, 22svh, 220px); --r: calc(var(--cw) * 0.22 * var(--n)); position: relative; width: var(--cw); height: calc(var(--cw) * 1.2); transform-style: preserve-3d; will-change: transform; }
+.miniS .miniRing { --cw: min(12vw, 18svh, 170px); }
+.miniCard {
+  position: absolute; inset: 0; transform: rotateY(calc(var(--i) * var(--step))) translateZ(var(--r));
+  border-radius: 18px; padding: clamp(12px, 1.1vw, 18px); display: flex; flex-direction: column; justify-content: flex-end; gap: 0.3em; overflow: hidden; color: var(--paper); text-decoration: none;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06) 45%, rgba(255, 255, 255, 0.12));
+  border: 1px solid rgba(255, 255, 255, 0.28); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 30px 80px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px) saturate(1.4); -webkit-backdrop-filter: blur(12px) saturate(1.4);
+}
+.miniCard > * { opacity: var(--face, 1); }
+.miniNum { position: absolute; left: clamp(12px, 1.1vw, 18px); top: clamp(12px, 1.1vw, 18px); font-family: var(--font-display), sans-serif; font-weight: 800; font-size: clamp(13px, 1vw, 17px); }
+.miniNum b { color: var(--fluo); }
+.miniCard h3 { font-family: var(--font-display), sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(13px, 1.05vw, 19px); line-height: 1; letter-spacing: -0.01em; }
+.miniCard p { opacity: 0.75; font-size: clamp(10px, 0.7vw, 12px); line-height: 1.3; }
+@media (max-width: 760px) { .miniRing { --cw: min(34vw, 140px); } .miniCard p { display: none; } }
+
+/* ---- card orbit (website design hero) ---- */
+.orbit { width: 100%; height: 100%; display: grid; place-items: center; perspective: 1400px; }
+.cloud { position: relative; width: 26%; aspect-ratio: 4 / 3; transform-style: preserve-3d; will-change: transform; }
+.screen {
+  position: absolute; inset: 0; border-radius: 10px; overflow: hidden; padding: 6%;
+  transform: rotateY(calc(var(--i) * (360deg / var(--n)))) translateZ(calc(var(--cw, 100px) * 1.6 + 8vmin)) translateY(var(--lift));
+  background: rgba(20, 20, 24, 0.85); border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5); opacity: calc(0.25 + var(--depth, 1) * 0.75); filter: blur(calc((1 - var(--depth, 1)) * 2px));
+  display: grid; gap: 6%; align-content: start;
+}
+.screen i { display: block; border-radius: 3px; background: rgba(255, 255, 255, 0.16); }
+.sBar { height: 10%; } .sHero { height: 38%; background: linear-gradient(150deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.1)) !important; } .sLine { height: 7%; } .sLineShort { height: 7%; width: 60%; }
+.screenHot .sHero { background: linear-gradient(150deg, rgba(228, 255, 46, 0.85), rgba(228, 255, 46, 0.3)) !important; }
+.screenHot { border-color: rgba(228, 255, 46, 0.6); }

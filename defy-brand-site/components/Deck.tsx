@@ -59,7 +59,7 @@ export default function Deck({ copy, eyebrow, items: given, flow = "chain", numb
     <section ref={root} className={s.deck} aria-label={label}>
       <div className={s.dPin}>
         <div className={s.dHead}><span className="eyebrow">{label}</span></div>
-        <div ref={slotRef} className={s.dSlot} data-flow={flow} aria-hidden="true">{flow !== "chain" && <img src="/assets/object.webp" alt="" />}</div>
+        <div ref={slotRef} className={s.dSlot} data-flow={flow} aria-hidden="true" />
         <div ref={trackRef} className={s.dTrack}>
           {items.map((it, i) => (
             <article key={it.h} className={`${s.dCard} ${it.last ? s.dLast : ""}`}>

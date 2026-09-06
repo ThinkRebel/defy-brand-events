@@ -76,6 +76,9 @@ export default function FlowObject() {
         target = { x: lerp(ra.left, rb.left, t), y: lerp(ra.top, rb.top, t) - arc, w: lerp(ra.width, rb.width, t), o: 1 };
       }
       // smooth follow
+      // a slot can hide the object until its own scene has handed over (e.g. dust → object)
+      const rv = parseFloat(getComputedStyle(segs[i].el).getPropertyValue("--reveal"));
+      if (!isNaN(rv)) target.o *= rv;
       const k = first ? 1 : 0.18;
       cur.x = lerp(cur.x, target.x, k); cur.y = lerp(cur.y, target.y, k); cur.w = lerp(cur.w, target.w, k); cur.o = lerp(cur.o, target.o, k);
       cur.r = S * 0.03; // slow continuous turn with scroll

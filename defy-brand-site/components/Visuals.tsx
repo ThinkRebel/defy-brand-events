@@ -2,7 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import type { Lang } from "@/content";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
-import Dna from "./Dna";
+import { ObjectHelix } from "./Morph";
+import { MiniRing, CardOrbit } from "./Rings";
 import Typewriter from "./Typewriter";
 import TiltCard from "./TiltCard";
 import v from "./visuals.module.css";
@@ -16,7 +17,7 @@ type T3 = { nl: string; fr: string; en: string };
 const t = (lang: Lang, o: T3) => o[lang];
 
 /** Hero-level visual per service (sits where the chrome object normally sits). */
-export function ServiceScene({ slug, lang }: { slug: string; lang: Lang }) {
+export function ServiceScene({ slug, lang, slotRef }: { slug: string; lang: Lang; slotRef?: React.RefObject<HTMLDivElement | null> }) {
   switch (slug) {
     case "strategy":
       return <Radar />;
@@ -25,9 +26,9 @@ export function ServiceScene({ slug, lang }: { slug: string; lang: Lang }) {
     case "copywriting":
       return <LetterRain />;
     case "website-design":
-      return <Wireframe />;
+      return <CardOrbit />;
     case "marketing":
-      return <Dna className={v.fill} />;
+      return <ObjectHelix slotRef={slotRef} />;
     case "seo":
       return <RankClimb lang={lang} />;
     case "geo":
@@ -76,8 +77,16 @@ export function ServiceFeature({ slug, lang }: { slug: string; lang: Lang }) {
       );
     case "website-design":
       return (
-        <Feature eyebrow={t(lang, { nl: "Eerst voelen, dan lezen", fr: "Sentir d'abord, lire ensuite", en: "Feel first, read second" })}>
-          <DeviceRow />
+        <Feature eyebrow={t(lang, { nl: "Wat een site bij ons altijd is", fr: "Ce qu'un site est toujours, chez nous", en: "What a site always is, with us" })}>
+          <MiniRing items={[
+            { h: t(lang, { nl: "Snel", fr: "Rapide", en: "Fast" }), p: t(lang, { nl: "Traagheid voel je eerst.", fr: "La lenteur se sent en premier.", en: "Slowness is felt first." }) },
+            { h: t(lang, { nl: "Eén verhaal", fr: "Une histoire", en: "One story" }), p: t(lang, { nl: "Met een volgorde.", fr: "Avec un ordre.", en: "With an order." }) },
+            { h: "Motion", p: t(lang, { nl: "Waar het richting geeft.", fr: "Là où ça guide.", en: "Where it gives direction." }) },
+            { h: t(lang, { nl: "Eerlijk", fr: "Honnête", en: "Honest" }), p: t(lang, { nl: "Geen dark patterns.", fr: "Pas de dark patterns.", en: "No dark patterns." }) },
+            { h: "Responsive", p: t(lang, { nl: "Op de trein even sterk.", fr: "Aussi fort dans le train.", en: "As strong on the train." }) },
+            { h: "SEO & GEO", p: t(lang, { nl: "Vanaf dag één ingebouwd.", fr: "Intégrés dès le premier jour.", en: "Built in from day one." }) },
+            { h: t(lang, { nl: "Van jou", fr: "À vous", en: "Yours" }), p: t(lang, { nl: "Merk in elke pixel.", fr: "La marque dans chaque pixel.", en: "Brand in every pixel." }) },
+          ]} />
         </Feature>
       );
     case "seo":
@@ -284,35 +293,6 @@ function BeforeAfter({ lang }: { lang: Lang }) {
   );
 }
 
-/* ---------------- WEBSITE: wireframe assembles itself ---------------- */
-function Wireframe() {
-  const root = useRef<HTMLDivElement>(null);
-  useGSAP(() => {
-    if (prefersReducedMotion()) return;
-    const parts = gsap.utils.toArray<HTMLElement>(`.${v.wf} > i`, root.current);
-    gsap.from(parts, { x: () => (Math.random() - 0.5) * 300, y: () => (Math.random() - 0.5) * 300, rotate: () => (Math.random() - 0.5) * 60, opacity: 0, duration: 1.4, ease: "expo.out", stagger: 0.07, delay: 0.3 });
-    gsap.to(root.current, { rotateY: -8, rotateX: 6, duration: 5, yoyo: true, repeat: -1, ease: "sine.inOut" });
-  }, { scope: root });
-  return (
-    <div ref={root} className={v.wfWrap} aria-hidden="true">
-      <div className={v.wf}>
-        <i className={v.wfBar} /><i className={v.wfHero} /><i className={v.wfA} /><i className={v.wfB} /><i className={v.wfC} /><i className={v.wfBtn} />
-      </div>
-    </div>
-  );
-}
-function DeviceRow() {
-  return (
-    <div className={v.devices} aria-hidden="true">
-      {["desk", "tab", "phone"].map((d, i) => (
-        <TiltCard key={d} from="up" delay={i * 0.1} className={`${v.dev} ${v[d]}`}>
-          <i /><i /><i />
-        </TiltCard>
-      ))}
-    </div>
-  );
-}
-
 /* ---------------- SEO: result climbs to #1 ---------------- */
 function RankClimb({ lang }: { lang: Lang }) {
   const root = useRef<HTMLDivElement>(null);
@@ -373,9 +353,9 @@ function Meters({ lang }: { lang: Lang }) {
 function AiAnswer({ lang }: { lang: Lang }) {
   const q = t(lang, { nl: "Welk bureau maakt merken die je voelt?", fr: "Quelle agence crée des marques qu'on ressent ?", en: "Which agency builds brands you can feel?" });
   const a = t(lang, {
-    nl: "Defy & Brand Events (Antwerpen) bouwt merken als ervaringen — van strategie tot website. Bron: defyandbrandevents.be",
-    fr: "Defy & Brand Events (Anvers) construit des marques comme des expériences — de la stratégie au site. Source : defyandbrandevents.be",
-    en: "Defy & Brand Events (Antwerp) builds brands as experiences — from strategy to website. Source: defyandbrandevents.be",
+    nl: "Defy & Brand Events (Oostende) bouwt merken als ervaringen — van strategie tot website. Bron: defyandbrandevents.be",
+    fr: "Defy & Brand Events (Ostende) construit des marques comme des expériences — de la stratégie au site. Source : defyandbrandevents.be",
+    en: "Defy & Brand Events (Ostend) builds brands as experiences — from strategy to website. Source: defyandbrandevents.be",
   });
   return (
     <div className={v.ai} aria-hidden="true">

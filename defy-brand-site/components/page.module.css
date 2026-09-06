@@ -347,3 +347,17 @@
   .pscene, .v1 .pscene, .v2 .pscene { position: relative; inset: auto; width: min(70vw, 340px); margin: 0 auto 20px; }
   .v2 .ph1, .v2 .psub, .v2 .pnum { margin-left: 0; text-align: left; }
 }
+
+/* handover scenes (helix → object) and copy band scenes (letter rain above the title) */
+.pwide { width: clamp(260px, 34vw, 600px); aspect-ratio: 1 / 1.15; top: 4%; }
+.pslot { position: absolute; left: 50%; top: 50%; width: 46%; aspect-ratio: 624 / 670; transform: translate(-50%, -50%); pointer-events: none; }
+.pband { position: relative; height: clamp(90px, 14vh, 170px); margin-bottom: clamp(10px, 2vh, 24px); z-index: 1; }
+.v2.phero { align-content: end; }
+.v2 .ph1, .v2 .psub, .v2 .pnum { margin-left: 0; text-align: left; }
+.introObj { width: clamp(180px, 20vw, 360px); aspect-ratio: 624 / 670; }
+
+.aboutHead { padding: clamp(80px, 12vh, 160px) var(--pad) clamp(30px, 5vh, 60px); background: var(--ink); display: grid; gap: 1em; }
+.ringBlock { padding: clamp(40px, 6vh, 90px) var(--pad); background: var(--ink); }
+.ringBlock .eyebrow { display: block; margin-bottom: 1em; }
+.noise { font-family: var(--font-display), "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(44px, 9vw, 160px); line-height: 0.9; letter-spacing: -0.02em; margin: 0.3em 0 0.35em; text-shadow: 0 20px 60px rgba(0, 0, 0, 0.6); }
+.noiseSub { max-width: 34ch; margin: 0 auto 1.6em; opacity: 0.85; font-size: clamp(16px, 1.4vw, 24px); line-height: 1.35; }
