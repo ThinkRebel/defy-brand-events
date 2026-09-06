@@ -86,7 +86,7 @@ export const fr: Copy = {
       what: "Racontez. (En vrac, c'est parfait. En vrac, c'est souvent mieux.)",
       send: "Envoyer",
     },
-    confirm: "Bien reçu. Nous le lisons vraiment, et un humain vous répond sous deux jours ouvrables — pas un répondeur automatique.",
+    confirm: "Bien reçu. Nous le lisons vraiment, et notre équipe vous répond sous deux jours ouvrables — pas un répondeur automatique.",
     alt: "Vous préférez parler tout de suite ?",
     meta: "Une idée, un problème, une ambition ? Racontez-le à Defy & Brand Events. Pas besoin que ce soit prêt.",
     cine: {
