@@ -4,11 +4,10 @@ import { notFound } from "next/navigation";
 import { getCopy, href, LANGS, type Lang } from "@/content";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import JsonLd from "@/components/JsonLd";
-import { PageHero, ContactForm } from "@/components/Page";
+import { PageHero, ContactPicker } from "@/components/Page";
 import { Closer, Reveal } from "@/components/Sections";
 import Cinema from "@/components/Cinema";
 import FlowObject from "@/components/FlowObject";
-import { Tornado } from "@/components/Morph";
 import { CardGlobe, CardBloom, SERVICE_IMG } from "@/components/Rings";
 import Portfolio from "@/components/Portfolio";
 import Kinetic from "@/components/Kinetic";
@@ -133,31 +132,13 @@ export default async function SectionPage({ params }: Props) {
       <>
         <JsonLd data={breadcrumbJsonLd(crumbs)} />
         <FlowObject />
-        <Tornado>
-          <div>
-            <span className="eyebrow">{c.nav.contact}</span>
-            <h1 className={p.noise}>Let&apos;s make<br />some noise.</h1>
-            <p className={p.noiseSub}>{ct.h}</p>
-            <a className="btn" href="#form"><i /><span>{ct.labels.send}</span></a>
-          </div>
-        </Tornado>
-        <section className={p.contact} id="form">
-          <div>
-            <span className="eyebrow">{c.nav.contact}</span>
-            <Kinetic as="h2" text={ct.h} mode="slide" className={p.ph1} />
-            <ul className={p.lines}>
-              {ct.lines.map((l, i) => (
-                <Reveal key={i} as="li" delay={0.3 + i * 0.1}>{l}</Reveal>
-              ))}
-            </ul>
-            <div className={p.introObj} data-flow="contact" aria-hidden="true" style={{ marginTop: "2em" }} />
-            <p className={p.invite}>
-              {ct.invite}
-              <span className={p.talk}>{ct.talk}</span>
-            </p>
-          </div>
-          <ContactForm copy={c} />
-        </section>
+        <header className={`${p.phero} ${p.noiseHero}`}>
+          <div className={p.pglow} aria-hidden="true" />
+          <span className="eyebrow">{c.nav.contact}</span>
+          <Kinetic as="h1" text="Let's make some noise." mode="flip" className={p.ph1} />
+          <p className={p.psub}>{ct.invite}</p>
+        </header>
+        <ContactPicker copy={c} />
       </>
     );
   }
