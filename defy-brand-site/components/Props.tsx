@@ -293,22 +293,22 @@ export function HelixSprite() {
 
 /* ============================ AGENTS (agentic workflow) ============================ */
 /**
- * The robot sheet (/assets/agents.png, 2 rows): top row = one agent, from exploded parts to
+ * The robot sheet (2172 x 724, 2 rows): top row = one agent, from exploded parts to
  * assembled, then multiplying; bottom row = five agents in action poses.
  * Scene: the parts fly together into one agent → it lights up and multiplies → five agents
  * take their places over the pipeline. Falls back to nothing when the sheet is missing.
  */
-const AGENTS_SRC = "/assets/agents.png";
+const AGENTS_SRC = "/assets/842F5F24-483C-42F9-B53B-B9AA8C40A2BF.PNG";
 const SHEET_AR = 3.0; // sheet width / height
 // cells as fractions of the sheet: [x, y, w, h]
 const BUILD: [number, number, number, number][] = [
-  [0.455, 0, 0.2, 0.55],   // wide apart, energy
-  [0.28, 0, 0.175, 0.55],  // parts near
-  [0.125, 0, 0.155, 0.55], // almost closed
-  [0.01, 0, 0.115, 0.55],  // assembled
+  [0.449, 0.008, 0.196, 0.547], // parts wide apart, energy
+  [0.281, 0.02, 0.162, 0.53],   // parts near
+  [0.1275, 0.02, 0.146, 0.5],   // almost closed
+  [0.0064, 0.044, 0.111, 0.47], // assembled
 ];
-const MULTIPLY: [number, number, number, number][] = [[0.65, 0, 0.15, 0.55], [0.8, 0, 0.2, 0.55]];
-const POSES: [number, number, number, number][] = [[0.14, 0.55, 0.13, 0.45], [0.29, 0.55, 0.12, 0.45], [0.41, 0.55, 0.14, 0.45], [0.55, 0.55, 0.12, 0.45], [0.67, 0.55, 0.13, 0.45]];
+const MULTIPLY: [number, number, number, number][] = [[0.645, 0.008, 0.166, 0.55], [0.808, 0.08, 0.192, 0.42]];
+const POSES: [number, number, number, number][] = [[0.155, 0.554, 0.107, 0.424], [0.295, 0.559, 0.101, 0.421], [0.417, 0.557, 0.13, 0.425], [0.561, 0.576, 0.105, 0.39], [0.687, 0.569, 0.124, 0.412]];
 const cellStyle = (c: [number, number, number, number]): React.CSSProperties => ({
   backgroundImage: `url(${AGENTS_SRC})`, backgroundRepeat: "no-repeat",
   backgroundSize: `${100 / c[2]}% ${100 / c[3]}%`, backgroundPosition: `${(c[0] / (1 - c[2])) * 100}% ${(c[1] / (1 - c[3])) * 100}%`,
