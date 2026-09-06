@@ -18,7 +18,8 @@
 .tornadoCopy > * { pointer-events: auto; }
 
 /* ---- mini ring ---- */
-.mini { position: relative; height: min(64svh, 560px); display: grid; place-items: center; perspective: 2000px; perspective-origin: 50% 40%; overflow: hidden; }
+/* no clipping: cards and their shadows may run over the neighbouring sections, so the page reads as one surface */
+.mini { position: relative; z-index: 2; height: min(64svh, 560px); display: grid; place-items: center; perspective: 2000px; perspective-origin: 50% 40%; overflow: visible; }
 .miniS { height: min(46svh, 400px); }
 .miniSlot { position: absolute; left: 50%; top: 50%; width: min(22vmin, 220px); aspect-ratio: 624 / 670; transform: translate(-50%, -50%); pointer-events: none; }
 .miniRing { --cw: min(15vw, 22svh, 220px); --r: calc(var(--cw) * 0.22 * var(--n)); position: relative; width: var(--cw); height: calc(var(--cw) * 1.2); transform-style: preserve-3d; will-change: transform; }
@@ -93,7 +94,7 @@
 @media (max-width: 760px) { .gCard, .sCard { width: 34vw; } .globe { height: 60svh; } }
 
 /* ---- card bloom ---- */
-.bloom { position: relative; height: min(80svh, 760px); perspective: 1600px; display: grid; place-items: center; overflow: hidden; }
+.bloom { position: relative; z-index: 2; height: min(80svh, 760px); perspective: 1600px; display: grid; place-items: center; overflow: visible; }
 .bloomStage { position: relative; width: 1px; height: 1px; transform-style: preserve-3d; will-change: transform; }
 .bCard {
   position: absolute; left: 50%; top: 50%; margin: calc(clamp(150px, 15vw, 230px) * -0.625) 0 0 calc(clamp(150px, 15vw, 230px) * -0.5);
