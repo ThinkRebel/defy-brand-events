@@ -66,6 +66,7 @@ export default async function SectionPage({ params }: Props) {
     return (
       <>
         <JsonLd data={breadcrumbJsonLd(crumbs)} />
+        <Cinema copy={c} />
         <FlowObject />
         <DustMorph text="DB EVENTS" />
         <section className={p.aboutHead}>
@@ -96,7 +97,6 @@ export default async function SectionPage({ params }: Props) {
             })}
           </ul>
         </section>
-        <Cinema copy={c} />
         <section className={p.how}>
           <div>
             <Reveal as="h2">{a.howTitle}</Reveal>
@@ -133,6 +133,7 @@ export default async function SectionPage({ params }: Props) {
     return (
       <>
         <JsonLd data={breadcrumbJsonLd(crumbs)} />
+        <FlowObject />
         <Tornado>
           <div>
             <span className="eyebrow">{c.nav.contact}</span>
@@ -144,12 +145,13 @@ export default async function SectionPage({ params }: Props) {
         <section className={p.contact} id="form">
           <div>
             <span className="eyebrow">{c.nav.contact}</span>
-            <h2 className={p.ph1} style={{ marginTop: "0.4em" }}>{ct.h}</h2>
+            <Kinetic as="h2" text={ct.h} mode="slide" className={p.ph1} />
             <ul className={p.lines}>
               {ct.lines.map((l, i) => (
                 <Reveal key={i} as="li" delay={0.3 + i * 0.1}>{l}</Reveal>
               ))}
             </ul>
+            <div className={p.introObj} data-flow="contact" aria-hidden="true" style={{ marginTop: "2em" }} />
             <p className={p.invite}>
               {ct.invite}
               <span className={p.talk}>{ct.talk}</span>
