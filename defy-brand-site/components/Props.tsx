@@ -320,10 +320,11 @@ export function AgentBuild({ slotRef }: { slotRef?: React.RefObject<HTMLDivEleme
     const build = q(`.${p.aBuild}`) as HTMLElement[];
     const handover = () => { slotRef?.current?.style.setProperty("--reveal", "1"); };
     if (prefersReducedMotion()) { gsap.set(build, { opacity: 0 }); handover(); return; }
+    // the very first sheet frame (parts wide apart) is cut off at the sheet edge, so the build starts at frame 2
     gsap.set(build, { opacity: 0 });
     const tl = gsap.timeline({ delay: 0.5 });
-    tl.fromTo(build[0], { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.8, ease: "expo.out" });
-    for (let i = 1; i < build.length; i++) tl.set(build[i - 1], { opacity: 0 }, "+=0.55").set(build[i], { opacity: 1 });
+    tl.fromTo(build[1], { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.8, ease: "expo.out" });
+    for (let i = 2; i < build.length; i++) tl.set(build[i - 1], { opacity: 0 }, "+=0.55").set(build[i], { opacity: 1 });
     tl.to(build[3], { scale: 1.06, duration: 0.25, yoyo: true, repeat: 1, ease: "power2.inOut" }, "+=0.3")
       .add(handover, "-=0.1")
       .to(build[3], { opacity: 0, duration: 0.4 });

@@ -2,7 +2,8 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
-import { CONTACT_EMAIL, type Copy, type Service, type Lang } from "@/content";
+import { CONTACT_EMAIL, COMPANY, href, type Copy, type Service, type Lang } from "@/content";
+import { MiniRing } from "./Rings";
 import { Reveal } from "./Sections";
 import TiltCard from "./TiltCard";
 import { ServiceScene, ServiceFeature } from "./Visuals";
@@ -163,7 +164,49 @@ function Steps({ steps }: { steps: { k: string; p: string }[] }) {
   );
 }
 
-export function ContactForm({ copy }: { copy: Copy }) {
+/** Contact: pick a service in the ring (it becomes the subject), then the form + the direct details. */
+export function ContactPicker({ copy }: { copy: Copy }) {
+  const c = copy.contact;
+  const [service, setService] = useState("");
+  const items = copy.services.map((sv) => ({ h: sv.name, p: sv.role.charAt(0).toUpperCase() + sv.role.slice(1) + ".", num: sv.num }));
+  const pick = (it: { h: string }) => {
+    setService(service === it.h ? "" : it.h);
+    document.getElementById("form")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  return (
+    <>
+      <section className={p.pick}>
+        <div className={p.pickHead}>
+          <span className="eyebrow">{c.pickEyebrow}</span>
+          <Kinetic as="h2" text={c.pickH} mode="slide" className={p.ph1} />
+          <p className={p.pickP}>{c.pickP}</p>
+        </div>
+        <MiniRing items={items} slot onPick={pick} active={service} />
+      </section>
+      <section className={p.contact} id="form">
+        <div>
+          <span className="eyebrow">{copy.nav.contact}</span>
+          <Kinetic as="h2" text={c.h} mode="flip" className={p.ph1} />
+          <ul className={p.lines}>
+            {c.lines.map((l, i) => (
+              <Reveal key={i} as="li" delay={0.3 + i * 0.1}>{l}</Reveal>
+            ))}
+          </ul>
+          <div className={p.details}>
+            <span className="eyebrow">{c.detailsH}</span>
+            <a href={`mailto:${CONTACT_EMAIL}`}><small>{c.mail}</small>{CONTACT_EMAIL}</a>
+            <a href={`tel:${COMPANY.phone}`}><small>{c.phone}</small>{COMPANY.phoneDisplay}</a>
+            <span><small>{c.visit}</small>{COMPANY.street}, {COMPANY.postalCode} {COMPANY.city}</span>
+          </div>
+          <div className={p.introObj} data-flow="contact" aria-hidden="true" style={{ marginTop: "2em" }} />
+        </div>
+        <ContactForm copy={copy} service={service} onService={setService} />
+      </section>
+    </>
+  );
+}
+
+export function ContactForm({ copy, service = "", onService }: { copy: Copy; service?: string; onService?: (s: string) => void }) {
   const c = copy.contact;
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -175,6 +218,7 @@ export function ContactForm({ copy }: { copy: Copy }) {
     const body = {
       name: String(data.get("name") || ""),
       contact: String(data.get("contact") || ""),
+      service: String(data.get("service") || ""),
       message: String(data.get("message") || ""),
       lang: copy.lang,
     };
@@ -184,7 +228,7 @@ export function ContactForm({ copy }: { copy: Copy }) {
       setSent(true);
     } catch {
       // graceful fallback: open the mail client with the message prefilled
-      const subject = encodeURIComponent(`Idee van ${body.name}`);
+      const subject = encodeURIComponent(`${body.service || "Idee"} — ${body.name}`);
       const text = encodeURIComponent(`${body.message}\n\n— ${body.name} (${body.contact})`);
       window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${text}`;
     } finally {
@@ -196,6 +240,13 @@ export function ContactForm({ copy }: { copy: Copy }) {
 
   return (
     <form className={p.form} onSubmit={onSubmit}>
+      <div className={p.field}>
+        <label htmlFor="service">{c.subject}</label>
+        <select id="service" name="service" value={service} onChange={(e) => onService?.(e.target.value)}>
+          <option value="">{c.other}</option>
+          {copy.services.map((sv) => <option key={sv.slug} value={sv.name}>#{sv.num} {sv.name}</option>)}
+        </select>
+      </div>
       <div className={p.field}>
         <label htmlFor="name">{c.labels.who}</label>
         <input id="name" name="name" required autoComplete="name" />

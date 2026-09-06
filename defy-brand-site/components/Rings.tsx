@@ -28,7 +28,7 @@ const imgAny = (it: Item) => imgFor(it) ?? photoFor("card" + it.h + (it.p ?? "")
  * MiniRing — the glass ring from the homepage, in a lighter form for sub-pages:
  * no pin, turns with time and with scroll, tilts with the pointer, copy fades on the back side.
  */
-export function MiniRing({ items, size = "m", slot = false }: { items: Item[]; size?: "s" | "m"; slot?: boolean }) {
+export function MiniRing({ items, size = "m", slot = false, onPick, active }: { items: Item[]; size?: "s" | "m"; slot?: boolean; onPick?: (it: Item) => void; active?: string }) {
   const root = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const n = items.length, step = 360 / n;
@@ -67,6 +67,9 @@ export function MiniRing({ items, size = "m", slot = false }: { items: Item[]; s
             </>
           );
           const style = { ["--i" as string]: i, ["--step" as string]: `${step}deg` };
+          if (onPick) return (
+            <button key={i} type="button" className={`${m.miniCard} ${m.miniPick} ${active === it.h ? m.miniOn : ""}`} style={style} onClick={() => onPick(it)} data-cursor aria-pressed={active === it.h}>{inner}</button>
+          );
           return it.href ? (
             <Link key={i} href={it.href} className={m.miniCard} style={style} data-cursor>{inner}</Link>
           ) : (
