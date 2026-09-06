@@ -11,6 +11,7 @@ import FlowObject from "@/components/FlowObject";
 import { DustMorph, Tornado } from "@/components/Morph";
 import { CardGlobe, CardBloom } from "@/components/Rings";
 import Portfolio from "@/components/Portfolio";
+import Kinetic from "@/components/Kinetic";
 import p from "@/components/page.module.css";
 
 type Props = { params: Promise<{ lang: Lang; section: string }> };
@@ -69,7 +70,7 @@ export default async function SectionPage({ params }: Props) {
         <DustMorph text="DB EVENTS" />
         <section className={p.aboutHead}>
           <span className="eyebrow">{a.eyebrow}</span>
-          <h1 className={p.ph1}>{a.h}</h1>
+          <Kinetic as="h1" text={a.h} mode="flip" className={p.ph1} />
         </section>
         <section className={p.aboutWhy}>
           <span className="eyebrow">{a.eyebrow}</span>
