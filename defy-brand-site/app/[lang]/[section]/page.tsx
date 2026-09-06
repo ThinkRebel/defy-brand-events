@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCopy, href, LANGS, type Lang } from "@/content";
-import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { buildMetadata, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo";
 import JsonLd from "@/components/JsonLd";
+import Faq from "@/components/Faq";
 import { PageHero, ContactPicker } from "@/components/Page";
 import { Closer, Reveal } from "@/components/Sections";
 import Cinema from "@/components/Cinema";
@@ -121,6 +122,8 @@ export default async function SectionPage({ params }: Props) {
             ))}
           </dl>
         </section>
+        <Faq page="about" lang={lang} />
+        <JsonLd data={faqJsonLd(lang, "about")} />
         <Closer copy={c} h={c.home.closerH} cta={c.home.closerCta} />
       </>
     );
@@ -139,6 +142,8 @@ export default async function SectionPage({ params }: Props) {
           <p className={p.psub}>{ct.invite}</p>
         </header>
         <ContactPicker copy={c} />
+        <Faq page="contact" lang={lang} />
+        <JsonLd data={faqJsonLd(lang, "contact")} />
       </>
     );
   }
