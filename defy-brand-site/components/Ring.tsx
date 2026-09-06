@@ -45,9 +45,16 @@ export default function Ring({ copy }: { copy: Copy }) {
       };
       window.addEventListener("pointermove", move);
 
+      const cards = q(`.${s.card}`) as HTMLElement[];
       const tick = (_t: number, dt: number) => {
         driftA += dt * 0.004;
-        ring.style.transform = `rotateX(${tiltX}deg) rotateZ(${tiltZ}deg) rotateY(${scrollA + driftA}deg)`;
+        const total = scrollA + driftA;
+        ring.style.transform = `rotateX(${tiltX}deg) rotateZ(${tiltZ}deg) rotateY(${total}deg)`;
+        // fade the copy on cards that face away, so text is never mirrored through the glass
+        cards.forEach((c, i) => {
+          const facing = Math.cos(((i * 40 + total) * Math.PI) / 180);
+          c.style.setProperty("--face", String(Math.min(1, Math.max(0, (facing - 0.05) * 3))));
+        });
       };
       gsap.ticker.add(tick);
 

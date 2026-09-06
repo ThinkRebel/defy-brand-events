@@ -322,7 +322,7 @@
   transition: transform 1.4s var(--ease);
 }
 .card:hover::before { transform: translateX(60%); }
-.card > * { position: relative; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.card > * { position: relative; opacity: var(--face, 1); }
 .card .n {
   position: absolute;
   left: clamp(14px, 1.3vw, 22px);
